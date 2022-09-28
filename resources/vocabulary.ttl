@@ -1,0 +1,94 @@
+@prefix :        <https://covidtesty.vse.cz/vocabulary#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> . 
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix reg:     <http://purl.org/linked-data/registry#> .
+@prefix schema:  <http://schema.org/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://covidtesty.vse.cz/vocabulary> a owl:Ontology ;
+  rdfs:label "Antigen covid test vocabulary"@en ;
+  dcterms:creator <http://mynarz.net/#jindrich>,
+                  [
+                    a schema:Person ;
+                    schema:email "svatek@vse.cz"
+                  ], 
+                  [
+                    a schema:Person ;
+                    schema:email "hank05@vse.cz"
+                  ] ;
+  vann:preferredNamespacePrefix "act" ;
+  vann:preferredNamespaceUri : .
+
+# Classes
+
+:AntigenCovidTest a rdfs:Class ;
+  rdfs:label "Antigen covid test"@en ;
+  rdfs:subClassOf schema:Product, schema:MedicalDevice ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+# Properties
+
+:biospecimenCollectionMethod a owl:ObjectProperty ;
+  rdfs:label "Biospecimen collection method"@en ;
+  rdfs:domain :AntigenCovidTest ;
+  rdfs:range skos:Concept ;
+  rdfs:seeAlso ncit:C70700 ; # = Biospecimen collection method <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C70700>
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+:coronavirusVariant a owl:ObjectProperty ;
+  rdfs:label "Coronavirus variant"@en ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+:peiSensitivityCategory a owl:ObjectProperty ;
+  rdfs:label "PEI sensitivity category"@en ;
+  rdfs:domain ncit:C41394 ; # = Diagnostic sensitivity <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C41394>
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+:ssiSensitivityCategory a owl:ObjectProperty ;
+  rdfs:label "SSI sensitivity category"@en ;
+  rdfs:domain ncit:C41394 ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+:ssiSensitivityDegree a owl:ObjectProperty ;
+  rdfs:label "SSI sensitivity degree"@en ;
+  rdfs:domain ncit:C41394 ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+# Code lists
+
+<https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> a skos:ConceptScheme ;
+  rdfs:label "Registration statuses"@en ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/registration-statuses/status-approved> a skos:Concept ;
+  skos:prefLabel "Approved"@en ;
+  skos:exactMatch reg:statusValid ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/registration-statuses/status-not-approved> a skos:Concept ;
+  skos:prefLabel "Not approved"@en ;
+  skos:exactMatch reg:statusInvalid ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/registration-statuses/status-warning> a skos:Concept ;
+  skos:prefLabel "Warning"@en ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+# Individuals
+
+<https://www.pei.de> a schema:Organization ;
+  schema:name "Paul-Ehrlich-Institut" .
+
+<https://ssi.dk> a schema:Organization ;
+  schema:name "Statens Serum Institut" .

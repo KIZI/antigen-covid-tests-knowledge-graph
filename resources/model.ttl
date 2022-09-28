@@ -1,0 +1,180 @@
+@prefix :        <https://covidtesty.vse.cz/shapes#> .
+@prefix act:     <https://covidtesty.vse.cz/vocabulary#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> . 
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix reg:     <http://purl.org/linked-data/registry#> .
+@prefix schema:  <http://schema.org/> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix time:    <http://www.w3.org/2006/time#> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+:AntigenCovidTest a sh:NodeShape ;
+  sh:targetClass act:AntigenCovidTest ;
+  sh:property [
+    sh:path schema:manufacturer ;
+    sh:class schema:Organization ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI
+  ], [
+    sh:path act:biospecimenCollectionMethod ;
+    sh:class skos:Concept ;
+    sh:nodeKind sh:IRI
+  ] .
+
+:BiospecimenCollectionMethod a sh:NodeShape ;
+  sh:targetObjectsOf act:biospecimenCollectionMethod ;
+  sh:message "Value not from the biospecimen collection method code list!"@en ;
+  sh:path skos:inScheme ;
+  sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/typy-testu/typ-testu> .
+
+:Organization a sh:NodeShape ;
+  sh:targetClass schema:Organization ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ], [
+    sh:path ( schema:address schema:addressCountry ) ;
+    sh:maxCount 1
+  ], [
+    sh:path schema:url ;
+    sh:minCount 0 # Just FYI
+  ] .
+
+:Register a sh:NodeShape ;
+  sh:targetClass reg:Register ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] .
+
+:RegisterItem a sh:NodeShape ;
+  sh:targetClass reg:RegisterItem ;
+  sh:property [
+    sh:path reg:representationOf ;
+    sh:class act:AntigenCovidTest ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ], [
+    sh:path reg:register ;
+    sh:class reg:Register ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ], [
+    sh:path reg:notation ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string
+  ], [
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 0
+  ], [
+    sh:path reg:status ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1
+  ], [
+    sh:path dcterms:description ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 0
+  ] .
+
+:DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
+  # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
+  sh:targetClass ncit:C41394, ncit:C41395 ; 
+  sh:property [
+    sh:path dcterms:creator ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ], [
+    sh:path dcterms:subject ;
+    sh:class act:AntigenCovidTest ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ], [
+    sh:path rdfs:comment ;
+    sh:nodeKind sh:Literal ;
+    sh:minCount 0
+  ] ;
+  sh:or (
+    # PEI sensitivity
+    [
+      sh:property [
+        sh:path dcterms:creator ;
+        sh:hasValue <https://www.pei.de>
+      ], [
+        sh:path act:peiSensitivityCategory ;
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+      ], [
+        sh:path rdf:value ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+      ]
+    ]
+
+    # SSI sensitivity
+    [
+      sh:property [
+        sh:path dcterms:creator ;
+        sh:hasValue <https://ssi.dk>
+      ], [
+        sh:path act:coronavirusVariant ;
+        sh:class skos:Concept ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 0 ;
+        sh:maxCount 1
+      ], [
+        sh:path act:ssiSensitivityCategory ;
+        sh:class skos:Concept ;
+        sh:nodeKind sh:IRI ;
+        sh:maxCount 1
+      ], [
+        sh:path act:ssiSensitivityDegree ;
+        # sh:class skos:Concept ; # TODO: Missing code list
+        sh:nodeKind sh:IRI ;
+        sh:maxCount 1
+      ]
+    ]
+
+    # EU list
+    [
+      # IF-THEN pattern from <https://book.validatingrdf.com/bookHtml011.html#sec158>
+      sh:or (
+        [
+          sh:not [
+            sh:path qudt:unit ;
+            sh:hasValue unit:PERCENT
+          ]
+        ]
+        [
+          sh:path rdf:value ;
+          sh:minInclusive 0 ;
+          sh:maxInclusive 100 ;
+          sh:datatype xsd:decimal
+        ]
+      )
+    ]
+  ) .
+  
+:Concept a sh:NodeShape ;
+  sh:targetClass skos:Concept ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:disjoint skos:altLabel
+  ], [
+    sh:path skos:inScheme ;
+    sh:nodeKind sh:IRI ;
+    sh:class skos:ConceptScheme
+  ] .

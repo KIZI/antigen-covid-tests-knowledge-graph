@@ -1,0 +1,8 @@
+PREFIX act:  <https://covidtesty.vse.cz/vocabulary#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?antigen_covid_test
+WHERE {
+  ?antigen_covid_test act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
+}
+
