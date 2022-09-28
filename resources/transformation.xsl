@@ -52,10 +52,6 @@
     <xsl:sequence select="replace($category, '2$', '')"/>
   </xsl:function>
 
-  <!-- Keys -->
-
-  <xsl:key name="test-types" match="/testy/ciselniky/typyTestu/typTestu" use="@hodnota"/>
-
   <!-- Output -->
 
   <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC"/>
