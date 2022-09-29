@@ -235,7 +235,7 @@
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
-      <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('kategorie', @kategorie))}"/>
+      <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'kategorie', @kategorie))}"/>
     </ncit:C41394>
   </xsl:template>
 
