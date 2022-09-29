@@ -18,8 +18,8 @@
   sh:property [
     sh:path schema:manufacturer ;
     sh:class schema:Organization ;
-    sh:maxCount 1 ;
-    sh:nodeKind sh:IRI
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1
   ], [
     sh:path act:biospecimenCollectionMethod ;
     sh:class skos:Concept ;
@@ -36,13 +36,16 @@
   sh:targetClass schema:Organization ;
   sh:property [
     sh:path schema:name ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1
   ], [
     sh:path ( schema:address schema:addressCountry ) ;
+    sh:datatype xsd:string ;
     sh:maxCount 1
   ], [
     sh:path schema:url ;
+    sh:datatype xsd:string ;
     sh:minCount 0 # Just FYI
   ] .
 
@@ -50,7 +53,7 @@
   sh:targetClass reg:Register ;
   sh:property [
     sh:path dcterms:identifier ;
-    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1
   ] .
@@ -60,24 +63,31 @@
   sh:property [
     sh:path reg:representationOf ;
     sh:class act:AntigenCovidTest ;
+    sh:nodeType sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1
   ], [
     sh:path reg:register ;
     sh:class reg:Register ;
+    sh:nodeType sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1
   ], [
     sh:path reg:notation ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:string
+    sh:datatype xsd:string ;
+    sh:maxCount 1
   ], [
     sh:path rdfs:label ;
-    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
     sh:minCount 0
   ], [
     sh:path reg:status ;
     sh:nodeKind sh:IRI ;
+    sh:class skos:Concept ;
+    sh:property [
+      sh:path skos:inScheme ;
+      sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses>
+    ] ;
     sh:maxCount 1
   ], [
     sh:path dcterms:description ;
@@ -90,6 +100,7 @@
   sh:targetClass ncit:C41394, ncit:C41395 ; 
   sh:property [
     sh:path dcterms:creator ;
+    sh:class schema:Organization ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1
@@ -101,7 +112,7 @@
     sh:maxCount 1
   ], [
     sh:path rdfs:comment ;
-    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
     sh:minCount 0
   ] ;
   sh:or (
@@ -114,6 +125,10 @@
         sh:path act:peiSensitivityCategory ;
         sh:nodeKind sh:IRI ;
         sh:class skos:Concept ;
+        sh:property [
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/kategorie>
+        ] ;
         sh:minCount 1 ;
         sh:maxCount 1
       ], [
@@ -133,12 +148,20 @@
         sh:path act:coronavirusVariant ;
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
+        sh:property [
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/varianta>
+        ] ;
         sh:minCount 0 ;
         sh:maxCount 1
       ], [
         sh:path act:ssiSensitivityCategory ;
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
+        sh:property [
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/kategorie>
+        ] ;
         sh:maxCount 1
       ], [
         sh:path act:ssiSensitivityDegree ;
