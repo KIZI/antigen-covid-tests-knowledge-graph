@@ -201,3 +201,30 @@
     sh:nodeKind sh:IRI ;
     sh:class skos:ConceptScheme
   ] .
+
+# Competency questions
+
+:CQ5 a sh:ConstraintComponent ;
+  sh:name "CQ5: Saliva tests"@en ;
+  sh:targetNode [] ;
+  sh:sparql [
+    sh:message "CQ5: Which tests are saliva tests?" ;
+    sh:prefixes :prefixes ;
+    sh:select """
+      SELECT *
+      WHERE {
+        FILTER NOT EXISTS {
+          [] a act:AntigenCovidTest ;
+            act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
+        }
+      }
+    """
+  ] .
+
+:prefixes sh:declare [
+    sh:prefix "act" ;
+    sh:namespace "https://covidtesty.vse.cz/vocabulary#"^^xsd:anyURI
+  ], [
+    sh:prefix "skos" ;
+    sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI
+  ] .
