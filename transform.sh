@@ -4,7 +4,9 @@
 #
 # Usage:
 #   ./tranform.sh path/to/data.xml > path/resulting/data.ttl
-#
+# 
+# Set the environment variable TEST=true to run unit tests for XSLT.
+#    
 # Dependencies:
 # - Saxon XSLT processor (e.g., brew install saxon)
 # - Apache Jena (e.g., brew install jena)
@@ -33,6 +35,13 @@ DATA="${1}"
 [ -e "${DATA}" ] || die "${DATA} does not exist!"
 [ -f "${DATA}" ] || die "${DATA} is not a file!"
 
+if [ ! -z "${TEST}" ]
+then
+  TEST="test=true"
+else
+  TEST="test=false"
+fi
+
 command_available riot
 command_available saxon
 command_available shacl
@@ -43,8 +52,10 @@ RESULT=$(mktemp).ttl
 
 info "Transforming source XML data to RDF/XML"
 saxon \
+  -ea \
   -s:"${DATA}" \
-  -xsl:resources/transformation.xsl > "${RDFXML}"
+  -xsl:resources/transformation.xsl \
+  "${TEST}" > "${RDFXML}"
 
 info "Validating syntax of the produced RDF/XML"
 riot \

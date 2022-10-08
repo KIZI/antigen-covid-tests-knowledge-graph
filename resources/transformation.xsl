@@ -20,13 +20,22 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xpath-default-namespace="https://covidtesty.vse.cz/testy/">
+  
+  <!-- Parameters -->
+
+  <xsl:param name="test" as="xsd:boolean"/> 
 
   <!-- Global variables -->
 
   <xsl:variable name="ns">https://covidtesty.vse.cz/data/</xsl:variable>
-  <xsl:variable name="dataset">https://covidtesty.vse.cz/data/evaluations</xsl:variable>
+  <xsl:variable name="dataset" select="concat($ns, 'evaluations')"/>
 
   <!-- Functions -->
+
+  <xsl:function name="f:clean-category" as="xsd:string">
+    <xsl:param name="category" as="xsd:string"/>
+    <xsl:sequence select="replace($category, '2$', '')"/>
+  </xsl:function>
 
   <!-- Converts camelCase $text into kebab-case. -->
   <xsl:function name="f:kebab-case" as="xsd:string">
@@ -47,11 +56,6 @@
     <xsl:sequence select="encode-for-uri(translate(replace(lower-case(normalize-unicode($text, 'NFKD')), '\P{IsBasicLatin}', ''), ' ', '-'))" />
   </xsl:function>
 
-  <xsl:function name="f:clean-category" as="xsd:string">
-    <xsl:param name="category" as="xsd:string"/>
-    <xsl:sequence select="replace($category, '2$', '')"/>
-  </xsl:function>
-
   <!-- Output -->
 
   <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC"/>
@@ -60,6 +64,10 @@
   <!-- Templates -->
 
   <xsl:template match="/testy">
+    <xsl:if test="$test">
+       <xsl:call-template name="tests"/>
+    </xsl:if>
+
     <rdf:RDF>
       <xsl:apply-templates/>
     </rdf:RDF>
@@ -327,5 +335,42 @@
   </xsl:template>
 
   <!-- Catch-all empty template -->
+
   <xsl:template match="text()|@*" mode="#all"/>
+
+  <!-- Tests -->
+
+  <xsl:template name="tests">
+    <xsl:message>Running tests</xsl:message>
+
+    <xsl:call-template name="test">
+      <xsl:with-param name="actual" select="f:clean-category('Indie2')"/>
+      <xsl:with-param name="expected">Indie</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="test">
+      <xsl:with-param name="actual" select="f:kebab-case('ConceptScheme')"/>
+      <xsl:with-param name="expected">concept-scheme</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="test">
+      <xsl:with-param name="actual" select="f:resource-iri('concept', ('kategorie', 'ABC123'))"/>
+      <xsl:with-param name="expected">https://covidtesty.vse.cz/data/concept/kategorie/abc123</xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="test">
+      <xsl:with-param name="actual" select="f:slugify('Příliš žluťoučký kůň')"/>
+      <xsl:with-param name="expected">prilis-zlutoucky-kun</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template name="test">
+    <xsl:param name="actual" required="yes"/>
+    <xsl:param name="expected" required="yes"/>
+    <xsl:assert test="$actual = $expected">
+    Failed test!
+    Expected: <xsl:value-of select="$expected"/>
+    Actual: <xsl:value-of select="$actual"/>
+    </xsl:assert>
+  </xsl:template>
 </xsl:stylesheet>
