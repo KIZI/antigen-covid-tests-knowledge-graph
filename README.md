@@ -12,7 +12,7 @@ The `transform.sh` script transforms the source XML data into data in the RDF/Tu
 
 While the resulting RDF data is written to the standard output stream, logs and validation messages are written to the standard error stream.
 
-Set the environment variable `TEST=true` to run unit tests for XSLT.
+Set the environment variable `TEST=true` to run unit tests for XSLT:
 
 ```sh
 TEST=true ./transform.sh path/to/data.xml > path/to/data.ttl
