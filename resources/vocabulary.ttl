@@ -50,6 +50,12 @@
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+:peiSensitivityDegree a owl:ObjectProperty ;
+  rdfs:label "PEI sensitivity degree"@en ;
+  rdfs:domain ncit:C41394 ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
 :ssiSensitivityCategory a owl:ObjectProperty ;
   rdfs:label "SSI sensitivity category"@en ;
   rdfs:domain ncit:C41394 ;
@@ -92,3 +98,10 @@
 
 <https://ssi.dk> a schema:Organization ;
   schema:name "Statens Serum Institut" .
+
+# Making implicit knowledge explicit
+<https://covidtesty.vse.cz/data/register/icmr> reg:owner [
+    schema:address [
+      schema:addressCountry "India"@en
+    ]
+  ] .

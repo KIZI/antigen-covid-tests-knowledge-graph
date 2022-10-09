@@ -45,3 +45,24 @@ WHERE {
 }
 
 ;
+
+###############################################
+# Remap properties of PEI sensitivity degrees #
+###############################################
+
+DELETE {
+  ?concept ?source ?o .
+}
+INSERT {
+  ?concept ?target ?o .
+}
+WHERE {
+  VALUES (?source        ?target) {
+         (skos:prefLabel skos:definition)
+         (skos:altLabel  skos:prefLabel)
+  }
+  ?concept skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/stupen> ;
+    ?source ?o .
+}
+
+;

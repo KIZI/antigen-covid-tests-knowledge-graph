@@ -123,6 +123,10 @@
     <skos:prefLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:prefLabel>
   </xsl:template>
 
+  <xsl:template match="sloupecNazev" mode="codelist-item-property">
+    <skos:altLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:altLabel>
+  </xsl:template>
+
   <xsl:template match="vychoziText" mode="codelist-item-property">
     <skos:definition xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:definition>
   </xsl:template>
@@ -244,6 +248,8 @@
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
       <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'kategorie', @kategorie))}"/>
+      <!-- TODO: This duplicates the degree for each sensitivity category. -->
+      <act:peiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', ../stupen))}"/>
     </ncit:C41394>
   </xsl:template>
 
