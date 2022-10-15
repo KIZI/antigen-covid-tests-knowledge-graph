@@ -216,75 +216,98 @@
 
 # Competency questions
 
-:CQ1 a sh:NodeShape ;
-  sh:name "Tests on the EU positive list"@en ;
+:DatasetShape a sh:NodeShape ;
+  sh:name "Competency questions applicable to the entire dataset"@en ;
   sh:targetNode [] ;
-  sh:sparql [
+  :cq1 [] ;
+  :cq2 [] ;
+  :cq3 [] ;
+  :cq4 [] ;
+  :cq5 [] ;
+  :cq6 [] ;
+  :cq8 [] ;
+  :cq9 [] ;
+  :cq11 [] ;
+  :cq12 [] ;
+  :cq13 [] ;
+  :cq14 [] ;
+  :cq16 [] .
+
+:PEIShape a sh:NodeShape ;
+  sh:name "Competency questions about Paul-Ehrlich-Institut"@en ;
+  sh:targetNode <https://www.pei.de> ;
+  :cq7 [] .
+
+:ManufacturerShape a sh:NodeShape ;
+  sh:name "Competency questions about manufacturers of antigen covid tests"@en ;
+  sh:targetObjectsOf schema:manufacturer ;
+  :cq15 [] .
+
+:CQ1 a sh:ConstraintComponent ;
+  sh:name "Tests on the EU positive list"@en ;
+  sh:parameter [
+    sh:path :cq1
+  ] ;
+  sh:nodeValidator [
     sh:message "Is a given test on the EU positive list?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?test
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest .
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest .
 
-          [] reg:representationOf ?test ;
-            reg:register/dcterms:identifier "EUlistPositive" .
-        }
-      }
+      [] reg:representationOf ?test ;
+        reg:register/dcterms:identifier "EUlistPositive" .
+    }
     """
   ] .
 
-:CQ2 a sh:NodeShape ;
+:CQ2 a sh:ConstraintComponent ;
   sh:name "Tests approved by SÚKL"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq2
+  ] ;
+  sh:nodeValidator [
     sh:message "Was a given test approved by SÚKL?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?test
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest .
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest .
 
-          [] reg:representationOf ?test ;
-            reg:register/dcterms:identifier "SUKL" .
-        }
-      }
+      [] reg:representationOf ?test ;
+        reg:register/dcterms:identifier "SUKL" .
+    }
     """
   ] .
 
-:CQ3 a sh:NodeShape ;
+:CQ3 a sh:ConstraintComponent ;
   sh:name "Manufacturer of tests"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq3
+  ] ;
+  sh:nodeValidator [
     sh:message "Which tests are made by a given manufacturer?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?test
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest ;
-            schema:manufacturer ?manufacturer . 
-        }
-      }
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        schema:manufacturer ?manufacturer . 
+    }
     """
   ] .
 
-:CQ4 a sh:NodeShape ;
+:CQ4 a sh:ConstraintComponent ;
   sh:name "Manufacturer's country"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq4
+  ] ;
+  sh:nodeValidator [
     sh:message "What country does a given manufacturer come from?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?country
-      WHERE {
-        FILTER NOT EXISTS {
-          [] schema:manufacturer ?manufacturer .
-          ?manufacturer schema:address/schema:addressCountry ?country .
-        }
-      }
+    sh:ask """
+    ASK {
+      [] schema:manufacturer ?manufacturer .
+      ?manufacturer schema:address/schema:addressCountry ?country .
+    }
     """
   ] .
 
@@ -300,103 +323,99 @@
 #     sh:maxCount 1
 #   ] .
 
-:CQ5 a sh:NodeShape ;
+:CQ5 a sh:ConstraintComponent ;
   sh:name "Saliva tests"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq5
+  ] ;
+  sh:nodeValidator [
     sh:message "Which tests are saliva tests?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?test
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest ;
-            act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
-        }
-      }
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
+    }
     """
   ] .
 
-:CQ6 a sh:NodeShape ;
+:CQ6 a sh:ConstraintComponent ;
   sh:name "Tests' URLs in the EU database"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq6
+  ] ;
+  sh:nodeValidator [
     sh:message "What is the URL of a given test in the EU database?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?url
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest ;
-            schema:url ?url .
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        schema:url ?url .
 
-          # TODO: Make this more explicit rather than rely on substring matching?
-          FILTER strstarts(str(?url), "https://covid-19-diagnostics.jrc.ec.europa.eu")
-        }
-      }
+      # TODO: Make this more explicit rather than rely on substring matching?
+      FILTER strstarts(str(?url), "https://covid-19-diagnostics.jrc.ec.europa.eu")
+    }
     """
   ] .
 
-:CQ7 a sh:NodeShape ;
+:CQ7 a sh:ConstraintComponent ;
   sh:name "Author of PEI evaluations"@en ;
-  sh:targetNode <https://www.pei.de> ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq7
+  ] ;
+  sh:nodeValidator [
     sh:message "What organisation created the PEI evaluation?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?organization_name
-      WHERE {
-        FILTER NOT EXISTS {
-          VALUES ?class {
-            ncit:C41394
-            ncit:C41395
-          }
-
-          [] dcterms:creator $this ;
-            a ?class .
-
-          $this a schema:Organization ;
-            schema:name ?organization_name .
-        }
+    sh:ask """
+    ASK {
+      # TODO: "SPARQL queries must not contain a VALUES clause" (https://www.w3.org/TR/shacl/#pre-binding)
+      VALUES ?class {
+        ncit:C41394
+        ncit:C41395
       }
+
+      [] dcterms:creator $this ;
+        a ?class .
+
+      $this a schema:Organization ;
+        schema:name ?organization_name .
+    }
     """
   ] .
 
-:CQ8 a sh:NodeShape ;
+:CQ8 a sh:ConstraintComponent ;
   sh:name "Test's UK evaluation"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq8
+  ] ;
+  sh:nodeValidator [
     sh:message "Does a given test pass in the UK evaluation?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?test
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest .
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest .
 
-          [] reg:representationOf ?test ;
-            reg:register/dcterms:identifier "UK" ;
-            reg:status/skos:prefLabel "Approved"@en .
-        }
-      }
+      [] reg:representationOf ?test ;
+        reg:register/dcterms:identifier "UK" ;
+        reg:status/skos:prefLabel "Approved"@en .
+    }
     """
   ] .
 
-:CQ9 a sh:NodeShape ;
+:CQ9 a sh:ConstraintComponent ;
   sh:name "ICMR's country"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq9
+  ] ;
+  sh:nodeValidator [
     sh:message "What country does the ICMR evaluation come from?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?country
-      WHERE {
-        FILTER NOT EXISTS {
-          ?register a reg:Register ;
-            dcterms:identifier "ICMR" ;
-            reg:owner/schema:address/schema:addressCountry ?country . 
-        }
-      }
+    sh:ask """
+    ASK {
+      ?register a reg:Register ;
+        dcterms:identifier "ICMR" ;
+        reg:owner/schema:address/schema:addressCountry ?country . 
+    }
     """
   ] .
 
@@ -417,157 +436,151 @@
     ]
   ) .
 
-:CQ11 a sh:NodeShape ;
+:CQ11 a sh:ConstraintComponent ;
   sh:name "PEI's highest total sensitivity"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq11
+  ] ;
+  sh:nodeValidator [
     sh:message "Which tests have the highest total sensitivity according to PEI?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
+    sh:ask """
+    ASK {
       SELECT ?test
       WHERE {
-        FILTER NOT EXISTS {
-          SELECT ?test
-          WHERE {
-            ?test a act:AntigenCovidTest .
-            
-            [] a ncit:C41394 ;
-              dcterms:subject ?test ;
-              dcterms:creator <https://www.pei.de> ;
-              act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
-              rdf:value ?total_sensitivity .
-          }
-          ORDER BY DESC(?total_sensitivity)
-          LIMIT 1
-        }
+        ?test a act:AntigenCovidTest .
+        
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
+          rdf:value ?total_sensitivity .
       }
+      ORDER BY DESC(?total_sensitivity)
+      LIMIT 1
+    }
     """
   ] .
 
-:CQ12 a sh:NodeShape ;
+:CQ12 a sh:ConstraintComponent ;
   sh:name "Manufacturer-declared test sensitivity"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq12
+  ] ;
+  sh:nodeValidator [
     sh:message "What is the sensitivity of given tests according to their manufacturers?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?sensitivity
-      WHERE {
-        FILTER NOT EXISTS {
-          [] a ncit:C41394 ;
-            dcterms:subject/schema:manufacturer ?manufacturer ;
-            dcterms:creator ?manufacturer ;
-            rdf:value ?sensitivity .
-        }
-      }
+    sh:ask """
+    ASK {
+      [] a ncit:C41394 ;
+        dcterms:subject/schema:manufacturer ?manufacturer ;
+        dcterms:creator ?manufacturer ;
+        rdf:value ?sensitivity .
+    }
     """
   ] .
 
-:CQ13 a sh:NodeShape ;
+:CQ13 a sh:ConstraintComponent ;
   sh:name "HVL PEI"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq13
+  ] ;
+  sh:nodeValidator [
     sh:message "What is the HVL PEI sensitivity of a given test?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?hvl_pei
-      WHERE {
-        FILTER NOT EXISTS {
-          ?test a act:AntigenCovidTest .
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest .
 
-          [] a ncit:C41394 ;
-            dcterms:subject ?test ;
-            dcterms:creator <https://www.pei.de> ;
-            act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
-            rdf:value ?hvl_pei .
-        }
-      }
+      [] a ncit:C41394 ;
+        dcterms:subject ?test ;
+        dcterms:creator <https://www.pei.de> ;
+        act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
+        rdf:value ?hvl_pei .
+    }
     """
   ] .
 
-:CQ14 a sh:NodeShape ;
+:CQ14 a sh:ConstraintComponent ;
   sh:name "Difference between total PEI sensitivity and manufacturer-declared sensitivity"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq14
+  ] ;
+  sh:nodeValidator [
     sh:message "What is the difference between the total PEI sensitivity of a given test and the sensitivity claimed by its manufacturer?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?difference
+    sh:ask """
+    ASK {
+      SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference)
       WHERE {
-        FILTER NOT EXISTS {
-          SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference)
-          WHERE {
-            ?test a act:AntigenCovidTest ;
-              schema:manufacturer ?manufacturer .
+        ?test a act:AntigenCovidTest ;
+          schema:manufacturer ?manufacturer .
 
-            [] a ncit:C41394 ;
-              dcterms:subject ?test ;
-              dcterms:creator <https://www.pei.de> ;
-              act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
-              rdf:value ?pei_sensitivity .
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
+          rdf:value ?pei_sensitivity .
 
-            [] a ncit:C41394 ;
-              dcterms:subject ?test ;
-              dcterms:creator ?manufacturer ;
-              rdf:value ?manufacturer_sensitivity .
-          }
-        }
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator ?manufacturer ;
+          rdf:value ?manufacturer_sensitivity .
       }
+    }
     """
   ] .
 
-:CQ15 a sh:NodeShape ;
+:CQ15 a sh:ConstraintComponent ;
   sh:name "Manufacturer's tests with sensitivity degree higher than 3"@en ;
-  sh:targetObjectsOf schema:manufacturer ;
-  sh:sparql [
+  sh:parameter [
+    sh:path :cq15
+  ] ;
+  sh:nodeValidator [
     sh:message "What percentage of tests from a given manufacturer has a degree of sensitivity higher than 3?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?percentage 
+    sh:ask """
+    ASK {
+      SELECT (COUNT(?sensitivity_degree) / xsd:decimal(COUNT(DISTINCT ?test)) * 100 AS ?percentage)
       WHERE {
-        FILTER NOT EXISTS {
-          SELECT (COUNT(?sensitivity_degree) / xsd:decimal(COUNT(DISTINCT ?test)) * 100 AS ?percentage)
-          WHERE {
-            ?test a act:AntigenCovidTest ;
-              schema:manufacturer $this .
+        ?test a act:AntigenCovidTest ;
+          schema:manufacturer $this .
 
-            OPTIONAL {
-              [] a ncit:C41394 ;
-                dcterms:subject ?test ;
-                act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
+        OPTIONAL {
+          [] a ncit:C41394 ;
+            dcterms:subject ?test ;
+            act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
 
-              FILTER (xsd:decimal(?sensitivity_degree) > 3)
-            }
-          }
+          FILTER (xsd:decimal(?sensitivity_degree) > 3)
         }
       }
+    }
     """
   ] .
 
-:CQ16 a sh:NodeShape ;
-  sh:name "SUKL-approved tests with PEI degree 5"@en ;
-  sh:targetNode [] ;
-  sh:sparql [
+:CQ16 a sh:ConstraintComponent ;
+  sh:name "SÚKL-approved tests with PEI degree 5"@en ;
+  sh:parameter [
+    sh:path :cq16
+  ] ;
+  sh:nodeValidator [
     sh:message "How many tests that are approved by SÚKL have a degree of 5 according to PEI?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT ?count
+    sh:ask """
+    ASK {
+      SELECT (COUNT(DISTINCT ?test) AS ?count)
       WHERE {
-        FILTER NOT EXISTS {
-          SELECT (COUNT(DISTINCT ?test) AS ?count)
-          WHERE {
-            ?test a act:AntigenCovidTest .
+        ?test a act:AntigenCovidTest .
 
-            [] reg:representationOf ?test ;
-              reg:register/dcterms:identifier "SUKL" .
+        [] reg:representationOf ?test ;
+          reg:register/dcterms:identifier "SUKL" .
 
-            [] a ncit:C41394 ;
-              dcterms:subject ?test ;
-              dcterms:creator <https://www.pei.de> ;
-              act:peiSensitivityDegree/skos:notation "5" .
-          }
-        }
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityDegree/skos:notation "5" .
       }
+    }
     """
   ] .
 
