@@ -217,7 +217,7 @@
 # Competency questions
 
 :DatasetShape a sh:NodeShape ;
-  sh:name "Competency questions applicable to the entire dataset"@en ;
+  rdfs:label "Competency questions applicable to the entire dataset"@en ;
   sh:targetNode [] ;
   :cq1 [] ;
   :cq2 [] ;
@@ -234,17 +234,17 @@
   :cq16 [] .
 
 :PEIShape a sh:NodeShape ;
-  sh:name "Competency questions about Paul-Ehrlich-Institut"@en ;
+  rdfs:label "Competency questions about Paul-Ehrlich-Institut"@en ;
   sh:targetNode <https://www.pei.de> ;
   :cq7 [] .
 
 :ManufacturerShape a sh:NodeShape ;
-  sh:name "Competency questions about manufacturers of antigen covid tests"@en ;
+  rdfs:label "Competency questions about manufacturers of antigen covid tests"@en ;
   sh:targetObjectsOf schema:manufacturer ;
   :cq15 [] .
 
 :CQ1 a sh:ConstraintComponent ;
-  sh:name "Tests on the EU positive list"@en ;
+  rdfs:label "Tests on the EU positive list"@en ;
   sh:parameter [
     sh:path :cq1
   ] ;
@@ -262,7 +262,7 @@
   ] .
 
 :CQ2 a sh:ConstraintComponent ;
-  sh:name "Tests approved by SÚKL"@en ;
+  rdfs:label "Tests approved by SÚKL"@en ;
   sh:parameter [
     sh:path :cq2
   ] ;
@@ -280,7 +280,7 @@
   ] .
 
 :CQ3 a sh:ConstraintComponent ;
-  sh:name "Manufacturer of tests"@en ;
+  rdfs:label "Manufacturer of tests"@en ;
   sh:parameter [
     sh:path :cq3
   ] ;
@@ -296,7 +296,7 @@
   ] .
 
 :CQ4 a sh:ConstraintComponent ;
-  sh:name "Manufacturer's country"@en ;
+  rdfs:label "Manufacturer's country"@en ;
   sh:parameter [
     sh:path :cq4
   ] ;
@@ -314,7 +314,7 @@
 # If country was available for all manufacturers, we can use the following constraint,
 # or we can encode in without SPARQL directly in the organization's shape above.
 # :CQ4 a sh:NodeShape ;
-#   sh:name "Manufacturer's country"@en ;
+#   rdfs:label "Manufacturer's country"@en ;
 #   sh:targetObjectsOf schema:manufacturer ;
 #   sh:property [
 #     sh:message "What country does a given manufacturer come from?"@en ;
@@ -324,7 +324,7 @@
 #   ] .
 
 :CQ5 a sh:ConstraintComponent ;
-  sh:name "Saliva tests"@en ;
+  rdfs:label "Saliva tests"@en ;
   sh:parameter [
     sh:path :cq5
   ] ;
@@ -340,7 +340,7 @@
   ] .
 
 :CQ6 a sh:ConstraintComponent ;
-  sh:name "Tests' URLs in the EU database"@en ;
+  rdfs:label "Tests' URLs in the EU database"@en ;
   sh:parameter [
     sh:path :cq6
   ] ;
@@ -359,7 +359,7 @@
   ] .
 
 :CQ7 a sh:ConstraintComponent ;
-  sh:name "Author of PEI evaluations"@en ;
+  rdfs:label "Author of PEI evaluations"@en ;
   sh:parameter [
     sh:path :cq7
   ] ;
@@ -384,7 +384,7 @@
   ] .
 
 :CQ8 a sh:ConstraintComponent ;
-  sh:name "Test's UK evaluation"@en ;
+  rdfs:label "Test's UK evaluation"@en ;
   sh:parameter [
     sh:path :cq8
   ] ;
@@ -403,7 +403,7 @@
   ] .
 
 :CQ9 a sh:ConstraintComponent ;
-  sh:name "ICMR's country"@en ;
+  rdfs:label "ICMR's country"@en ;
   sh:parameter [
     sh:path :cq9
   ] ;
@@ -420,7 +420,7 @@
   ] .
 
 :CQ10 a sh:NodeShape ;
-  sh:name "PEI degree"@en ;
+  rdfs:label "PEI degree"@en ;
   sh:message "What is the degree according to PEI of a given test and what does it mean? (the description of degree)"@en ;
   sh:targetClass skos:Concept ;
   sh:or (
@@ -437,7 +437,7 @@
   ) .
 
 :CQ11 a sh:ConstraintComponent ;
-  sh:name "PEI's highest total sensitivity"@en ;
+  rdfs:label "PEI's highest total sensitivity"@en ;
   sh:parameter [
     sh:path :cq11
   ] ;
@@ -463,7 +463,7 @@
   ] .
 
 :CQ12 a sh:ConstraintComponent ;
-  sh:name "Manufacturer-declared test sensitivity"@en ;
+  rdfs:label "Manufacturer-declared test sensitivity"@en ;
   sh:parameter [
     sh:path :cq12
   ] ;
@@ -481,7 +481,7 @@
   ] .
 
 :CQ13 a sh:ConstraintComponent ;
-  sh:name "HVL PEI"@en ;
+  rdfs:label "HVL PEI"@en ;
   sh:parameter [
     sh:path :cq13
   ] ;
@@ -502,7 +502,7 @@
   ] .
 
 :CQ14 a sh:ConstraintComponent ;
-  sh:name "Difference between total PEI sensitivity and manufacturer-declared sensitivity"@en ;
+  rdfs:label "Difference between total PEI sensitivity and manufacturer-declared sensitivity"@en ;
   sh:parameter [
     sh:path :cq14
   ] ;
@@ -532,7 +532,7 @@
   ] .
 
 :CQ15 a sh:ConstraintComponent ;
-  sh:name "Manufacturer's tests with sensitivity degree higher than 3"@en ;
+  rdfs:label "Manufacturer's tests with sensitivity degree higher than 3"@en ;
   sh:parameter [
     sh:path :cq15
   ] ;
@@ -559,7 +559,7 @@
   ] .
 
 :CQ16 a sh:ConstraintComponent ;
-  sh:name "SÚKL-approved tests with PEI degree 5"@en ;
+  rdfs:label "SÚKL-approved tests with PEI degree 5"@en ;
   sh:parameter [
     sh:path :cq16
   ] ;
