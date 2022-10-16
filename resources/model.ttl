@@ -456,7 +456,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      SELECT ?test
+      SELECT ?test $this $value $cq11
       WHERE {
         ?test a act:AntigenCovidTest .
         
@@ -524,7 +524,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference)
+      SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference) $this $value $cq14
       WHERE {
         ?test a act:AntigenCovidTest ;
           schema:manufacturer ?manufacturer .
@@ -555,7 +555,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      SELECT (COUNT(?sensitivity_degree) / xsd:decimal(COUNT(DISTINCT ?test)) * 100 AS ?percentage)
+      SELECT (COUNT(?sensitivity_degree) / xsd:decimal(COUNT(DISTINCT ?test)) * 100 AS ?percentage) $this $value $cq15
       WHERE {
         ?test a act:AntigenCovidTest ;
           schema:manufacturer $this .
@@ -568,6 +568,7 @@
           FILTER (xsd:decimal(?sensitivity_degree) > 3)
         }
       }
+      GROUP BY $this $value $cq15
     }
     """
   ] .
@@ -583,7 +584,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      SELECT (COUNT(DISTINCT ?test) AS ?count)
+      SELECT (COUNT(DISTINCT ?test) AS ?count) $this $value $cq16
       WHERE {
         ?test a act:AntigenCovidTest .
 
@@ -595,6 +596,7 @@
           dcterms:creator <https://www.pei.de> ;
           act:peiSensitivityDegree/skos:notation "5" .
       }
+      GROUP BY $this $value $cq16
     }
     """
   ] .
