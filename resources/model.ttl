@@ -251,6 +251,7 @@
     sh:path :cq1
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Is a given test on the EU positive list?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -269,6 +270,7 @@
     sh:path :cq2
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Was a given test approved by SÚKL?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -287,6 +289,7 @@
     sh:path :cq3
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Which tests are made by a given manufacturer?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -303,6 +306,7 @@
     sh:path :cq4
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What country does a given manufacturer come from?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -331,6 +335,7 @@
     sh:path :cq5
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Which tests are saliva tests?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -347,6 +352,7 @@
     sh:path :cq6
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What is the URL of a given test in the EU database?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -366,6 +372,7 @@
     sh:path :cq7
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What organisation created the PEI evaluation?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -391,6 +398,7 @@
     sh:path :cq8
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Does a given test pass in the UK evaluation?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -410,6 +418,7 @@
     sh:path :cq9
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What country does the ICMR evaluation come from?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -444,6 +453,7 @@
     sh:path :cq11
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "Which tests have the highest total sensitivity according to PEI?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -470,6 +480,7 @@
     sh:path :cq12
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What is the sensitivity of given tests according to their manufacturers?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -488,6 +499,7 @@
     sh:path :cq13
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What is the HVL PEI sensitivity of a given test?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -509,6 +521,7 @@
     sh:path :cq14
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What is the difference between the total PEI sensitivity of a given test and the sensitivity claimed by its manufacturer?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -539,6 +552,7 @@
     sh:path :cq15
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "What percentage of tests from a given manufacturer has a degree of sensitivity higher than 3?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
@@ -566,6 +580,7 @@
     sh:path :cq16
   ] ;
   sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
     sh:message "How many tests that are approved by SÚKL have a degree of 5 according to PEI?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
