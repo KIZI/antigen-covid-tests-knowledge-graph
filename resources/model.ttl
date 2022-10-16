@@ -377,14 +377,12 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      # TODO: "SPARQL queries must not contain a VALUES clause" (https://www.w3.org/TR/shacl/#pre-binding)
-      VALUES ?class {
-        ncit:C41394
-        ncit:C41395
+      ?evaluation dcterms:creator $this .
+      {
+        ?evaluation a ncit:C41394 .
+      } UNION {
+        ?evaluation a ncit:C41395 .
       }
-
-      [] dcterms:creator $this ;
-        a ?class .
 
       $this a schema:Organization ;
         schema:name ?organization_name .
