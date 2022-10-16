@@ -32,9 +32,11 @@
 
 :BiospecimenCollectionMethod a sh:NodeShape ;
   sh:targetObjectsOf act:biospecimenCollectionMethod ;
-  sh:message "Value not from the biospecimen collection method code list!"@en ;
-  sh:path skos:inScheme ;
-  sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/typy-testu/typ-testu> .
+  sh:property [
+    sh:message "Value not from the biospecimen collection method code list!"@en ;
+    sh:path skos:inScheme ;
+    sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/typy-testu/typ-testu>
+  ] .
 
 :Organization a sh:NodeShape ;
   sh:targetClass schema:Organization ;
