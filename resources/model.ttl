@@ -258,9 +258,9 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?test a act:AntigenCovidTest .
+      $test a act:AntigenCovidTest .
 
-      [] reg:representationOf ?test ;
+      [] reg:representationOf $test ;
         reg:register/dcterms:identifier "EUlistPositive" .
     }
     """
@@ -277,9 +277,9 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?test a act:AntigenCovidTest .
+      $test a act:AntigenCovidTest .
 
-      [] reg:representationOf ?test ;
+      [] reg:representationOf $test ;
         reg:register/dcterms:identifier "SUKL" .
     }
     """
@@ -297,7 +297,7 @@
     sh:ask """
     ASK {
       ?test a act:AntigenCovidTest ;
-        schema:manufacturer ?manufacturer .
+        schema:manufacturer $manufacturer .
     }
     """
   ] .
@@ -313,8 +313,9 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      [] schema:manufacturer ?manufacturer .
-      ?manufacturer schema:address/schema:addressCountry ?country .
+      [] schema:manufacturer $manufacturer .
+
+      $manufacturer schema:address/schema:addressCountry ?country .
     }
     """
   ] .
@@ -359,7 +360,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?test a act:AntigenCovidTest ;
+      $test a act:AntigenCovidTest ;
         schema:url ?url .
 
       # TODO: Make this more explicit rather than rely on substring matching?
@@ -403,9 +404,9 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?test a act:AntigenCovidTest .
+      $test a act:AntigenCovidTest .
 
-      [] reg:representationOf ?test ;
+      [] reg:representationOf $test ;
         reg:register/dcterms:identifier "UK" ;
         reg:status/skos:prefLabel "Approved"@en .
     }
@@ -423,7 +424,7 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?register a reg:Register ;
+      [] a reg:Register ;
         dcterms:identifier "ICMR" ;
         reg:owner/schema:address/schema:addressCountry ?country .
     }
@@ -485,8 +486,11 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
+      $test a act:AntigenCovidTest ;
+        schema:manufacturer ?manufacturer .
+
       [] a ncit:C41394 ;
-        dcterms:subject/schema:manufacturer ?manufacturer ;
+        dcterms:subject $test ;
         dcterms:creator ?manufacturer ;
         rdf:value ?sensitivity .
     }
@@ -504,10 +508,10 @@
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      ?test a act:AntigenCovidTest .
+      $test a act:AntigenCovidTest .
 
       [] a ncit:C41394 ;
-        dcterms:subject ?test ;
+        dcterms:subject $test ;
         dcterms:creator <https://www.pei.de> ;
         act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
         rdf:value ?hvl_pei .
@@ -528,17 +532,17 @@
     ASK {
       SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference) $this $value $cq14
       WHERE {
-        ?test a act:AntigenCovidTest ;
+        $test a act:AntigenCovidTest ;
           schema:manufacturer ?manufacturer .
 
         [] a ncit:C41394 ;
-          dcterms:subject ?test ;
+          dcterms:subject $test ;
           dcterms:creator <https://www.pei.de> ;
           act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
           rdf:value ?pei_sensitivity .
 
         [] a ncit:C41394 ;
-          dcterms:subject ?test ;
+          dcterms:subject $test ;
           dcterms:creator ?manufacturer ;
           rdf:value ?manufacturer_sensitivity .
       }
