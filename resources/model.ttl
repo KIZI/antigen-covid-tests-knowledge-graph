@@ -1,7 +1,7 @@
 @prefix :        <https://covidtesty.vse.cz/shapes#> .
 @prefix act:     <https://covidtesty.vse.cz/vocabulary#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> . 
+@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> .
 @prefix qudt:    <http://qudt.org/schema/qudt/> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
@@ -103,7 +103,7 @@
 
 :DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
   # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
-  sh:targetClass ncit:C41394, ncit:C41395 ; 
+  sh:targetClass ncit:C41394, ncit:C41395 ;
   sh:property [
     sh:path dcterms:creator ;
     sh:class schema:Organization ;
@@ -204,7 +204,7 @@
       )
     ]
   ) .
-  
+
 :Concept a sh:NodeShape ;
   sh:targetClass skos:Concept ;
   sh:property [
@@ -233,7 +233,9 @@
   :cq12 [] ;
   :cq13 [] ;
   :cq14 [] ;
-  :cq16 [] .
+  :cq16 [] ;
+  :cq17 [] ;
+  :cq18 [] .
 
 :PEIShape a sh:NodeShape ;
   rdfs:label "Competency questions about Paul-Ehrlich-Institut"@en ;
@@ -295,7 +297,7 @@
     sh:ask """
     ASK {
       ?test a act:AntigenCovidTest ;
-        schema:manufacturer ?manufacturer . 
+        schema:manufacturer ?manufacturer .
     }
     """
   ] .
@@ -423,7 +425,7 @@
     ASK {
       ?register a reg:Register ;
         dcterms:identifier "ICMR" ;
-        reg:owner/schema:address/schema:addressCountry ?country . 
+        reg:owner/schema:address/schema:addressCountry ?country .
     }
     """
   ] .
@@ -459,7 +461,7 @@
       SELECT ?test $this $value $cq11
       WHERE {
         ?test a act:AntigenCovidTest .
-        
+
         [] a ncit:C41394 ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
@@ -601,6 +603,59 @@
     """
   ] .
 
+:CQ17 a sh:ConstraintComponent ;
+  rdfs:label "Highest low viral load sensitivity according to PEI"@en ;
+  sh:parameter [
+    sh:path :cq17
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests have the highest LVL PEI sensitivity?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT ?test $this $value $cq17
+      WHERE {
+        ?test a act:AntigenCovidTest .
+
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityCategory/skos:altLabel "low viral load"@en ;
+          rdf:value ?sensitivity
+      }
+      ORDER BY DESC(?sensitivity)
+    }
+    """
+  ] .
+
+:CQ18 a sh:ConstraintComponent ;
+  rdfs:label "Not approved tests with manufacturer claimed sensitivity ≥ 90 %"@en ;
+  sh:parameter [
+    sh:path :cq18
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests have the sensitivity claimed by their manufacturers ≥ 90 % and at the same time weren't approved by some evaluation?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        schema:manufacturer ?manufacturer .
+
+      [] a ncit:C41394 ;
+        dcterms:subject ?test ;
+        dcterms:creator ?manufacturer ;
+        rdf:value ?sensitivity .
+
+      FILTER (?sensitivity >= 90)
+
+      [] reg:representationOf ?test ;
+        reg:status status:not-approved .
+    }
+    """
+  ] .
+
 :prefixes sh:declare [
     sh:prefix "act" ;
     sh:namespace "https://covidtesty.vse.cz/vocabulary#"^^xsd:anyURI
@@ -622,6 +677,9 @@
   ], [
     sh:prefix "skos" ;
     sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI
+  ], [
+    sh:prefix "status" ;
+    sh:namespace "https://covidtesty.vse.cz/data/concept/registration-statuses/status-"^^xsd:anyURI
   ], [
     sh:prefix "xsd" ;
     sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI
