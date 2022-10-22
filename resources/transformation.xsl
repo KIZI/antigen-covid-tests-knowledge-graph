@@ -123,6 +123,10 @@
     <skos:prefLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:prefLabel>
   </xsl:template>
 
+  <xsl:template match="sloupecNazev" mode="codelist-item-property">
+    <skos:altLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:altLabel>
+  </xsl:template>
+
   <xsl:template match="vychoziText" mode="codelist-item-property">
     <skos:definition xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:definition>
   </xsl:template>
@@ -148,8 +152,9 @@
   <xsl:template match="test">
     <!-- No ID is available for all tests, therefore we generate a synthetic ID. -->
     <xsl:variable name="covid-test" select="f:resource-iri('antigen-covid-test', (generate-id()))"/>
-    <!-- Manufacturer IDs are available only for tests on EU lists, so we generate a synthetic ID. -->
-    <xsl:variable name="manufacturer" select="f:resource-iri('organization', (generate-id()))"/> 
+    <!-- Manufacturer IDs are available only for tests on EU lists, so we fall back on a synthetic ID. -->
+    <xsl:variable name="manufacturer-id" select="(euList/manufacturer/@id, generate-id())[1]"/>
+    <xsl:variable name="manufacturer" select="f:resource-iri('organization', ($manufacturer-id))"/>
     <act:AntigenCovidTest rdf:about="{$covid-test}">
       <xsl:apply-templates mode="covid-test">
         <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
@@ -158,6 +163,7 @@
     <xsl:apply-templates>
       <xsl:with-param name="covid-test" select="$covid-test" tunnel="yes"/>
       <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
+      <xsl:with-param name="manufacturer-id" select="$manufacturer-id" tunnel="yes"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -244,6 +250,8 @@
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
       <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'kategorie', @kategorie))}"/>
+      <!-- TODO: This duplicates the degree for each sensitivity category. -->
+      <act:peiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', ../stupen))}"/>
     </ncit:C41394>
   </xsl:template>
 
@@ -277,8 +285,9 @@
   </xsl:template>
 
   <xsl:template match="country" mode="manufacturer">
+    <xsl:param name="manufacturer-id" required="yes" tunnel="yes"/>
     <schema:address>
-      <schema:PostalAddress>
+      <schema:PostalAddress rdf:about="{f:resource-iri('postal-address', ($manufacturer-id))}">
         <schema:addressCountry><xsl:value-of select="text()"/></schema:addressCountry>
       </schema:PostalAddress>
     </schema:address>
