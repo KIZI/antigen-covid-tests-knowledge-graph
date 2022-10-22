@@ -152,8 +152,8 @@
   <xsl:template match="test">
     <!-- No ID is available for all tests, therefore we generate a synthetic ID. -->
     <xsl:variable name="covid-test" select="f:resource-iri('antigen-covid-test', (generate-id()))"/>
-    <!-- Manufacturer IDs are available only for tests on EU lists, so we generate a synthetic ID. -->
-    <xsl:variable name="manufacturer" select="f:resource-iri('organization', (generate-id()))"/> 
+    <!-- Manufacturer IDs are available only for tests on EU lists, so we fall back on a synthetic ID. -->
+    <xsl:variable name="manufacturer" select="f:resource-iri('organization', (euList/manufacturer/@id, generate-id())[1])"/>
     <act:AntigenCovidTest rdf:about="{$covid-test}">
       <xsl:apply-templates mode="covid-test">
         <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
