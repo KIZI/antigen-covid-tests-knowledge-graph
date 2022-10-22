@@ -497,7 +497,7 @@
   ] .
 
 :CQ14 a sh:ConstraintComponent ;
-  rdfs:label "Difference between total PEI sensitivity and manufacturer-declared sensitivity"@en ;
+  rdfs:label "Differences between HVL PEI sensitivities and manufacturer-declared sensitivities"@en ;
   sh:parameter [
     sh:path :cq14
   ] ;
