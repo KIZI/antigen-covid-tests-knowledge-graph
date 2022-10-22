@@ -1,7 +1,8 @@
-PREFIX act:  <https://covidtesty.vse.cz/vocabulary#>
-PREFIX ncit: <http://purl.obolibrary.org/obo/NCIT_>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX act:    <https://covidtesty.vse.cz/vocabulary#>
+PREFIX ncit:   <http://purl.obolibrary.org/obo/NCIT_>
+PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX skos:   <http://www.w3.org/2004/02/skos/core#>
 
 ###################################
 # Delete duplicate skos:altLabels #
@@ -63,6 +64,46 @@ WHERE {
   }
   ?concept skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/stupen> ;
     ?source ?o .
+}
+
+;
+
+##################
+# Normalize Ltd. #
+##################
+
+DELETE {
+  ?manufacturer schema:name ?name2 .
+}
+WHERE {
+  [] schema:manufacturer ?manufacturer .
+
+  ?manufacturer schema:name ?name1, ?name2 .
+
+  FILTER (!sameTerm(?name1, ?name2)
+          &&
+          ?name1 = concat(?name2, "."))
+}
+
+;
+
+##############################
+# Remove duplicate addresses #
+##############################
+
+DELETE {
+  ?manufacturer schema:address ?address2 .
+
+  ?address2 ?p ?o .
+}
+WHERE {
+  ?manufacturer schema:address ?address1, ?address2 .
+
+  FILTER (!sameTerm(?address1, ?address2))
+
+  ?country ^schema:addressCountry ?address1, ?address2 .
+
+  ?address2 ?p ?o .
 }
 
 ;
