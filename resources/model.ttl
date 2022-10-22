@@ -503,23 +503,23 @@
   ] ;
   sh:nodeValidator [
     a sh:SPARQLAskValidator ;
-    sh:message "What is the difference between the total PEI sensitivity of a given test and the sensitivity claimed by its manufacturer?"@en ;
+    sh:message "What are the differences between the HVL PEI sensitivities and the sensitivities claimed by tests' manufacturers?"@en ;
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
-      SELECT (?pei_sensitivity - ?manufacturer_sensitivity AS ?difference) $this $value $cq14
+      SELECT ?test (?hvl_pei - ?manufacturer_sensitivity AS ?difference) $this $value $cq14
       WHERE {
-        $test a act:AntigenCovidTest ;
+        ?test a act:AntigenCovidTest ;
           schema:manufacturer ?manufacturer .
 
         [] a ncit:C41394 ;
-          dcterms:subject $test ;
+          dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
-          act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
-          rdf:value ?pei_sensitivity .
+          act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
+          rdf:value ?hvl_pei .
 
         [] a ncit:C41394 ;
-          dcterms:subject $test ;
+          dcterms:subject ?test ;
           dcterms:creator ?manufacturer ;
           rdf:value ?manufacturer_sensitivity .
       }
