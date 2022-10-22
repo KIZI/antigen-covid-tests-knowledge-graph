@@ -231,7 +231,6 @@
   :cq9 [] ;
   :cq11 [] ;
   :cq12 [] ;
-  :cq13 [] ;
   :cq14 [] ;
   :cq16 [] ;
   :cq17 [] ;
@@ -493,28 +492,6 @@
         dcterms:subject $test ;
         dcterms:creator ?manufacturer ;
         rdf:value ?sensitivity .
-    }
-    """
-  ] .
-
-:CQ13 a sh:ConstraintComponent ;
-  rdfs:label "HVL PEI"@en ;
-  sh:parameter [
-    sh:path :cq13
-  ] ;
-  sh:nodeValidator [
-    a sh:SPARQLAskValidator ;
-    sh:message "What is the HVL PEI sensitivity of a given test?"@en ;
-    sh:prefixes :prefixes ;
-    sh:ask """
-    ASK {
-      $test a act:AntigenCovidTest .
-
-      [] a ncit:C41394 ;
-        dcterms:subject $test ;
-        dcterms:creator <https://www.pei.de> ;
-        act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
-        rdf:value ?hvl_pei .
     }
     """
   ] .
