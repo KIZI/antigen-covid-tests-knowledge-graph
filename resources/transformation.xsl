@@ -153,7 +153,8 @@
     <!-- No ID is available for all tests, therefore we generate a synthetic ID. -->
     <xsl:variable name="covid-test" select="f:resource-iri('antigen-covid-test', (generate-id()))"/>
     <!-- Manufacturer IDs are available only for tests on EU lists, so we fall back on a synthetic ID. -->
-    <xsl:variable name="manufacturer" select="f:resource-iri('organization', (euList/manufacturer/@id, generate-id())[1])"/>
+    <xsl:variable name="manufacturer-id" select="(euList/manufacturer/@id, generate-id())[1]"/>
+    <xsl:variable name="manufacturer" select="f:resource-iri('organization', ($manufacturer-id))"/>
     <act:AntigenCovidTest rdf:about="{$covid-test}">
       <xsl:apply-templates mode="covid-test">
         <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
@@ -162,6 +163,7 @@
     <xsl:apply-templates>
       <xsl:with-param name="covid-test" select="$covid-test" tunnel="yes"/>
       <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
+      <xsl:with-param name="manufacturer-id" select="$manufacturer-id" tunnel="yes"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -283,8 +285,9 @@
   </xsl:template>
 
   <xsl:template match="country" mode="manufacturer">
+    <xsl:param name="manufacturer-id" required="yes" tunnel="yes"/>
     <schema:address>
-      <schema:PostalAddress>
+      <schema:PostalAddress rdf:about="{f:resource-iri('postal-address', ($manufacturer-id))}">
         <schema:addressCountry><xsl:value-of select="text()"/></schema:addressCountry>
       </schema:PostalAddress>
     </schema:address>

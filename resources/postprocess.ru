@@ -86,24 +86,3 @@ WHERE {
 }
 
 ;
-
-##############################
-# Remove duplicate addresses #
-##############################
-
-DELETE {
-  ?manufacturer schema:address ?address2 .
-
-  ?address2 ?p ?o .
-}
-WHERE {
-  ?manufacturer schema:address ?address1, ?address2 .
-
-  FILTER (!sameTerm(?address1, ?address2))
-
-  ?country ^schema:addressCountry ?address1, ?address2 .
-
-  ?address2 ?p ?o .
-}
-
-;
