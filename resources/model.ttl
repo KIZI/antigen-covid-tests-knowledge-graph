@@ -20,7 +20,7 @@
     sh:class schema:Organization ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
-    sh:message "The test can have only one manufacturer. Manufacturer needs to have IRI and needs to be instance of class schema:Organization."@en ;
+    sh:message "The test can have only one manufacturer. Manufacturer needs to be identified by IRI and needs to be instance of class schema:Organization."@en ;
   ], [
     sh:path act:biospecimenCollectionMethod ;
     sh:class skos:Concept ;
@@ -51,7 +51,7 @@
     sh:path ( schema:address schema:addressCountry ) ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
-    sh:message "Adress needs to be string, there can be only one adress."@en ;
+    sh:message "Adress country needs to be a string, there can be only one adress."@en ;
   ], [
     sh:path schema:url ;
     sh:datatype xsd:string ;
@@ -76,24 +76,24 @@
     sh:nodeType sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:message "Register item has to be represented by only one antigen covid test."@en ;
+    sh:message "Register item represents only one antigen covid test."@en ;
   ], [
     sh:path reg:register ;
     sh:class reg:Register ;
     sh:nodeType sh:IRI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:message "Register item can have only one register represented as IRI."@en;
+    sh:message "Register item can have only one register identified by an IRI."@en;
   ], [
     sh:path reg:notation ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
-    sh:message "Notation of item in register has to be only one value type string."@en;
+    sh:message "Notation of item in register has to be only one value of the type string."@en;
   ], [
     sh:path rdfs:label ;
     sh:datatype xsd:string ;
     sh:minCount 0 ;
-    sh:message "Label of item in register has to be value type string."@en;
+    sh:message "Label of item in register has to be value of the type string."@en;
   ], [
     sh:path reg:status ;
     sh:nodeKind sh:IRI ;
@@ -143,7 +143,7 @@
         sh:nodeKind sh:IRI ;
         sh:class skos:Concept ;
         sh:property [
-          sh:message "Value is not from the sensitivity pei category code list!"@en ;
+          sh:message "Value is not from the sensitivity PEI category code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/kategorie>
         ] ;
@@ -154,7 +154,7 @@
         sh:nodeKind sh:IRI ;
         sh:class skos:Concept ;
         sh:property [
-          sh:message "Value is not from the sensitivity pei degree code list!"@en ;
+          sh:message "Value is not from the sensitivity PEI degree code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/stupen>
         ]
@@ -177,7 +177,7 @@
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
         sh:property [
-          sh:message "Value is not from the sensitivity ssi variant code list!"@en ;
+          sh:message "Value is not from the sensitivity SSI variant code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/varianta>
         ] ;
@@ -188,7 +188,7 @@
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
         sh:property [
-          sh:message "Value is not from the sensitivity ssi category code list!"@en ;
+          sh:message "Value is not from the sensitivity SSI category code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/kategorie>
         ] ;
