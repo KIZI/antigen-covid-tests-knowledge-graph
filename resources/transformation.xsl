@@ -205,9 +205,18 @@
 
   <xsl:template match="vyrobce" mode="covid-test">
     <xsl:param name="manufacturer" required="yes" tunnel="yes"/>
+    <xsl:variable name="eu-list-name" select="../euList/manufacturer/name"/>
     <schema:manufacturer>
       <schema:Organization rdf:about="{$manufacturer}">
-        <schema:name><xsl:value-of select="text()"/></schema:name>
+        <xsl:choose>
+          <!-- Prefer manufacturer names from the COVID-19 In Vitro Diagnostic Devices and Test Methods Database. -->
+          <xsl:when test="not($eu-list-name)">
+            <schema:name><xsl:value-of select="text()"/></schema:name>
+          </xsl:when>
+          <xsl:when test="$eu-list-name and text() != $eu-list-name">
+            <schema:alternateName><xsl:value-of select="text()"/></schema:alternateName>
+          </xsl:when>
+        </xsl:choose>
       </schema:Organization>
     </schema:manufacturer>
   </xsl:template>
@@ -293,8 +302,9 @@
     </schema:address>
   </xsl:template>
   
-  <!-- Ignore, since manufacturer's name is already taken from <vyrobce>. -->
-  <xsl:template match="name" mode="manufacturer"/>
+  <xsl:template match="name" mode="manufacturer">
+    <schema:name><xsl:value-of select="text()"/></schema:name>
+  </xsl:template>
 
   <xsl:template match="website" mode="manufacturer">
     <schema:url><xsl:value-of select="text()"/></schema:url>
