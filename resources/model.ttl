@@ -46,7 +46,11 @@
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:message "The organization has to have name."@en ;
+    sh:message "The organization has to have a single name."@en ;
+  ], [
+    sh:path schema:alternateName ;
+    sh:datatype xsd:string ;
+    sh:minCount 0
   ], [
     sh:path ( schema:address schema:addressCountry ) ;
     sh:datatype xsd:string ;
