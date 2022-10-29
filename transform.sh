@@ -77,6 +77,6 @@ riot \
   resources/vocabulary.ttl > "${VALIDATION_FILE}"
 
 info "Validating the produced data via SHACL"
-shacl validate \
+time shacl validate \
   --data "${VALIDATION_FILE}" \
   --shapes resources/model.ttl 1>&2
