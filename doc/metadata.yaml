@@ -1,0 +1,30 @@
+---
+title: Test-driven knowledge graph construction
+author:
+- name: Jindřich Mynarz
+  email: mynarzjindrich@gmail.com
+- name: Kateřina Haníková
+  email: hank05@vse.cz
+  institute: Department of Information and Knowledge Engineering, University of Economics, Prague
+- name: Vojtěch Svátek
+  email: svatek@vse.cz
+  institute: Department of Information and Knowledge Engineering, University of Economics, Prague
+date: 2022
+abstract: |
+  We propose how to construct knowledge graphs using a method based on user requirements formulated as competency questions.
+  It suggests to formalize the competency questions as SPARQL queries wrapped as SHACL constraints allowing them to be used as automated tests.
+  The method defines a process to guide knowledge graph construction based on feedback from tests.
+  It aims to reduce the engineering effort required to construct a knowledge graph that meets the requirements, while assessing the quality of semantic artifacts produced in this effort.
+  We intend the method to provide a solid engineering basis for knowledge graph construction using the lessons learnt from software development and based on open standards.
+  We demonstrate using the method on construction of a knowledge graph about antigen covid tests.
+keywords:
+- testing
+- knowledge graphs
+- competency questions
+bibliography: references.bib
+link-citations: true
+linkReferences: true
+figPrefix:
+- "Fig."
+- "Figs."
+---
