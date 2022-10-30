@@ -444,6 +444,18 @@ $if(logo)$
 $endif$
 $endif$
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\tikzset{%
+  >={Latex[width=2mm,length=2mm]},
+  % Specifications for style of nodes:
+    base/.style = {rectangle, rounded corners, draw=black,
+                   minimum width=3cm, minimum height=1cm,
+                   text centered, font=\sffamily, fill=white},
+  result/.style = {base, fill=orange}
+}
+
 \begin{document}
 $if(has-frontmatter)$
 \frontmatter

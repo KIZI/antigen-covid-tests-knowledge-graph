@@ -50,15 +50,42 @@ We present a method for test-driven knowledge graph construction.
 The method proposes a sequence of steps and feedback loops between them. 
 An overview of the relations between the key artifacts used by the method are depicted in [@fig:process].
 
-![Knowledge graph construction method](process.png){#fig:process}
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=1.5cm, every node/.style={fill=white, font=\sffamily}, align=center, tips=proper]
+  \node (requirements)   [base]                                             {User\\requirements};
+  \node (cqs)            [base, below=1cm of requirements]                      {Competency\\questions};
+  \node (sparql)         [base, below=1cm of cqs]                               {SPARQL\\queries};
+  \node (shacl)          [base, below=1cm of sparql]                            {SHACL\\constraints};
+  \node (kg)             [result, below=1cm of shacl]                           {Knowledge\\graph};
+  \node (ontology)       [base, left of=sparql, xshift=-3.5cm]                             {Ontology\\terms};
+  \node (transformation) [base, left of=kg, xshift=-3.5cm] {Transformation\\to RDF};
+  \node (source)         [base, left of=transformation, xshift=-3.5cm]        {Source\\data};
 
-First, start by using knowledge elicitation techniques [@Shadbolt2015] to gather user requirements.
+  % Specification of lines between nodes specified above
+  % with aditional nodes for description
+  \draw[->]      (requirements) -- node[right] {formulated as} (cqs);
+  \draw[->]               (cqs) -- node[right] {translate to} (sparql);
+  \draw[->]               (cqs) -| node[above] {pressupose} (ontology);
+  \draw[->]            (sparql) -- node[right] {executed by} (shacl);
+  \draw[->]            (sparql) -- node[below] {expressed\\by} (ontology);
+  \draw[->]             (shacl) -- node[right] {validate} (kg);
+  \draw[->]             (shacl.east) edge[bend right=90] node[right, xshift=0.1cm] {induced\\from} (sparql.east);
+  \draw[->]            (source) -- node[below] {is\\input\\to} (transformation);
+  \draw[->]    (transformation) -- node[below] {produces} (kg);
+  \draw [->] (transformation) edge[bend left=45] node {uses} (ontology);
+  \draw[->]             (shacl) -| node[below] {combine} (ontology);
+\end{tikzpicture}
+\caption{Knowledge graph construction method} \label{fig:process}
+\end{figure}
+
+1. Start by using knowledge elicitation techniques [@Shadbolt2015] to gather user requirements.
 User requirements can be gathered from subject-matter experts or prospective users of the knowledge graph.
 Formulate the user requirements as competency questions (CQs) [@Gruninger1994].
 CQs are analytical questions that the target knowledge graph is expected to answer.
 In order to avoid misinterpretation, they can be reviewed with those who expressed the requirements. 
 
-Analyze the CQs to extract terms and relations.
+2. Analyze the CQs to extract terms and relations.
 CQs can be analyzed using the linguistic notion of presupposition, which can be defined as *"a condition that must be met for a linguistic expression to have a denotation"* [@Ren2014].
 View this way, CQs presuppose the terms with which they can be expressed.
 The terms to extract from CQs are typically nouns or noun phrases that refer to entities from the knowledge graph's domain.
@@ -68,7 +95,7 @@ The relations to extract might be represented by verbs connecting the terms co-o
 Pronouns may translate to joins between the relations. 
 Moreover, CQs may have implicit prerequisites that can also translate to relations between entities.
 
-Formalize the terms and relations in a minimum viable ontology using RDF Schema [@Brickley2014].
+3. Formalize the terms and relations in a minimum viable ontology using RDF Schema [@Brickley2014].
 Terms typically map to classes (i.e. instances of `rdfs:Class`) and relations map to properties (i.e. instances of `rdf:Property`) or map indirectly to n-ary relations represented by classes.
 Document the ontology with definitions sourced from and validated by subject-matter experts to create a shared understanding.
 The ontology should make minimal ontological commitment, so avoid its upfront axiomatization, such as OWL restrictions.
@@ -77,7 +104,7 @@ Consequently, this step may reveal ambiguity in the CQs.
 Ambiguous CQs cannot be formalized reliably since misinterpretations may occur.
 In such cases, sources of ambiguity should be revised with subject-matter experts aiming to reformulate them in an unambiguous way.
 
-Translate the CQs to SPARQL queries expressed by the ontology.
+4. Translate the CQs to SPARQL queries expressed by the ontology.
 SPARQL queries make the CQs executable.
 We expect a manual translation of the CQs to SPARQL queries.
 Automated translation was attempted by others, such as in @EspinozaArias2022, but we consider it out of our scope here.
@@ -93,7 +120,7 @@ Constraints encoding these invariants are akin to property-based testing [@Fink1
 In case stricter guarantees are needed, the expected correct answers can be included in the validation constraints implementing the CQs.
 Such constraints correspond to the usual example-based testing.
 
-Wrap the queries as SPARQL-based SHACL constraints to automate their execution.
+5. Wrap the queries as SPARQL-based SHACL constraints to automate their execution.
 SHACL defines a target^[<https://www.w3.org/TR/shacl/#targets>] of each constraint.
 A target defines the scope of a CQ.
 Scope of the data graph validated by the constraints may either encompass the entire knowledge graph, such as when it is small, or cover its subset.
@@ -106,10 +133,10 @@ SHACL also defines the criteria of correctness of the SPARQL queries.
 An `sh:ask` query is expected to return the boolean `true`, while any results produced by an `sh:select` query are treated as violations.
 Specific expected results can be either hard-coded into the queries or specified via `sh:hasValue` in case a single value is expected.
 
-Develop a transformation of the source data to the target knowledge graph that is expected to meet the constraints.
+6. Develop a transformation of the source data to the target knowledge graph that is expected to meet the constraints.
 This can be implemented in many ways, largely dependent on the source data, see e.g., @Fensel2020b, so we will not cover it here.
 
-Validate the knowledge graph under development with the SHACL constraints.
+7. Validate the knowledge graph under development with the SHACL constraints.
 If the validation fails, resolve the reported violations by fixing the artifacts created in the previous steps.
 Fix the most primary artifact causing the violations.
 For instance, data transformation shall not work around an insufficiently expressive ontology.
@@ -117,7 +144,7 @@ Imposing a more expressive data model on the knowledge graph might reveal errors
 In this way, finer structure of its ontology makes the previously hidden data quality issues visible.
 Some feedback may even indicate ill-formed CQs in need of revision.
 
-If the validation succeeds, refactor the artifacts.
+8. If the validation succeeds, refactor the artifacts.
 Note that the above-described method tests if a knowledge graph meets the given user requirements.
 It does not evaluate how well these requirements are satisfied.
 Absence of errors does not imply that the knowledge graph is sound.
