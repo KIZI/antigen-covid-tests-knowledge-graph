@@ -1,0 +1,28 @@
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=1.5cm, every node/.style={fill=white, font=\sffamily}, align=center, tips=proper]
+  \node (requirements)   [base]                                             {User\\requirements};
+  \node (cqs)            [base, below=1cm of requirements]                      {Competency\\questions};
+  \node (sparql)         [base, below=1cm of cqs]                               {SPARQL\\queries};
+  \node (shacl)          [base, below=1cm of sparql]                            {SHACL\\constraints};
+  \node (kg)             [result, below=1cm of shacl]                           {Knowledge\\graph};
+  \node (ontology)       [base, left of=sparql, xshift=-3.5cm]                             {Ontology\\terms};
+  \node (transformation) [base, left of=kg, xshift=-3.5cm] {Transformation\\to RDF};
+  \node (source)         [base, left of=transformation, xshift=-3.5cm]        {Source\\data};
+
+  % Specification of lines between nodes specified above
+  % with aditional nodes for description
+  \draw[->]      (requirements) -- node[right] {formulated as} (cqs);
+  \draw[->]               (cqs) -- node[right] {translate to} (sparql);
+  \draw[->]               (cqs) -| node[above] {pressupose} (ontology);
+  \draw[->]            (sparql) -- node[right] {executed by} (shacl);
+  \draw[->]            (sparql) -- node[below] {expressed\\by} (ontology);
+  \draw[->]             (shacl) -- node[right] {validate} (kg);
+  \draw[->]             (shacl.east) edge[bend right=90] node[right, xshift=0.1cm] {induced\\from} (sparql.east);
+  \draw[->]            (source) -- node[below] {is\\input\\to} (transformation);
+  \draw[->]    (transformation) -- node[below] {produces} (kg);
+  \draw [->] (transformation) edge[bend left=45] node {uses} (ontology);
+  \draw[->]             (shacl) -| node[below] {combine} (ontology);
+\end{tikzpicture}
+\caption{Knowledge graph construction method} \label{fig:process}
+\end{figure}
