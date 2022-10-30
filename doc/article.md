@@ -5,12 +5,14 @@ We can also make up a name for the proposed method.
 
 Knowledge graphs use graph-based data models to capture knowledge commonly combined from large and diverse data sources [@Hogan2021].
 Constructing knowledge graphs can be an intricate and open-ended task that is in many ways an art rather than a craft.^[The same argument was made about designing ontologies in @Soldatova2016.]
-We are short on solid engineering practices to guide us through it.
+There is a shortage of solid engineering practices guiding through this task.
 
-We propose how to construct knowledge graphs using a method based on user requirements formulated as competency questions.
-It suggests to formalize the competency questions as SPARQL [@SPARQL2013] queries and wrap them as SHACL [@SHACL2017] constraints allowing them to be used as automated tests.
-The method defines a process to guide a knowledge graph construction based on feedback from tests.
+We propose how to construct knowledge graphs using a method based on user requirements formulated as competency questions (CQs).
+It suggests to formalize the CQs as SPARQL queries [@SPARQL2013] and wrap them as SHACL constraints [@SHACL2017] allowing them to be used as automated tests.
+The method defines a process guiding knowledge graph construction based on feedback from tests.
 It aims to reduce the effort required to construct a knowledge graph that meets its requirements, while assessing the quality of semantic artifacts made in this effort.
+
+# Motivation
 
 Following a method for knowledge graph construction offers several benefits.
 In general, a method helps decide what to do next.
@@ -21,6 +23,8 @@ The direction provided by a method anchored in user requirements can reduce the 
 For example, it discourages needless effort spent on achieving a lossless transformation to the target knowledge graph that preserves all source data even though it might not be needed.
 It can help avoid premature abstration and premature optimization, such as for performance or readability.
 Thanks to the tests checking if the user requirements are satisfied, we get an early proof of value instead of speculating about it.
+
+# Related work
 
 When outlining this method, we can learn from ontology engineering that has a head start of several decades on knowledge graphs.
 There is a long tradition of using competency questions as requirements for ontologies [@Gruninger1994].
@@ -46,11 +50,11 @@ The following text describes the proposed method for knowledge graph constructio
 
 # Method
 
+\input{diagram}
+
 We present a method for test-driven knowledge graph construction.
 The method proposes a sequence of steps and feedback loops between them. 
 An overview of the relations between the key artifacts used by the method are depicted in [@fig:process].
-
-\input{diagram}
 
 1. Start by using knowledge elicitation techniques [@Shadbolt2015] to gather user requirements.
 User requirements can be gathered from subject-matter experts or prospective users of the knowledge graph.
@@ -230,6 +234,7 @@ ASK {
 
 We transformed the input XML data to RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
+This is a small knowledge graph of around 10 thousand RDF triples, so we validated it as a whole.
 
 All artifacts we developed in this effort, such as competency questions, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
 
