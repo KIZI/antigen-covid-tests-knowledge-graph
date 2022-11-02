@@ -254,26 +254,51 @@
 
   <xsl:template match="citlivostPei/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <ncit:C41394> <!-- C41394 = Diagnostic sensitivity -->
+    <xsl:param name="evaluation-pei" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:Evaluation rdf:about="{$evaluation-pei}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
       <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'kategorie', @kategorie))}"/>
-      <!-- TODO: This duplicates the degree for each sensitivity category. -->
-      <act:peiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', ../stupen))}"/>
-    </ncit:C41394>
+    </act:Evaluation>
+    <ncit:C41394 rdf:about="{$evaluation-pei}"/> <!-- C41394 = Diagnostic sensitivity -->
+  </xsl:template>
+    
+  <xsl:template match="citlivostPei/stupen">
+    <xsl:param name="covid-test" required="yes" tunnel="yes"/>
+    <xsl:param name="evaluation-pei-deg" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:Evaluation rdf:about="{$evaluation-pei-deg}">
+      <dcterms:subject rdf:resource="{$covid-test}"/>
+      <dcterms:creator rdf:resource="https://www.pei.de"/>
+      <rdf:value><xsl:value-of select="text()"/></rdf:value>
+      <act:peiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', text()))}"/>
+    </act:Evaluation>
+    <act:PeiDegree rdf:about="{$evaluation-pei-deg}"/>
+  </xsl:template>
+  
+  <xsl:template match="citlivostPei/prumer">
+    <xsl:param name="covid-test" required="yes" tunnel="yes"/>
+    <xsl:param name="evaluation-pei-avg" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:Evaluation rdf:about="{$evaluation-pei-avg}">
+      <dcterms:subject rdf:resource="{$covid-test}"/>
+      <dcterms:creator rdf:resource="https://www.pei.de"/>
+      <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
+    </act:Evaluation>
+    <act:PeiAverage rdf:about="{$evaluation-pei-avg}"/>
   </xsl:template>
 
   <xsl:template match="citlivostSsi/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <ncit:C41394>
+    <xsl:param name="evaluation-ssi" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:Evaluation rdf:about="{$evaluation-ssi}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://ssi.dk"/>
       <act:coronavirusVariant rdf:resource="{f:resource-iri('concept', ('citlivost-ssi', 'varianta', @varianta))}"/>
       <act:ssiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-ssi', 'kategorie', @kategorie))}"/>
       <!-- TODO: SSI sensitivity degree is not defined in the code lists. -->
       <act:ssiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('stupen-citlivosti-ssi', @ikona))}"/>
-    </ncit:C41394>
+    </act:Evaluation>
+    <ncit:C41394 rdf:about="{$evaluation-ssi}"/>
   </xsl:template>
 
   <xsl:template match="euList">
@@ -314,11 +339,12 @@
   <xsl:template match="performance[@parameter = ('Clinical Sensitivity', 'Clinical Specificity')]">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
     <xsl:param name="manufacturer" required="yes" tunnel="yes"/>
-    <rdf:Description>
+    <xsl:param name="evaluation-man" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:Evaluation rdf:about="{$evaluation-man}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="{$manufacturer}"/>
       <xsl:apply-templates mode="performance" select="@*"/>
-    </rdf:Description>
+    </act:Evaluation>
   </xsl:template>
 
   <xsl:template match="@parameter" mode="performance">
