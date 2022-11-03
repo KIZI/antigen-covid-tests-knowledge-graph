@@ -39,8 +39,8 @@
   rdfs:subClassOf :Evaluation ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
-:PeiAverage a rdfs:Class ;
-  rdfs:label "PEI sensitivity average"@en ;
+:PeiTotalSensitivity a rdfs:Class ;
+  rdfs:label "Total sensitivity according to PEI, counted as weighted average"@en ;
   rdfs:comment "Total sensitivity is the overall sensitivity of a test in evaluation done by Paul-Ehrlich Institute. This value is counted as weighted average from the results of sensitivities in three viral load categories (high, medium and low viral load)."@en ;
   rdfs:subClassOf :Evaluation ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
