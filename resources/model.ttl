@@ -116,7 +116,7 @@
 
 :DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
   # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
-  sh:targetClass ncit:C41394, ncit:C41395 ;
+  sh:targetClass ncit:C41394, ncit:C41395, act:Evaluation ;
   sh:property [
     sh:path dcterms:creator ;
     sh:class schema:Organization ;
@@ -199,7 +199,7 @@
         sh:maxCount 1
       ], [
         sh:path act:ssiSensitivityDegree ;
-        # sh:class skos:Concept ; # TODO: Missing code list
+        sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
         sh:maxCount 1
       ]
@@ -482,10 +482,9 @@
       WHERE {
         ?test a act:AntigenCovidTest .
 
-        [] a ncit:C41394 ;
+        [] a act:PeiTotalSensitivity ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
-          act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
           rdf:value ?total_sensitivity .
       }
       ORDER BY DESC(?total_sensitivity)
@@ -564,7 +563,7 @@
           schema:manufacturer $this .
 
         OPTIONAL {
-          [] a ncit:C41394 ;
+          [] a act:PeiDegree ;
             dcterms:subject ?test ;
             act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
 
@@ -594,7 +593,7 @@
         [] reg:representationOf ?test ;
           reg:register/dcterms:identifier "SUKL" .
 
-        [] a ncit:C41394 ;
+        [] a act:PeiDegree ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
           act:peiSensitivityDegree/skos:notation "5" .
