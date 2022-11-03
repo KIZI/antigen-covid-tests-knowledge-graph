@@ -284,7 +284,7 @@
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
     </act:Evaluation>
-    <act:PeiAverage rdf:about="{$evaluation-pei-avg}"/>
+    <act:PeiTotalSensitivity rdf:about="{$evaluation-pei-avg}"/>
   </xsl:template>
 
   <xsl:template match="citlivostSsi/hodnoceni">
