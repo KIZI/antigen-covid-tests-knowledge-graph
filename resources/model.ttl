@@ -201,6 +201,11 @@
         sh:path act:ssiSensitivityDegree ;
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
+        sh:property [
+          sh:message "Value is not from the sensitivity SSI degree code list!"@en ;
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi>
+        ] ;
         sh:maxCount 1
       ]
     ]
