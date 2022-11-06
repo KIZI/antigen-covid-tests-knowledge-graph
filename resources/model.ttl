@@ -116,7 +116,7 @@
 
 :DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
   # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
-  sh:targetClass ncit:C41394, ncit:C41395, act:Evaluation ;
+  sh:targetClass ncit:C41393 ;
   sh:property [
     sh:path dcterms:creator ;
     sh:class schema:Organization ;
