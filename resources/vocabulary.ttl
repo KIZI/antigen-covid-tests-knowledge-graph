@@ -30,19 +30,15 @@
   rdfs:subClassOf schema:Product, schema:MedicalDevice ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
-:Evaluation a rdfs:Class ;
-  rdfs:label "Evaluation"@en ;
-  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
-
 :PeiDegree a rdfs:Class ;
   rdfs:label "PEI sensitivity degree"@en ;
-  rdfs:subClassOf :Evaluation ;
+  rdfs:subClassOf ncit:C41393 ; # = Diagnostic Accuracy Assessment Criterion <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C41393>
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 :PeiTotalSensitivity a rdfs:Class ;
   rdfs:label "Total sensitivity according to PEI, counted as weighted average"@en ;
   rdfs:comment "Total sensitivity is the overall sensitivity of a test in evaluation done by Paul-Ehrlich Institute. This value is counted as weighted average from the results of sensitivities in three viral load categories (high, medium and low viral load)."@en ;
-  rdfs:subClassOf :Evaluation ;
+  rdfs:subClassOf ncit:C41393 ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 # Properties
@@ -67,7 +63,7 @@
 
 :peiSensitivityDegree a owl:ObjectProperty ;
   rdfs:label "PEI sensitivity degree"@en ;
-  rdfs:domain ncit:C41394, :PeiDegree ;
+  rdfs:domain ncit:C41393 ;
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
