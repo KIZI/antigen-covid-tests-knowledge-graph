@@ -103,7 +103,7 @@
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 #SSI code list
-<https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi> a skos:ConceptScheme ;
+<https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> a skos:ConceptScheme ;
   rdfs:label "Sensitivity according the SSI"@en ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
