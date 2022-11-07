@@ -109,17 +109,17 @@
 
 <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/star> a skos:Concept ;
   skos:prefLabel "Positive"@en ;
-  skos:inScheme <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi> ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/half-star> a skos:Concept;
   skos:prefLabel "Weak positive"@en ;
-  skos:inScheme <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi> ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/cross> a skos:Concept;
   skos:prefLabel "Negative"@en ;
-  skos:inScheme <https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi> ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 # Individuals
