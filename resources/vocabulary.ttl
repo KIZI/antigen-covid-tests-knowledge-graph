@@ -23,7 +23,68 @@
   vann:preferredNamespacePrefix "act" ;
   vann:preferredNamespaceUri : .
 
+
+##########################################################################
+#NCIT imported classes: owl:imports ncit:C41393, ncit:C41394, ncit:C41395 
+##########################################################################
+
+###  http://purl.obolibrary.org/obo/NCIT_C25466
+ncit:C25466 rdf:type owl:Class ;
+            rdfs:label "Criterion"^^xsd:string .
+
+###  http://purl.obolibrary.org/obo/NCIT_C41393
+ncit:C41393 rdf:type owl:Class ;
+            rdfs:subClassOf ncit:C25466 ;
+            <http://purl.obolibrary.org/obo/IAO_0000115> "A qualitative characteristic or quantitative parameter used to provide a reliable and valid estimate of the degree to which patients who were diagnosed with particular condition or disease, match the traditional (prototypical) conception of this disease or condition."^^xsd:string ;
+            ncit:NHC0 "C41393"^^xsd:string ;
+            ncit:P106 "Functional Concept"^^xsd:string ;
+            ncit:P108 "Diagnostic Accuracy Assessment Criterion"^^xsd:string ;
+            ncit:P207 "C1511875"^^xsd:string ;
+            ncit:P366 "Diagnostic_Accuracy_Assessment_Criterion"^^xsd:string ;
+            <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Diagnostic Accuracy Assessment Criteria"^^xsd:string ,
+                                                                           "Diagnostic Accuracy Assessment Criterion"^^xsd:string ,
+                                                                           "Diagnostic Test Quality Assessment Criteria"^^xsd:string ,
+                                                                           "Diagnostic Test Quality Assessment Criterion"^^xsd:string ;
+            rdfs:label "Diagnostic Accuracy Assessment Criterion"^^xsd:string .
+
+###  http://purl.obolibrary.org/obo/NCIT_C41394
+ncit:C41394 rdf:type owl:Class ;
+            rdfs:subClassOf ncit:C41393 ;
+            <http://purl.obolibrary.org/obo/IAO_0000115> "The probability that a test will produce a true postive result when used on effected subjects as compared to a reference or \"gold standard\". The sensitivity of a test can be determined by calculating: number of true positive results divided by the sum of true positive results plus number of false negative results."^^xsd:string ;
+            ncit:NHC0 "C41394"^^xsd:string ;
+            ncit:P106 "Functional Concept"^^xsd:string ,
+                      "Quantitative Concept"^^xsd:string ;
+            ncit:P108 "Diagnostic Sensitivity"^^xsd:string ;
+            ncit:P207 "C1511883"^^xsd:string ;
+            ncit:P325 "The frequency with which a test yields a true positive result among individuals who actually have the disease or the gene mutation in question. A test with high sensitivity has a low false-negative rate and thus does a good job of correctly identifying affected individuals."^^xsd:string ;
+            ncit:P366 "Diagnostic_Sensitivity"^^xsd:string ;
+            <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Diagnostic Sensitivity"^^xsd:string ,
+                                                                           "Sensitivity"^^xsd:string ,
+                                                                           "Sensitivity of Diagnostic Test"^^xsd:string ,
+                                                                           "sensitivity"^^xsd:string ;
+            rdfs:label "Diagnostic Sensitivity"^^xsd:string .
+
+###  http://purl.obolibrary.org/obo/NCIT_C41395
+ncit:C41395 rdf:type owl:Class ;
+            rdfs:subClassOf ncit:C41393 ;
+            <http://purl.obolibrary.org/obo/IAO_0000115> "The probability that a test will produce a true negative result when used on non-effected subjects as compared to a reference or \"gold standard\". The specificity of a test can be determined by calculating: number of true negative results divided by the sum of true negative results plus number of false positive results."^^xsd:string ;
+            ncit:NHC0 "C41395"^^xsd:string ;
+            ncit:P106 "Functional Concept"^^xsd:string ,
+                      "Quantitative Concept"^^xsd:string ;
+            ncit:P108 "Diagnostic Specificity"^^xsd:string ;
+            ncit:P207 "C1511884"^^xsd:string ;
+            ncit:P325 "The frequency with which a test yields a true negative result among individuals who do not have the disease or the gene mutation in question. A test with high specificity has a low false-positive rate and thus does a good job of correctly classifying unaffected individuals."^^xsd:string ;
+            ncit:P366 "Diagnostic_Specificity"^^xsd:string ;
+            <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Diagnostic Specificity"^^xsd:string ,
+                                                                           "Specificity"^^xsd:string ,
+                                                                           "Specificity of Diagnostic Test"^^xsd:string ,
+                                                                           "specificity"^^xsd:string ;
+            rdfs:label "Diagnostic Specificity"^^xsd:string .
+
+
+##################################################################
 # Classes
+##################################################################
 
 :AntigenCovidTest a rdfs:Class ;
   rdfs:label "Antigen covid test"@en ;
@@ -41,7 +102,10 @@
   rdfs:subClassOf ncit:C41393 ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+
+##################################################################
 # Properties
+##################################################################
 
 :biospecimenCollectionMethod a owl:ObjectProperty ;
   rdfs:label "Biospecimen collection method"@en ;
@@ -79,7 +143,10 @@
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+
+##################################################################
 # Code lists
+##################################################################
 
 <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> a skos:ConceptScheme ;
   rdfs:label "Registration statuses"@en ;
@@ -122,7 +189,10 @@
   skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+
+##################################################################
 # Individuals
+##################################################################
 
 <https://www.pei.de> a schema:Organization ;
   schema:name "Paul-Ehrlich-Institut" .
