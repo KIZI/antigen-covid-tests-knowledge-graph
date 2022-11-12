@@ -87,7 +87,7 @@ then
 
   printf -- "--graph %s\n" ${GRAPHS} |
   xargs arq \
-    --query resources/subclassof.rq \
+    --query resources/subset_imported.rq \
     --quiet > "${IMPORTS}"
 fi
 
