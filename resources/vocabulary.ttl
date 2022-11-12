@@ -22,7 +22,9 @@
                   ] ;
   vann:preferredNamespacePrefix "act" ;
   vann:preferredNamespaceUri : ;
-  owl:imports ncit:C41394, ncit:C41395 .
+  owl:imports ncit:C41393,
+              ncit:C41394,
+              ncit:C41395 .
 
 ##################################################################
 # Classes
