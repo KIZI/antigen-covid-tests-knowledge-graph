@@ -238,11 +238,6 @@ This is a small knowledge graph of around 10 thousand RDF triples, so we validat
 
 All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
 
-<!--
-Compare the usability of XQueries on the source data with SPARQL queries on the resulting data?
-- How could we do it? Show some examples implementing the same competency questions in XQuery and SPARQL?
--->
-
 # Conclusions
 
 As can be expected, the proposed method has several limitations.
