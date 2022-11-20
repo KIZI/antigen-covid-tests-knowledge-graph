@@ -67,8 +67,7 @@ info "Post-processing"
 update \
   --data "${RDFXML}" \
   --dump \
-  --update resources/postprocess.ru |
-tee "${RESULT}"
+  --update resources/postprocess.ru > "${RESULT}"
 
 # Get owl:imports
 VOCABULARY=resources/vocabulary.ttl
@@ -97,7 +96,8 @@ riot \
   --quiet \
   "${RESULT}" \
   "${VOCABULARY}" \
-  "${IMPORTS}" > "${VALIDATION_FILE}"
+  "${IMPORTS}" |
+tee "${VALIDATION_FILE}"
 
 info "Validating the produced data via SHACL"
 time shacl validate \
