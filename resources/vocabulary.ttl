@@ -35,7 +35,7 @@
   rdfs:subClassOf schema:Product, schema:MedicalDevice ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
-:PeiDegree a rdfs:Class ;
+:PeiSensitivityDegree a rdfs:Class ;
   rdfs:label "PEI sensitivity degree"@en ;
   rdfs:subClassOf ncit:C41393 ; # = Diagnostic Accuracy Assessment Criterion <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C41393>
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
