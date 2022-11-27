@@ -36,13 +36,14 @@
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 :PeiSensitivityDegree a rdfs:Class ;
-  rdfs:label "PEI sensitivity degree"@en ;
+  rdfs:label "PEI diagnostic sensitivity degree"@en ;
+  rdfs:comment "Overall degree of a test's sensitivity based on evaluation done by the Paul-Ehrlich Institute. Tests' sensitivities are evaluated in three categories (high, medium and low viral load). Depending on values in these categories, test is rated by the degree (value from 1 to 5)."@en;
   rdfs:subClassOf ncit:C41393 ; # = Diagnostic Accuracy Assessment Criterion <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C41393>
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
 :PeiTotalSensitivity a rdfs:Class ;
   rdfs:label "Total sensitivity according to PEI, counted as weighted average"@en ;
-  rdfs:comment "Total sensitivity is the overall sensitivity of a test in evaluation done by Paul-Ehrlich Institute. This value is counted as weighted average from the results of sensitivities in three viral load categories (high, medium and low viral load)."@en ;
+  rdfs:comment "Total sensitivity is the overall diagnostic sensitivity of a test in evaluation done by Paul-Ehrlich Institute. This value is counted as weighted average from the results of sensitivities in three viral load categories (high, medium and low viral load)."@en ;
   rdfs:subClassOf ncit:C41393 ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
