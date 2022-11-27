@@ -254,7 +254,7 @@
 
   <xsl:template match="citlivostPei/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <xsl:param name="evaluation-pei" select="f:resource-iri('evaluation', generate-id())"/>
+    <xsl:variable name="evaluation-pei" select="f:resource-iri('evaluation', generate-id())"/>
     <ncit:C41394 rdf:about="{$evaluation-pei}"> <!-- C41394 = Diagnostic sensitivity -->
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
@@ -265,7 +265,7 @@
     
   <xsl:template match="citlivostPei/stupen">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <xsl:param name="evaluation-pei-deg" select="f:resource-iri('evaluation', generate-id())"/>
+    <xsl:variable name="evaluation-pei-deg" select="f:resource-iri('evaluation', generate-id())"/>
     <act:PeiDegree rdf:about="{$evaluation-pei-deg}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
@@ -276,7 +276,7 @@
   
   <xsl:template match="citlivostPei/prumer">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <xsl:param name="evaluation-pei-avg" select="f:resource-iri('evaluation', generate-id())"/>
+    <xsl:variable name="evaluation-pei-avg" select="f:resource-iri('evaluation', generate-id())"/>
     <act:PeiTotalSensitivity rdf:about="{$evaluation-pei-avg}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
@@ -286,7 +286,7 @@
 
   <xsl:template match="citlivostSsi/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <xsl:param name="evaluation-ssi" select="f:resource-iri('evaluation', generate-id())"/>
+    <xsl:variable name="evaluation-ssi" select="f:resource-iri('evaluation', generate-id())"/>
     <ncit:C41394 rdf:about="{$evaluation-ssi}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://ssi.dk"/>
@@ -335,7 +335,7 @@
   <xsl:template match="performance[@parameter = ('Clinical Sensitivity', 'Clinical Specificity')]">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
     <xsl:param name="manufacturer" required="yes" tunnel="yes"/>
-    <xsl:param name="evaluation-man" select="f:resource-iri('evaluation', generate-id())"/>
+    <xsl:variable name="evaluation-man" select="f:resource-iri('evaluation', generate-id())"/>
     <rdf:Description rdf:about="{$evaluation-man}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="{$manufacturer}"/>
