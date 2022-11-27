@@ -568,7 +568,7 @@
           schema:manufacturer $this .
 
         OPTIONAL {
-          [] a act:PeiDegree ;
+          [] a act:PeiSensitivityDegree ;
             dcterms:subject ?test ;
             act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
 
@@ -598,7 +598,7 @@
         [] reg:representationOf ?test ;
           reg:register/dcterms:identifier "SUKL" .
 
-        [] a act:PeiDegree ;
+        [] a act:PeiSensitivityDegree ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
           act:peiSensitivityDegree/skos:notation "5" .
