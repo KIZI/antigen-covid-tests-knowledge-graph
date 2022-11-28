@@ -269,8 +269,7 @@
     <act:PeiSensitivityDegree rdf:about="{$evaluation-pei-deg}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
-      <rdf:value><xsl:value-of select="text()"/></rdf:value>
-      <act:peiSensitivityDegree rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', text()))}"/>
+      <rdf:value rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', text()))}"/>
     </act:PeiSensitivityDegree>
   </xsl:template>
   
