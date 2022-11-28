@@ -46,6 +46,7 @@ command_available riot
 command_available saxon
 command_available shacl
 command_available update
+command_available arq
 
 RDFXML=$(mktemp).rdf
 RESULT=$(mktemp).ttl
@@ -66,15 +67,37 @@ info "Post-processing"
 update \
   --data "${RDFXML}" \
   --dump \
-  --update resources/postprocess.ru |
-tee "${RESULT}"
+  --update resources/postprocess.ru > "${RESULT}"
+
+# Get owl:imports
+VOCABULARY=resources/vocabulary.ttl
+IMPORTS=resources/imports.ttl # Local cache for owl:imports
+# If the local cache for imports doesn't exist or the vocabulary was modified since it was modified.
+if [[ ! -e "${IMPORTS}" ]] || [[ $(date -r "${VOCABULARY}" +%s) -gt $(date -r "${IMPORTS}" +%s) ]]
+then
+  info "Downloading owl:imports"
+
+  GRAPHS=$(arq \
+             --data "${VOCABULARY}" \
+             --query resources/imports.rq \
+             --results CSV |
+           tail -n+2 |
+           tr -d '\r')
+
+  printf -- "--graph %s\n" ${GRAPHS} |
+  xargs arq \
+    --query resources/subset_imported.rq \
+    --quiet > "${IMPORTS}"
+fi
 
 # Merge the produced data with its vocabulary for SHACL validation
 VALIDATION_FILE=$(mktemp).nt
 riot \
   --quiet \
   "${RESULT}" \
-  resources/vocabulary.ttl > "${VALIDATION_FILE}"
+  "${VOCABULARY}" \
+  "${IMPORTS}" |
+tee "${VALIDATION_FILE}"
 
 info "Validating the produced data via SHACL"
 time shacl validate \
