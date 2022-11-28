@@ -70,12 +70,6 @@
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
-:peiSensitivityDegree a owl:ObjectProperty ;
-  rdfs:label "PEI sensitivity degree"@en ;
-  rdfs:domain ncit:C41393 ;
-  rdfs:range skos:Concept ;
-  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
-
 :ssiSensitivityCategory a owl:ObjectProperty ;
   rdfs:label "SSI sensitivity category"@en ;
   rdfs:domain ncit:C41394 ;
