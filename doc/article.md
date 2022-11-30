@@ -10,7 +10,7 @@ There is a shortage of solid engineering practices guiding through this task.
 We propose how to construct knowledge graphs using a standards-based method founded upon user requirements formulated as competency questions (CQs).
 It suggests to formalize the CQs as SPARQL queries [@SPARQL2013] and wrap them as SHACL constraints [@SHACL2017] in order to allow them to be used as automated tests.
 The method defines a process guiding knowledge graph construction based on feedback from tests.
-It aims to reduce the effort required to construct a knowledge graph that meets its requirements, while assessing the quality of semantic artifacts, such as ontologies, that are made in the process.
+It aims to reduce the effort required to construct a knowledge graph that meets its requirements and passes quality assessment of semantic artifacts, such as ontologies, that are made in the process.
 
 # Motivation
 
