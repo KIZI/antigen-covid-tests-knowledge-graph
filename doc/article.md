@@ -173,6 +173,16 @@ For example, performance feedback may be incompatible with the feedback about ve
 CQs may pose conflicting requirements.
 Addressing the feedback thus requires making informed trade-offs.
 
+# Limitations
+
+As can be expected, the proposed method has several limitations.
+Here we recount some of them and suggest how to remedy them.
+The method may cause the developed artifacts to overfit the user requirements in scope, which would hinder the reuse of the artifacts.
+This shortcoming can be remedied by including more CQs or focusing on reusability during refactoring.
+User requirements for the knowledge graph under construction can be more complex than what SPARQL can express.
+One way around it is formalizing the requirements in a more expressive programming language that extends SHACL, such as @SHACLJS2017.
+Ultimately, in order to ameliorate the limitations of this method, it is best combined with other methods, such as those for ontology design.
+
 # Case study: Antigen covid test knowledge graph
 
 We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2.
@@ -239,13 +249,5 @@ This is a small knowledge graph of around 10 thousand RDF triples, so we validat
 All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
 
 # Conclusions
-
-As can be expected, the proposed method has several limitations.
-Here we recount some of them and suggest how to remedy them.
-The method may cause the developed artifacts to overfit the user requirements in scope, which would hinder the reuse of the artifacts.
-This shortcoming can be remedied by including more CQs or focusing on reusability during refactoring.
-User requirements for the knowledge graph under construction can be more complex than what SPARQL can express.
-One way around it is formalizing the requirements in a more expressive programming language that extends SHACL, such as @SHACLJS2017.
-Ultimately, in order to ameliorate the limitations of this method, it is best combined with other methods, such as those for ontology design.
 
 # References
