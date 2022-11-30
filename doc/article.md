@@ -126,7 +126,7 @@ Similarly, imposing a more expressive data model on the knowledge graph might re
 In this way, the finer structure of its ontology makes the previously hidden data quality issues visible.
 Some feedback may even indicate ill-formed CQs in need of revision.
 
-8. If the validation succeeds, refactor the artifacts.
+8. Refactor the artifacts.
 The SHACL specification of the knowledge graph is a key artifact to refactor.
 It can serve as a formal specification of the anticipated use of the ontology.
 Moreover, SHACL can transcend a single ontology and specify how to combine terms reused from multiple ontologies.
