@@ -1,7 +1,7 @@
 @prefix :        <https://covidtesty.vse.cz/vocabulary#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> . 
+@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix reg:     <http://purl.org/linked-data/registry#> .
 @prefix schema:  <http://schema.org/> .
@@ -21,16 +21,36 @@
                     schema:email "hank05@vse.cz"
                   ] ;
   vann:preferredNamespacePrefix "act" ;
-  vann:preferredNamespaceUri : .
+  vann:preferredNamespaceUri : ;
+  owl:imports ncit:C41393,
+              ncit:C41394,
+              ncit:C41395 .
 
+##################################################################
 # Classes
+##################################################################
 
 :AntigenCovidTest a rdfs:Class ;
   rdfs:label "Antigen covid test"@en ;
   rdfs:subClassOf schema:Product, schema:MedicalDevice ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+:PeiSensitivityDegree a rdfs:Class ;
+  rdfs:label "PEI diagnostic sensitivity degree"@en ;
+  rdfs:comment "Overall degree of a test's sensitivity based on evaluation done by the Paul-Ehrlich Institute. Tests' sensitivities are evaluated in three categories (high, medium and low viral load). Depending on values in these categories, test is rated by the degree (value from 1 to 5)."@en;
+  rdfs:subClassOf ncit:C41393 ; # = Diagnostic Accuracy Assessment Criterion <https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C41393>
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+:PeiTotalSensitivity a rdfs:Class ;
+  rdfs:label "Total sensitivity according to PEI, counted as weighted average"@en ;
+  rdfs:comment "Total sensitivity is the overall diagnostic sensitivity of a test in evaluation done by Paul-Ehrlich Institute. This value is counted as weighted average from the results of sensitivities in three viral load categories (high, medium and low viral load)."@en ;
+  rdfs:subClassOf ncit:C41393 ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+
+##################################################################
 # Properties
+##################################################################
 
 :biospecimenCollectionMethod a owl:ObjectProperty ;
   rdfs:label "Biospecimen collection method"@en ;
@@ -50,12 +70,6 @@
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
-:peiSensitivityDegree a owl:ObjectProperty ;
-  rdfs:label "PEI sensitivity degree"@en ;
-  rdfs:domain ncit:C41394 ;
-  rdfs:range skos:Concept ;
-  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
-
 :ssiSensitivityCategory a owl:ObjectProperty ;
   rdfs:label "SSI sensitivity category"@en ;
   rdfs:domain ncit:C41394 ;
@@ -68,7 +82,10 @@
   rdfs:range skos:Concept ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+
+##################################################################
 # Code lists
+##################################################################
 
 <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> a skos:ConceptScheme ;
   rdfs:label "Registration statuses"@en ;
@@ -91,7 +108,30 @@
   skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses> ;
   rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
 
+#SSI code list
+<https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> a skos:ConceptScheme ;
+  rdfs:label "Sensitivity according the SSI"@en ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/star> a skos:Concept ;
+  skos:prefLabel "Positive"@en ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/half-star> a skos:Concept;
+  skos:prefLabel "Weak positive"@en ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+<https://covidtesty.vse.cz/data/concept/stupen-citlivosti-ssi/cross> a skos:Concept;
+  skos:prefLabel "Negative"@en ;
+  skos:inScheme <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi> ;
+  rdfs:isDefinedBy <https://covidtesty.vse.cz/vocabulary> .
+
+
+##################################################################
 # Individuals
+##################################################################
 
 <https://www.pei.de> a schema:Organization ;
   schema:name "Paul-Ehrlich-Institut" .

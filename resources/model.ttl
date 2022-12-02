@@ -46,7 +46,11 @@
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:message "The organization has to have name."@en ;
+    sh:message "The organization has to have a single name."@en ;
+  ], [
+    sh:path schema:alternateName ;
+    sh:datatype xsd:string ;
+    sh:minCount 0
   ], [
     sh:path ( schema:address schema:addressCountry ) ;
     sh:datatype xsd:string ;
@@ -112,7 +116,7 @@
 
 :DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
   # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
-  sh:targetClass ncit:C41394, ncit:C41395 ;
+  sh:targetClass ncit:C41393 ;
   sh:property [
     sh:path dcterms:creator ;
     sh:class schema:Organization ;
@@ -195,8 +199,13 @@
         sh:maxCount 1
       ], [
         sh:path act:ssiSensitivityDegree ;
-        # sh:class skos:Concept ; # TODO: Missing code list
+        sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
+        sh:property [
+          sh:message "Value is not from the sensitivity SSI degree code list!"@en ;
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi>
+        ] ;
         sh:maxCount 1
       ]
     ]
@@ -478,10 +487,9 @@
       WHERE {
         ?test a act:AntigenCovidTest .
 
-        [] a ncit:C41394 ;
+        [] a act:PeiTotalSensitivity ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
-          act:peiSensitivityCategory [] ; # TODO: What is "total sensitivity"?
           rdf:value ?total_sensitivity .
       }
       ORDER BY DESC(?total_sensitivity)
@@ -560,7 +568,7 @@
           schema:manufacturer $this .
 
         OPTIONAL {
-          [] a ncit:C41394 ;
+          [] a act:PeiSensitivityDegree ;
             dcterms:subject ?test ;
             act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
 
@@ -590,7 +598,7 @@
         [] reg:representationOf ?test ;
           reg:register/dcterms:identifier "SUKL" .
 
-        [] a ncit:C41394 ;
+        [] a act:PeiSensitivityDegree ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
           act:peiSensitivityDegree/skos:notation "5" .
