@@ -601,7 +601,7 @@
         [] a act:PeiSensitivityDegree ;
           dcterms:subject ?test ;
           dcterms:creator <https://www.pei.de> ;
-          act:peiSensitivityDegree/skos:notation "5" .
+          rdf:value/skos:notation "5" .
       }
       GROUP BY $this $value $cq16
     }
