@@ -1,7 +1,7 @@
 @prefix :        <https://covidtesty.vse.cz/shapes#> .
 @prefix act:     <https://covidtesty.vse.cz/vocabulary#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> . 
+@prefix ncit:    <http://purl.obolibrary.org/obo/NCIT_> .
 @prefix qudt:    <http://qudt.org/schema/qudt/> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
@@ -19,18 +19,25 @@
     sh:path schema:manufacturer ;
     sh:class schema:Organization ;
     sh:nodeKind sh:IRI ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "The test can have only one manufacturer. Manufacturer needs to be identified by IRI and needs to be instance of class schema:Organization."@en ;
   ], [
     sh:path act:biospecimenCollectionMethod ;
     sh:class skos:Concept ;
     sh:nodeKind sh:IRI
+  ], [
+    sh:path schema:url ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 0 # Just FYI
   ] .
 
 :BiospecimenCollectionMethod a sh:NodeShape ;
   sh:targetObjectsOf act:biospecimenCollectionMethod ;
-  sh:message "Value not from the biospecimen collection method code list!"@en ;
-  sh:path skos:inScheme ;
-  sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/typy-testu/typ-testu> .
+  sh:property [
+    sh:message "Value not from the biospecimen collection method code list!"@en ;
+    sh:path skos:inScheme ;
+    sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/typy-testu/typ-testu>
+  ] .
 
 :Organization a sh:NodeShape ;
   sh:targetClass schema:Organization ;
@@ -38,15 +45,21 @@
     sh:path schema:name ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "The organization has to have a single name."@en ;
+  ], [
+    sh:path schema:alternateName ;
+    sh:datatype xsd:string ;
+    sh:minCount 0
   ], [
     sh:path ( schema:address schema:addressCountry ) ;
     sh:datatype xsd:string ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Adress country needs to be a string, there can be only one adress."@en ;
   ], [
     sh:path schema:url ;
     sh:datatype xsd:string ;
-    sh:minCount 0 # Just FYI
+    sh:minCount 0
   ] .
 
 :Register a sh:NodeShape ;
@@ -55,7 +68,8 @@
     sh:path dcterms:identifier ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Register needs to have identifier that is string."@en ;
   ] .
 
 :RegisterItem a sh:NodeShape ;
@@ -65,26 +79,31 @@
     sh:class act:AntigenCovidTest ;
     sh:nodeType sh:IRI ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Register item represents only one antigen covid test."@en ;
   ], [
     sh:path reg:register ;
     sh:class reg:Register ;
     sh:nodeType sh:IRI ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Register item can have only one register identified by an IRI."@en;
   ], [
     sh:path reg:notation ;
     sh:datatype xsd:string ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Notation of item in register has to be only one value of the type string."@en;
   ], [
     sh:path rdfs:label ;
     sh:datatype xsd:string ;
-    sh:minCount 0
+    sh:minCount 0 ;
+    sh:message "Label of item in register has to be value of the type string."@en;
   ], [
     sh:path reg:status ;
     sh:nodeKind sh:IRI ;
     sh:class skos:Concept ;
     sh:property [
+      sh:message "Value not from the registration statuses code list!"@en ;
       sh:path skos:inScheme ;
       sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/registration-statuses>
     ] ;
@@ -97,19 +116,21 @@
 
 :DiagnosticAccuracyAssessmentCriterion a sh:NodeShape ;
   # If NCIT vocabulary is mixed in the validated data, we can target the common superclass ncit:C41393.
-  sh:targetClass ncit:C41394, ncit:C41395 ; 
+  sh:targetClass ncit:C41393 ;
   sh:property [
     sh:path dcterms:creator ;
     sh:class schema:Organization ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Creator has to be only one organisation."@en;
   ], [
     sh:path dcterms:subject ;
     sh:class act:AntigenCovidTest ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:message "Subject of diagnostic sensitivity/specificity has to be only one antigen covid test."@en;
   ], [
     sh:path rdfs:comment ;
     sh:datatype xsd:string ;
@@ -126,16 +147,27 @@
         sh:nodeKind sh:IRI ;
         sh:class skos:Concept ;
         sh:property [
+          sh:message "Value is not from the sensitivity PEI category code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/kategorie>
         ] ;
         sh:minCount 1 ;
         sh:maxCount 1
       ], [
+        sh:path act:peiSensitivityDegree ;
+        sh:nodeKind sh:IRI ;
+        sh:class skos:Concept ;
+        sh:property [
+          sh:message "Value is not from the sensitivity PEI degree code list!"@en ;
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/stupen>
+        ]
+      ], [
         sh:path rdf:value ;
         sh:datatype xsd:decimal ;
         sh:minCount 1 ;
-        sh:maxCount 1
+        sh:maxCount 1 ;
+        sh:message "Value has to be only one with decimal datatype."@en ;
       ]
     ]
 
@@ -149,6 +181,7 @@
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
         sh:property [
+          sh:message "Value is not from the sensitivity SSI variant code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/varianta>
         ] ;
@@ -159,14 +192,20 @@
         sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
         sh:property [
+          sh:message "Value is not from the sensitivity SSI category code list!"@en ;
           sh:path skos:inScheme ;
           sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-ssi/kategorie>
         ] ;
         sh:maxCount 1
       ], [
         sh:path act:ssiSensitivityDegree ;
-        # sh:class skos:Concept ; # TODO: Missing code list
+        sh:class skos:Concept ;
         sh:nodeKind sh:IRI ;
+        sh:property [
+          sh:message "Value is not from the sensitivity SSI degree code list!"@en ;
+          sh:path skos:inScheme ;
+          sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/stupen-citlivosti-ssi>
+        ] ;
         sh:maxCount 1
       ]
     ]
@@ -190,7 +229,7 @@
       )
     ]
   ) .
-  
+
 :Concept a sh:NodeShape ;
   sh:targetClass skos:Concept ;
   sh:property [
@@ -204,20 +243,421 @@
 
 # Competency questions
 
-:CQ5 a sh:ConstraintComponent ;
-  sh:name "CQ5: Saliva tests"@en ;
+:DatasetShape a sh:NodeShape ;
+  rdfs:label "Competency questions applicable to the entire dataset"@en ;
   sh:targetNode [] ;
-  sh:sparql [
-    sh:message "CQ5: Which tests are saliva tests?" ;
+  :cq1 [] ;
+  :cq2 [] ;
+  :cq3 [] ;
+  :cq4 [] ;
+  :cq5 [] ;
+  :cq6 [] ;
+  :cq8 [] ;
+  :cq9 [] ;
+  :cq11 [] ;
+  :cq12 [] ;
+  :cq14 [] ;
+  :cq16 [] ;
+  :cq17 [] ;
+  :cq18 [] .
+
+:PEIShape a sh:NodeShape ;
+  rdfs:label "Competency questions about Paul-Ehrlich-Institut"@en ;
+  sh:targetNode <https://www.pei.de> ;
+  :cq7 [] .
+
+:ManufacturerShape a sh:NodeShape ;
+  rdfs:label "Competency questions about manufacturers of antigen covid tests"@en ;
+  sh:targetObjectsOf schema:manufacturer ;
+  :cq15 [] .
+
+:CQ1 a sh:ConstraintComponent ;
+  rdfs:label "Tests on the EU positive list"@en ;
+  sh:parameter [
+    sh:path :cq1
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Is a given test on the EU positive list?"@en ;
     sh:prefixes :prefixes ;
-    sh:select """
-      SELECT *
+    sh:ask """
+    ASK {
+      $test a act:AntigenCovidTest .
+
+      [] reg:representationOf $test ;
+        reg:register/dcterms:identifier "EUlistPositive" .
+    }
+    """
+  ] .
+
+:CQ2 a sh:ConstraintComponent ;
+  rdfs:label "Tests approved by SÚKL"@en ;
+  sh:parameter [
+    sh:path :cq2
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Was a given test approved by SÚKL?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      $test a act:AntigenCovidTest .
+
+      [] reg:representationOf $test ;
+        reg:register/dcterms:identifier "SUKL" .
+    }
+    """
+  ] .
+
+:CQ3 a sh:ConstraintComponent ;
+  rdfs:label "Manufacturer of tests"@en ;
+  sh:parameter [
+    sh:path :cq3
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests are made by a given manufacturer?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        schema:manufacturer $manufacturer .
+    }
+    """
+  ] .
+
+:CQ4 a sh:ConstraintComponent ;
+  rdfs:label "Manufacturer's country"@en ;
+  sh:parameter [
+    sh:path :cq4
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What country does a given manufacturer come from?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      [] schema:manufacturer $manufacturer .
+
+      $manufacturer schema:address/schema:addressCountry ?country .
+    }
+    """
+  ] .
+
+# If country was available for all manufacturers, we can use the following constraint,
+# or we can encode in without SPARQL directly in the organization's shape above.
+# :CQ4 a sh:NodeShape ;
+#   rdfs:label "Manufacturer's country"@en ;
+#   sh:targetObjectsOf schema:manufacturer ;
+#   sh:property [
+#     sh:message "What country does a given manufacturer come from?"@en ;
+#     sh:path ( schema:address schema:addressCountry ) ;
+#     sh:minCount 1 ;
+#     sh:maxCount 1
+#   ] .
+
+:CQ5 a sh:ConstraintComponent ;
+  rdfs:label "Saliva tests"@en ;
+  sh:parameter [
+    sh:path :cq5
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests are saliva tests?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
+    }
+    """
+  ] .
+
+:CQ6 a sh:ConstraintComponent ;
+  rdfs:label "Tests' URLs in the EU database"@en ;
+  sh:parameter [
+    sh:path :cq6
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What is the URL of a given test in the EU database?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      $test a act:AntigenCovidTest ;
+        schema:url ?url .
+
+      # TODO: Make this more explicit rather than rely on substring matching?
+      FILTER strstarts(str(?url), "https://covid-19-diagnostics.jrc.ec.europa.eu")
+    }
+    """
+  ] .
+
+:CQ7 a sh:ConstraintComponent ;
+  rdfs:label "Author of PEI evaluations"@en ;
+  sh:parameter [
+    sh:path :cq7
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What organisation created the PEI evaluation?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      ?evaluation dcterms:creator $this .
+      {
+        ?evaluation a ncit:C41394 .
+      } UNION {
+        ?evaluation a ncit:C41395 .
+      }
+
+      $this a schema:Organization ;
+        schema:name ?organization_name .
+    }
+    """
+  ] .
+
+:CQ8 a sh:ConstraintComponent ;
+  rdfs:label "Test's UK evaluation"@en ;
+  sh:parameter [
+    sh:path :cq8
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Does a given test pass in the UK evaluation?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      $test a act:AntigenCovidTest .
+
+      [] reg:representationOf $test ;
+        reg:register/dcterms:identifier "UK" ;
+        reg:status/skos:prefLabel "Approved"@en .
+    }
+    """
+  ] .
+
+:CQ9 a sh:ConstraintComponent ;
+  rdfs:label "ICMR's country"@en ;
+  sh:parameter [
+    sh:path :cq9
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What country does the ICMR evaluation come from?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      [] a reg:Register ;
+        dcterms:identifier "ICMR" ;
+        reg:owner/schema:address/schema:addressCountry ?country .
+    }
+    """
+  ] .
+
+:CQ10 a sh:NodeShape ;
+  rdfs:label "PEI degree"@en ;
+  sh:message "What is the degree according to PEI of a given test and what does it mean? (the description of degree)"@en ;
+  sh:targetClass skos:Concept ;
+  sh:or (
+    [
+      sh:not [
+        sh:path skos:inScheme ;
+        sh:hasValue <https://covidtesty.vse.cz/data/concept-scheme/citlivost-pei/stupen>
+      ]
+    ]
+    [
+      sh:path skos:definition ;
+      sh:minCount 1
+    ]
+  ) .
+
+:CQ11 a sh:ConstraintComponent ;
+  rdfs:label "PEI's highest total sensitivity"@en ;
+  sh:parameter [
+    sh:path :cq11
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests have the highest total sensitivity according to PEI?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT ?test $this $value $cq11
       WHERE {
-        FILTER NOT EXISTS {
-          [] a act:AntigenCovidTest ;
-            act:biospecimenCollectionMethod/skos:prefLabel "saliva"@en .
+        ?test a act:AntigenCovidTest .
+
+        [] a act:PeiTotalSensitivity ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          rdf:value ?total_sensitivity .
+      }
+      ORDER BY DESC(?total_sensitivity)
+      LIMIT 1
+    }
+    """
+  ] .
+
+:CQ12 a sh:ConstraintComponent ;
+  rdfs:label "Manufacturer-declared test sensitivity"@en ;
+  sh:parameter [
+    sh:path :cq12
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What is the sensitivity of given tests according to their manufacturers?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      $test a act:AntigenCovidTest ;
+        schema:manufacturer ?manufacturer .
+
+      [] a ncit:C41394 ;
+        dcterms:subject $test ;
+        dcterms:creator ?manufacturer ;
+        rdf:value ?sensitivity .
+    }
+    """
+  ] .
+
+:CQ14 a sh:ConstraintComponent ;
+  rdfs:label "Differences between HVL PEI sensitivities and manufacturer-declared sensitivities"@en ;
+  sh:parameter [
+    sh:path :cq14
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What are the differences between the HVL PEI sensitivities and the sensitivities claimed by tests' manufacturers?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT ?test (?hvl_pei - ?manufacturer_sensitivity AS ?difference) $this $value $cq14
+      WHERE {
+        ?test a act:AntigenCovidTest ;
+          schema:manufacturer ?manufacturer .
+
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
+          rdf:value ?hvl_pei .
+
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator ?manufacturer ;
+          rdf:value ?manufacturer_sensitivity .
+      }
+    }
+    """
+  ] .
+
+:CQ15 a sh:ConstraintComponent ;
+  rdfs:label "Manufacturer's tests with sensitivity degree higher than 3"@en ;
+  sh:parameter [
+    sh:path :cq15
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "What percentage of tests from a given manufacturer has a degree of sensitivity higher than 3?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT (COUNT(?sensitivity_degree) / xsd:decimal(COUNT(DISTINCT ?test)) * 100 AS ?percentage) $this $value $cq15
+      WHERE {
+        ?test a act:AntigenCovidTest ;
+          schema:manufacturer $this .
+
+        OPTIONAL {
+          [] a act:PeiSensitivityDegree ;
+            dcterms:subject ?test ;
+            act:peiSensitivityDegree/skos:notation ?sensitivity_degree .
+
+          FILTER (xsd:decimal(?sensitivity_degree) > 3)
         }
       }
+      GROUP BY $this $value $cq15
+    }
+    """
+  ] .
+
+:CQ16 a sh:ConstraintComponent ;
+  rdfs:label "SÚKL-approved tests with PEI degree 5"@en ;
+  sh:parameter [
+    sh:path :cq16
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "How many tests that are approved by SÚKL have a degree of 5 according to PEI?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT (COUNT(DISTINCT ?test) AS ?count) $this $value $cq16
+      WHERE {
+        ?test a act:AntigenCovidTest .
+
+        [] reg:representationOf ?test ;
+          reg:register/dcterms:identifier "SUKL" .
+
+        [] a act:PeiSensitivityDegree ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          rdf:value/skos:notation "5" .
+      }
+      GROUP BY $this $value $cq16
+    }
+    """
+  ] .
+
+:CQ17 a sh:ConstraintComponent ;
+  rdfs:label "Highest low viral load sensitivity according to PEI"@en ;
+  sh:parameter [
+    sh:path :cq17
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests have the highest LVL PEI sensitivity?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      SELECT ?test $this $value $cq17
+      WHERE {
+        ?test a act:AntigenCovidTest .
+
+        [] a ncit:C41394 ;
+          dcterms:subject ?test ;
+          dcterms:creator <https://www.pei.de> ;
+          act:peiSensitivityCategory/skos:altLabel "low viral load"@en ;
+          rdf:value ?sensitivity
+      }
+      ORDER BY DESC(?sensitivity)
+    }
+    """
+  ] .
+
+:CQ18 a sh:ConstraintComponent ;
+  rdfs:label "Not approved tests with manufacturer claimed sensitivity ≥ 90 %"@en ;
+  sh:parameter [
+    sh:path :cq18
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which tests have the sensitivity claimed by their manufacturers ≥ 90 % and at the same time weren't approved by some evaluation?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      ?test a act:AntigenCovidTest ;
+        schema:manufacturer ?manufacturer .
+
+      [] a ncit:C41394 ;
+        dcterms:subject ?test ;
+        dcterms:creator ?manufacturer ;
+        rdf:value ?sensitivity .
+
+      FILTER (?sensitivity >= 90)
+
+      [] reg:representationOf ?test ;
+        reg:status status:not-approved .
+    }
     """
   ] .
 
@@ -225,6 +665,27 @@
     sh:prefix "act" ;
     sh:namespace "https://covidtesty.vse.cz/vocabulary#"^^xsd:anyURI
   ], [
+    sh:prefix "dcterms" ;
+    sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI
+  ], [
+    sh:prefix "ncit" ;
+    sh:namespace "http://purl.obolibrary.org/obo/NCIT_"^^xsd:anyURI
+  ], [
+    sh:prefix "rdf" ;
+    sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI
+  ], [
+    sh:prefix "reg" ;
+    sh:namespace "http://purl.org/linked-data/registry#"^^xsd:anyURI
+  ], [
+    sh:prefix "schema" ;
+    sh:namespace "http://schema.org/"^^xsd:anyURI
+  ], [
     sh:prefix "skos" ;
     sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI
+  ], [
+    sh:prefix "status" ;
+    sh:namespace "https://covidtesty.vse.cz/data/concept/registration-statuses/status-"^^xsd:anyURI
+  ], [
+    sh:prefix "xsd" ;
+    sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI
   ] .

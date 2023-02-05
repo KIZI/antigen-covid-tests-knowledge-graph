@@ -123,6 +123,10 @@
     <skos:prefLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:prefLabel>
   </xsl:template>
 
+  <xsl:template match="sloupecNazev" mode="codelist-item-property">
+    <skos:altLabel xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:altLabel>
+  </xsl:template>
+
   <xsl:template match="vychoziText" mode="codelist-item-property">
     <skos:definition xml:lang="{@jazyk}"><xsl:value-of select="text()"/></skos:definition>
   </xsl:template>
@@ -148,8 +152,9 @@
   <xsl:template match="test">
     <!-- No ID is available for all tests, therefore we generate a synthetic ID. -->
     <xsl:variable name="covid-test" select="f:resource-iri('antigen-covid-test', (generate-id()))"/>
-    <!-- Manufacturer IDs are available only for tests on EU lists, so we generate a synthetic ID. -->
-    <xsl:variable name="manufacturer" select="f:resource-iri('organization', (generate-id()))"/> 
+    <!-- Manufacturer IDs are available only for tests on EU lists, so we fall back on a synthetic ID. -->
+    <xsl:variable name="manufacturer-id" select="(euList/manufacturer/@id, generate-id())[1]"/>
+    <xsl:variable name="manufacturer" select="f:resource-iri('organization', ($manufacturer-id))"/>
     <act:AntigenCovidTest rdf:about="{$covid-test}">
       <xsl:apply-templates mode="covid-test">
         <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
@@ -158,6 +163,7 @@
     <xsl:apply-templates>
       <xsl:with-param name="covid-test" select="$covid-test" tunnel="yes"/>
       <xsl:with-param name="manufacturer" select="$manufacturer" tunnel="yes"/>
+      <xsl:with-param name="manufacturer-id" select="$manufacturer-id" tunnel="yes"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -199,9 +205,18 @@
 
   <xsl:template match="vyrobce" mode="covid-test">
     <xsl:param name="manufacturer" required="yes" tunnel="yes"/>
+    <xsl:variable name="eu-list-name" select="../euList/manufacturer/name"/>
     <schema:manufacturer>
       <schema:Organization rdf:about="{$manufacturer}">
-        <schema:name><xsl:value-of select="text()"/></schema:name>
+        <xsl:choose>
+          <!-- Prefer manufacturer names from the COVID-19 In Vitro Diagnostic Devices and Test Methods Database. -->
+          <xsl:when test="not($eu-list-name)">
+            <schema:name><xsl:value-of select="text()"/></schema:name>
+          </xsl:when>
+          <xsl:when test="$eu-list-name and text() != $eu-list-name">
+            <schema:alternateName><xsl:value-of select="text()"/></schema:alternateName>
+          </xsl:when>
+        </xsl:choose>
       </schema:Organization>
     </schema:manufacturer>
   </xsl:template>
@@ -239,17 +254,39 @@
 
   <xsl:template match="citlivostPei/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <ncit:C41394> <!-- C41394 = Diagnostic sensitivity -->
+    <xsl:variable name="evaluation-pei" select="f:resource-iri('evaluation', generate-id())"/>
+    <ncit:C41394 rdf:about="{$evaluation-pei}"> <!-- C41394 = Diagnostic sensitivity -->
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://www.pei.de"/>
       <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
       <act:peiSensitivityCategory rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'kategorie', @kategorie))}"/>
     </ncit:C41394>
   </xsl:template>
+    
+  <xsl:template match="citlivostPei/stupen">
+    <xsl:param name="covid-test" required="yes" tunnel="yes"/>
+    <xsl:variable name="evaluation-pei-deg" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:PeiSensitivityDegree rdf:about="{$evaluation-pei-deg}">
+      <dcterms:subject rdf:resource="{$covid-test}"/>
+      <dcterms:creator rdf:resource="https://www.pei.de"/>
+      <rdf:value rdf:resource="{f:resource-iri('concept', ('citlivost-pei', 'stupen', text()))}"/>
+    </act:PeiSensitivityDegree>
+  </xsl:template>
+  
+  <xsl:template match="citlivostPei/prumer">
+    <xsl:param name="covid-test" required="yes" tunnel="yes"/>
+    <xsl:variable name="evaluation-pei-avg" select="f:resource-iri('evaluation', generate-id())"/>
+    <act:PeiTotalSensitivity rdf:about="{$evaluation-pei-avg}">
+      <dcterms:subject rdf:resource="{$covid-test}"/>
+      <dcterms:creator rdf:resource="https://www.pei.de"/>
+      <rdf:value rdf:datatype="&xsd;decimal"><xsl:value-of select="text()"/></rdf:value>
+    </act:PeiTotalSensitivity>
+  </xsl:template>
 
   <xsl:template match="citlivostSsi/hodnoceni">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
-    <ncit:C41394>
+    <xsl:variable name="evaluation-ssi" select="f:resource-iri('evaluation', generate-id())"/>
+    <ncit:C41394 rdf:about="{$evaluation-ssi}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="https://ssi.dk"/>
       <act:coronavirusVariant rdf:resource="{f:resource-iri('concept', ('citlivost-ssi', 'varianta', @varianta))}"/>
@@ -277,15 +314,17 @@
   </xsl:template>
 
   <xsl:template match="country" mode="manufacturer">
+    <xsl:param name="manufacturer-id" required="yes" tunnel="yes"/>
     <schema:address>
-      <schema:PostalAddress>
+      <schema:PostalAddress rdf:about="{f:resource-iri('postal-address', ($manufacturer-id))}">
         <schema:addressCountry><xsl:value-of select="text()"/></schema:addressCountry>
       </schema:PostalAddress>
     </schema:address>
   </xsl:template>
   
-  <!-- Ignore, since manufacturer's name is already taken from <vyrobce>. -->
-  <xsl:template match="name" mode="manufacturer"/>
+  <xsl:template match="name" mode="manufacturer">
+    <schema:name><xsl:value-of select="text()"/></schema:name>
+  </xsl:template>
 
   <xsl:template match="website" mode="manufacturer">
     <schema:url><xsl:value-of select="text()"/></schema:url>
@@ -295,7 +334,8 @@
   <xsl:template match="performance[@parameter = ('Clinical Sensitivity', 'Clinical Specificity')]">
     <xsl:param name="covid-test" required="yes" tunnel="yes"/>
     <xsl:param name="manufacturer" required="yes" tunnel="yes"/>
-    <rdf:Description>
+    <xsl:variable name="evaluation-man" select="f:resource-iri('evaluation', generate-id())"/>
+    <rdf:Description rdf:about="{$evaluation-man}">
       <dcterms:subject rdf:resource="{$covid-test}"/>
       <dcterms:creator rdf:resource="{$manufacturer}"/>
       <xsl:apply-templates mode="performance" select="@*"/>
