@@ -63,7 +63,7 @@ The method involves the following steps:
 User requirements can be gathered from subject-matter experts or prospective users of the knowledge graph.
 Formulate the user requirements as CQs [@Gruninger1994].
 CQs are analytical questions that the target knowledge graph is expected to answer.
-In order to avoid misinterpretation, they can be reviewed with those who expressed the requirements the CQs capture.
+In order to avoid misinterpretation, they should be reviewed by those who expressed the requirements the CQs capture.
 
 2. Analyze the CQs to extract terms and relations.
 CQs can be analyzed using the linguistic notion of presupposition, which can be defined as *"a condition that must be met for a linguistic expression to have a denotation"* [@Ren2014].
@@ -73,7 +73,6 @@ They can be considered lexical surface forms of these entities.
 The terms can be identified manually or aided by tools, such as part-of-speech tagging.
 The relations to extract might be represented by verbs connecting the terms co-occurring in a CQ.
 Pronouns may translate to joins between the relations.
-Moreover, CQs may have implicit prerequisites that also translate to relations between entities.
 
 3. Formalize the terms and relations in a minimum viable ontology using RDF Schema [@Brickley2014].
 While terms typically map to classes (i.e. instances of `rdfs:Class`), relations map either directly to properties (i.e. instances of `rdf:Property`) or indirectly to n-ary relations represented by classes.
@@ -87,7 +86,7 @@ In such cases, sources of ambiguity should be revised with subject-matter expert
 4. Translate the CQs to SPARQL queries expressed by the ontology.
 SPARQL queries make the CQs executable.
 Here, we expect a manual translation of the CQs to SPARQL queries.
-Automated translation was attempted by others, such as in @EspinozaArias2022, but we consider it out of our scope here.
+Automated translation was attempted by others, such as in @EspinozaArias2022.
 Start with hypothetical, syntactically valid SPARQL queries expressed by the ontology.
 A CQ may translate to a SPARQL graph pattern composed of triple patterns joining the terms co-occurring in the question via specific relations.
 The way CQs should be translated to SPARQL queries largely depends on their expected answers.

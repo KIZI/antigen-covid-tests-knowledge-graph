@@ -14,7 +14,7 @@
   % with aditional nodes for description
   \draw[->]      (requirements) -- node[right] {formulated as} (cqs);
   \draw[->]               (cqs) -- node[right] {translate to} (sparql);
-  \draw[->]               (cqs) -| node[above] {pressupose} (ontology);
+  \draw[->]          (ontology) |- node[above] {extracted from} (cqs);
   \draw[->]            (sparql) -- node[right] {executed by} (shacl);
   \draw[->]            (sparql) -- node[below] {expressed\\by} (ontology);
   \draw[->]             (shacl) -- node[right] {validate} (kg);
