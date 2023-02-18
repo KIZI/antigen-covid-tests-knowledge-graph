@@ -193,10 +193,10 @@ Before the whole process there was an important step of studying the source data
 Already at this point we discovered model challenges some described in [@Svatek2022].
 
 Then we started with the process of developing the knowledge graph by the first step of the proposed method, which is gathering user requirements.
-We captured user requirements formulated as CQs, such as *“What is the sensitivity of given tests according to their manufacturers?”*
-In the second step we analysed the questions and extracted terms and relations, such as *“sensitivity”*, *“test”*, or *“has manufacturer”* in the question given as an example.
+We captured user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?""*
+In the second step we analysed the questions and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* in the question given as an example.
 
-```ttl
+```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
   rdfs:label "Diagnostic sensitivity"@en .
 
@@ -225,7 +225,7 @@ This could be another advantage of our proposed method, there is no need to crea
 Having the minimum viable ontology, we were able to move to step number four and translate the CQs into SPARQL queries.
 After translating all CQs to SPARQL queries we continued with the fifth step and wrapped these queries as SHACL constraints, we can see the example SHACL constraint below.
 
-```rq
+```{#lst:example-cq caption="Example competency question in SHACL"}
 :CQ12 a sh:ConstraintComponent ;
   rdfs:label "Manufacturer-declared test sensitivity"@en ;
   sh:parameter [
@@ -233,7 +233,8 @@ After translating all CQs to SPARQL queries we continued with the fifth step and
   ] ;
   sh:nodeValidator [
     a sh:SPARQLAskValidator ;
-    sh:message "What is the sensitivity of given tests according to their manufacturers?"@en ;
+    sh:message """What is the sensitivity of given tests
+                  according to their manufacturers?"""@en ;
     sh:prefixes :prefixes ;
     sh:ask """
     ASK {
