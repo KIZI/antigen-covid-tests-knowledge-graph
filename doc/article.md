@@ -184,11 +184,17 @@ Ultimately, in order to ameliorate the limitations of this method, it is best co
 
 # Case study: Antigen covid tests knowledge graph
 
-We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2. Its source data was originally gathered to create an overview of different evaluations of selected rapid antigen tests available on the Czech market ^[<https://covidtesty.vse.cz/english/test-evaluation-older-data/>] . The source data was collected manually from several regulatory bodies (MZČR, SÚKL, EU HSC) and were paired with evaluations of performance of antigen covid tests, such as sensitivity and specificity, that comes from independent studies from various countries.  This data was integrated into an XML file. So, we set to create a knowledge graph out of this data to open it to a wider reuse and to perform a simple retrospective analysis over this data.
+We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2.
+Its source data was originally gathered to create an overview of different evaluations of selected rapid antigen tests available on the Czech market.^[<https://covidtesty.vse.cz/english/test-evaluation-older-data/>]
+The source data was collected manually from several regulatory bodies (MZČR, SÚKL, EU HSC) and were paired with evaluations of performance of antigen covid tests, such as sensitivity and specificity, that comes from independent studies from various countries.
+This data was integrated into an XML file. So, we set to create a knowledge graph out of this data to open it to a wider reuse and to perform a simple retrospective analysis over this data.
 
-Before the whole process there was an important step of studying the source data, as it was originally created for the web and was adjusted only for this purpose, we needed to understand the data to be able to give them proper semantics. Already at this point we discovered model challenges some described in [@Svatek2022].
+Before the whole process there was an important step of studying the source data, as it was originally created for the web and was adjusted only for this purpose, we needed to understand the data to be able to give them proper semantics.
+Already at this point we discovered model challenges some described in [@Svatek2022].
 
-Then we started with the process of developing the knowledge graph by the first step of the proposed method, which is gathering user requirements. We captured user requirements formulated as CQs, such as *“What is the sensitivity of given tests according to their manufacturers?”*. In the second step we analysed the questions and extracted terms and relations, such as *“sensitivity”*, *“test”*, or *“has manufacturer”* in the question given as an example.
+Then we started with the process of developing the knowledge graph by the first step of the proposed method, which is gathering user requirements.
+We captured user requirements formulated as CQs, such as *“What is the sensitivity of given tests according to their manufacturers?”*
+In the second step we analysed the questions and extracted terms and relations, such as *“sensitivity”*, *“test”*, or *“has manufacturer”* in the question given as an example.
 
 ```ttl
 :DiagnosticSensitivity a rdfs:Class ;
@@ -210,9 +216,14 @@ Then we started with the process of developing the knowledge graph by the first 
   rdfs:label "Has value"@en .
 ```
 
-The third step: Given the terms and relations we created a minimum viable ontology, mostly by reusing existing ontologies and using RDF Schema. For most of the terms we found ontologies, which could be reused. For those terms where there were not sufficient terms, we formalised a simple Antigen Covid Test Ontology. The aim of this ontology was to cover user requirements formulated as CQs. This could be another advantage of our proposed method, there is no need to create complex, complicated ontologies, just a few terms that cannot be reused from existing ontologies.  
+The third step: Given the terms and relations we created a minimum viable ontology, mostly by reusing existing ontologies and using RDF Schema.
+For most of the terms we found ontologies, which could be reused.
+For those terms where there were not sufficient terms, we formalised a simple Antigen Covid Test Ontology.
+The aim of this ontology was to cover user requirements formulated as CQs.
+This could be another advantage of our proposed method, there is no need to create complex, complicated ontologies, just a few terms that cannot be reused from existing ontologies.
 
-Having the minimum viable ontology, we were able to move to step number four and translate the CQs into SPARQL queries. After translating all CQs to SPARQL queries we continued with the fifth step and wrapped these queries as SHACL constraints, we can see the example SHACL constraint below.
+Having the minimum viable ontology, we were able to move to step number four and translate the CQs into SPARQL queries.
+After translating all CQs to SPARQL queries we continued with the fifth step and wrapped these queries as SHACL constraints, we can see the example SHACL constraint below.
 
 ```rq
 :CQ12 a sh:ConstraintComponent ;
@@ -237,17 +248,38 @@ Having the minimum viable ontology, we were able to move to step number four and
     """
   ] .
 ```
-The step number six was about building the whole transformation process and at the end the data was also validated with prepared SHACL, so the steps six and seven were put together and run by one script. We transformed the input XML data to RDF/XML via an XSL transformation followed by SPARQL UPDATE operations for post-processing. We automated the data processing and test execution by a script based on Jena command-line tools ^[<https://jena.apache.org/documentation/tools>] . Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole. 
 
-<!-- Following paragraph needs to be rewrited. -->
-After building the transformation process including the validation of the knowledge graph, there was a final step of refactoring the emerging artefacts. For example, we wanted to avoid generating blank nodes in the knowledge graph to make the process deterministic. So, we started to generate new IRIs, improved XSL transformation, and along with that we added to the ontology the class Evaluation and adjusted SHACL as well. During the development we ran the whole script again and checked if there were some errors regarding this issue, if not, we continued with the process until there were no errors and we were satisfied with the result. 
+The step number six was about building the whole transformation process and at the end the data was also validated with prepared SHACL, so the steps six and seven were put together and run by one script.
+We transformed the input XML data to RDF/XML via an XSL transformation followed by SPARQL UPDATE operations for post-processing.
+We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
+Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
 
-One important thing needs to be emphasised. There were some hidden errors that were not discovered. These errors were hidden by SPARQL ASK queries. As it was mentioned before ASK queries are expected to return the boolean true, if there is any result for the queries. Though, in case of the more complicated questions, in our case it was analytical questions, such validation was not enough. An essence of one of our questions was to group antigen tests by the same manufacturer. Running the SHACL validation with this question as a constraint in the form of sh:ask query did not bring any violation. But by directly querying the knowledge graph using SELECT query and with additional detailed analysis over the source data, we have discovered that even though we got some results from the knowledge graph, they were not as presumed. Specifically, up to this point each manufacturer produced only one test in our knowledge graph, although in fact there were some manufacturers, which produced more than one. So by doing this manual analysis we have discovered a significant mistake that was not discovered simply using sh:ask query. This mistake was caused during the XSL transformation where each test got its own unique manufacturer and there was no post-processing to merge the same manufacturers. Thus, we managed this “hidden” issue by post-processing the XSL transformation and got the expected results.
+<!-- Following paragraph needs to be rewritten. -->
+After building the transformation process including the validation of the knowledge graph, there was a final step of refactoring the emerging artefacts.
+For example, we wanted to avoid generating blank nodes in the knowledge graph to make the process deterministic.
+So, we started to generate new IRIs, improved XSL transformation, and along with that we added to the ontology the class Evaluation and adjusted SHACL as well.
+During the development we ran the whole script again and checked if there were some errors regarding this issue, if not, we continued with the process until there were no errors and we were satisfied with the result.
+
+One important thing needs to be emphasised.
+There were some hidden errors that were not discovered.
+These errors were hidden by SPARQL ASK queries.
+As it was mentioned before ASK queries are expected to return the boolean true, if there is any result for the queries.
+Though, in case of the more complicated questions, in our case it was analytical questions, such validation was not enough.
+An essence of one of our questions was to group antigen tests by the same manufacturer.
+Running the SHACL validation with this question as a constraint in the form of `sh:ask` query did not bring any violation.
+But by directly querying the knowledge graph using SELECT query and with additional detailed analysis over the source data, we have discovered that even though we got some results from the knowledge graph, they were not as presumed.
+Specifically, up to this point each manufacturer produced only one test in our knowledge graph, although in fact there were some manufacturers, which produced more than one.
+So by doing this manual analysis we have discovered a significant mistake that was not discovered simply using `sh:ask` query.
+This mistake was caused during the XSL transformation where each test got its own unique manufacturer and there was no post-processing to merge the same manufacturers.
+Thus, we managed this "hidden" issue by post-processing the XSL transformation and got the expected results.
 
 <!-- TODO -->
-It follows that using validation only with sh:ask queries is quite a black box, it can verify if there is an answer for a question, but we need to search more, if the result is what we have expected. Overall, using sh:ask queries for validation works well on simple questions, but in case of complicated questions we need to keep an eye for results in order to refactor the knowledge graph, so it can give proper results.
+It follows that using validation only with sh:ask queries is quite a black box, it can verify if there is an answer for a question, but we need to search more, if the result is what we have expected.
+Overall, using sh:ask queries for validation works well on simple questions, but in case of complicated questions we need to keep an eye for results in order to refactor the knowledge graph, so it can give proper results.
 
-Except for the previously mentioned challenges there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies. Since the source data was collected manually it was inconsistent and needed to be fixed, some of these errors occurred during the validation process such as duplicates. Nevertheless, the future work could be aimed at automatic update of the data and related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
+Except for the previously mentioned challenges there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
+Since the source data was collected manually it was inconsistent and needed to be fixed, some of these errors occurred during the validation process such as duplicates.
+Nevertheless, the future work could be aimed at automatic update of the data and related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
 
 All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
 
