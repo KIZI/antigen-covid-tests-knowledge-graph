@@ -186,7 +186,7 @@ Ultimately, in order to ameliorate the limitations of this method, it is best co
 
 We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2.
 Its source data was gathered to create an overview of different evaluations of selected rapid antigen tests available on the Czech market.^[<https://covidtesty.vse.cz/english/test-evaluation-older-data/>]
-It was collected manually from several regulatory bodies (MZČR, SÚKL, EU HSC) and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
+It was collected manually from several regulatory bodies (SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>], EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>]) and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
 All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
