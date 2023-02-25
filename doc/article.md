@@ -1,8 +1,3 @@
-<!--
-Alternative title: Using tests for knowledge graph construction
-We can also make up a name for the proposed method.
--->
-
 Knowledge graphs use graph-based data models to capture knowledge commonly combined from large and diverse data sources [@Hogan2021].
 Constructing knowledge graphs can be an intricate and open-ended task that is in many ways an art rather than a craft.^[The same argument was made about designing ontologies in @Soldatova2016.]
 There is a shortage of solid engineering practices guiding through this task.
@@ -196,7 +191,7 @@ The XML data was originally structured for display on a web page so we needed to
 Already at this point we discovered several challenges with the data model, some described in [@Svatek2022].
 
 We started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-We then analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question. 
+We then analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question.
 
 ```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
@@ -275,5 +270,14 @@ Since the source data was collected manually, it was inconsistent and needed to 
 Nevertheless, the future work could be aimed at automatic update of the data and related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
 
 # Conclusions
+
+Hereby proposed method guides through the open-ended process of knowledge graph construction.
+It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts produced or consumed in the process.
+The central contribution of the method is allowing to test if and how well the produced knowledge graph satisfies the requirements for its construction.
+This is done via competency questions formulated as SPARQL queries embedded in SHACL shapes for test automation.
+
+We share the experience of applying the method to build a knowledge graph about antigen covid tests.
+The method aided with collaborative development of this knowledge graph, allowing its incremental refinement without regressions.
+Since constructing knowledge graphs from the same user requirements using multiple methods, while comparing their outcomes, is prohibitively expensive, we expect future improvements of the proposed method to come from its applications on knowledge graphs with different requirements.
 
 # References
