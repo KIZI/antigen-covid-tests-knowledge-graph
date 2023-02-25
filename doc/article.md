@@ -189,7 +189,7 @@ Its source data was gathered to create an overview of different evaluations of s
 It was collected manually from several regulatory bodies (SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>], EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>]) and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
-All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/jindrichmynarz/antigen-covid-tests-knowledge-graph>]
+All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
 
 Understanding the source data and its domain was a key prerequisite of our work.
 The XML data was originally structured for display on a web page so we needed to map its visual encoding into semantics.
