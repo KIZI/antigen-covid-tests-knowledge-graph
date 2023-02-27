@@ -67,10 +67,10 @@ The terms to extract from CQs are typically nouns or noun phrases that refer to 
 They can be considered lexical surface forms of these entities.
 The terms can be identified manually or aided by tools, such as part-of-speech tagging.
 The relations to extract might be represented by verbs connecting the terms co-occurring in a CQ.
-Pronouns may translate to joins between the relations.
+Less direct mappings between entities and surface forms are possible too. 
 
 3. Formalize the terms and relations in a minimum viable ontology using RDF Schema [@Brickley2014].
-While terms typically map to classes (i.e. instances of `rdfs:Class`), relations map either directly to properties (i.e. instances of `rdf:Property`) or indirectly to n-ary relations represented by classes.
+While terms typically map to classes (i.e. instances of `rdfs:Class`), relations map either to properties (i.e. instances of `rdf:Property`) or n-ary relations represented by classes.
 Document the ontology with definitions sourced from and validated by subject-matter experts to create a shared understanding.
 The ontology should make minimal ontological commitment, so avoid its upfront axiomatization, such as OWL restrictions.
 The resulting ontology shall serve as an explicit and machine-readable conceptualization of the knowledge graph's domain.
@@ -82,7 +82,7 @@ In such cases, sources of ambiguity should be revised with subject-matter expert
 SPARQL queries make the CQs executable.
 Here, we expect a manual translation of the CQs to SPARQL queries.
 Automated translation was attempted by others, such as in @EspinozaArias2022.
-Start with hypothetical, syntactically valid SPARQL queries expressed by the ontology.
+Start with syntactically valid SPARQL queries of hypothetical data expressed by the ontology.
 A CQ may translate to a SPARQL graph pattern composed of triple patterns joining the terms co-occurring in the question via specific relations.
 The way CQs should be translated to SPARQL queries largely depends on their expected answers.
 @Ren2014 suggests that we might be *"more interested in checking if a CQ can be meaningfully answered, instead of directly answering a CQ."*
@@ -91,7 +91,7 @@ What it means is that the query can answer a CQ using a given knowledge graph.
 It does not verify if the answer is correct.
 Conversely, some CQs may describe universal invariants of their domain.
 Queries encoding these invariants are akin to property-based testing [@Fink1997].
-In case stricter guarantees are needed, the expected correct answers can be included in the queries and validation constraints implementing the CQs, corresponding to the usual example-based testing.
+In case stricter guarantees are needed, the expected correct answers can be included in the queries and validation constraints in SHACL implementing the CQs, corresponding to the usual example-based testing.
 
 5. Wrap the queries as SPARQL-based SHACL constraints to automate their execution.
 SHACL defines a target^[<https://www.w3.org/TR/shacl/#targets>] of each constraint.
@@ -181,7 +181,7 @@ Ultimately, in order to ameliorate the limitations of this method, it is best co
 
 We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2.
 Its source data was gathered to create an overview of different evaluations of selected rapid antigen tests available on the Czech market.^[<https://covidtesty.vse.cz/english/test-evaluation-older-data/>]
-It was collected manually from several regulatory bodies (SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>], EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>]) and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
+It was collected manually from several regulatory bodies, such as SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>] and EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>], and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
 All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
@@ -273,12 +273,12 @@ Nevertheless, the future work could be aimed at automatic update of the data and
 # Conclusions
 
 Hereby proposed method guides through the open-ended process of knowledge graph construction.
-It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts produced or consumed in the process.
+It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts that are produced or consumed in the process.
 The central contribution of the method is allowing to test if and how well the produced knowledge graph satisfies the requirements for its construction.
 This is done via competency questions formulated as SPARQL queries embedded in SHACL shapes for test automation.
 
 We share the experience of applying the method to build a knowledge graph about antigen covid tests.
-The method aided with collaborative development of this knowledge graph, allowing its incremental refinement without regressions.
+The method aided in collaborative development of this knowledge graph, allowing its incremental refinement without regressions.
 Since constructing knowledge graphs from the same user requirements using multiple methods, while comparing their outcomes, is prohibitively expensive, we expect future improvements of the proposed method to come from its applications on knowledge graphs with different requirements.
 
 # References
