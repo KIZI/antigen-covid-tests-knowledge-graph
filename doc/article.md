@@ -184,15 +184,17 @@ Its source data was gathered to create an overview of different evaluations of s
 It was collected manually from several regulatory bodies, such as SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>] and EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>], and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
-All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
+All artefacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
 
 Understanding the source data and its domain was a key prerequisite of our work.
 The XML data was originally structured for display on a web page so we needed to map its visual encoding into semantics.
-Already at this point we discovered several challenges with the data model.
-For instance, the term "evaluation" could lead to different individuals in the real world, which have slightly different meanings, the question is, how to model them, whether to express them as one or more formal classes. This problem was more described in [@Svatek2022].
+Already at this point, we discovered several challenges with the data model.
+For instance, the term *"evaluation"* could lead to different individuals in the real world, which have slightly different meanings, the question is, how to model them, whether to express them as one or more formal classes. This problem was described in [@Svatek2022].
 
-We started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-We then analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question.
+The first step of the proposed method is gathering user requirements. 
+So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
+The second step is to analyse the CQs to extract terms and relations. 
+Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question.
 
 ```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
@@ -205,13 +207,13 @@ We then analysed the CQs and extracted terms and relations, such as *"sensitivit
   rdfs:label "Has manufacturer"@en .
 ```
 
-We created a minimum viable ontology from the extracted terms and relations, mostly by reusing existing ontologies and using RDF Schema.
+The third step was to create a minimum viable ontology from the extracted terms and relations, we did it mostly by reusing existing ontologies and using RDF Schema.
 For what we did not find suitable terms to reuse, we formalised terms in the simple Antigen Covid Test Ontology.
-The aim of this ontology was to allow expressing the CQs in SPARQL.
-This could be another advantage of our proposed method, there is no need to create complex, complicated ontologies, just a few terms that cannot be reused from existing ontologies.
+This ontology aimed to allow the expression of the CQs in SPARQL. 
+This could be an advantage of our proposed method, there is no need to create complex, complicated ontologies, just a few terms that cannot be reused from existing ontologies.
 
-Having the minimum viable ontology, we moved to translating the CQs into SPARQL queries.
-We wrapped the SPARQL queries as SHACL constraints, such as in the [example @lst:example-cq].
+Having the minimum viable ontology, we moved to step four: translating the CQs into SPARQL queries.
+After this step, we approached step number five and wrapped the SPARQL queries as SHACL constraints, such as in the [example @lst:example-cq].
 
 ```{#lst:example-cq caption="Example competency question in SHACL"}
 :CQ12 a sh:ConstraintComponent ;
@@ -238,37 +240,39 @@ We wrapped the SPARQL queries as SHACL constraints, such as in the [example @lst
   ] .
 ```
 
-We continued with implementing a transformation of the source data into RDF.
+As the sixth step, we started with implementing a transformation of the source data into RDF.
 We transformed the input XML data to RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
 The resulting data was tested by the CQs in SHACL.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
 Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
+So, in the end, we joined steps six and seven (transformation and validation) into one automated process.
 
+The final step of the proposed method, the eighth step, is about refactoring artefacts. 
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
-When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artifacts we created.
+When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artefacts we created.
 For example, we wanted to avoid blank nodes to make the process deterministic, so we improved the XSL transformation to generate IRIs instead.
 We also abstracted a parent class for evaluations in the ontology and adjusted the SHACL shapes accordingly.
 
 One important thing needs to be emphasised.
-There were some hidden errors that were not discovered.
+Some hidden errors were not discovered. 
 These errors were hidden by SPARQL ASK queries.
 As it was mentioned before ASK queries are expected to return the boolean `true` if there is any result for the queries.
-Though, in case of the more complicated questions, in our case it was analytical questions, such validation was not enough.
+Though in a case of more complicated questions, in our case it was analytical questions, such validation was not enough.
 An essence of one of our questions was to group antigen tests by the same manufacturer.
 Running the SHACL validation with this question as a constraint in the form of `sh:ask` query did not detect any violation.
-But by directly querying the knowledge graph using SELECT query and with additional detailed analysis over the source data, we have discovered that even though we got some results from the knowledge graph, they were not as presumed.
-Specifically, up to this point each manufacturer produced only one test in our knowledge graph, although in fact there were some manufacturers, which produced more than one.
-So by doing this manual analysis we have discovered a significant mistake that was not discovered simply using `sh:ask` query.
+But by directly querying the knowledge graph using SELECT query and with additional detailed analysis of the source data, we have discovered that even though we got some results from the knowledge graph, they were not as presumed.
+Specifically, up to this point each manufacturer produced only one test in our knowledge graph, although in the source data there were some manufacturers, which produced more than one.
+So, by doing this manual analysis we discovered a significant mistake that was not discovered simply using the `sh:ask` query.
 This mistake was caused during the XSL transformation where each test got its own unique manufacturer and there was no post-processing to merge the same manufacturers.
 Thus, we managed this "hidden" issue by post-processing the XSL transformation and got the expected results.
 
-<!-- TODO -->
 It follows that using validation only with `sh:ask` queries is quite a black box, it can verify if there is an answer for a question, but we need to search more, if the result is what we have expected.
 Overall, using `sh:ask` queries for validation works well on simple questions, but in case of complicated questions we need to keep an eye for results in order to refactor the knowledge graph, so it can give proper results.
+The more specific assertions we make about our domain, the better we can detect invalid data describing it. Yet when the domain changes, such assertions are more likely to become invalid. Consequently, there is a trade-off to be made between the assertion's specificity and its durability in face of change.
 
-Except for the previously mentioned challenges there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
+Except for the previously mentioned challenges, there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
 Since the source data was collected manually, it was inconsistent and needed to be fixed, some of these errors occurred during the validation process, such as duplicates.
-Nevertheless, the future work could be aimed at automatic update of the data and related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
+Nevertheless, the future work could be aimed at an automatic update of the data and the related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
 
 # Conclusions
 
