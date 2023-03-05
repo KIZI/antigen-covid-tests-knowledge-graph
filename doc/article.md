@@ -171,7 +171,7 @@ Addressing the feedback thus requires making informed trade-offs.
 
 As can be expected, the proposed method has several limitations.
 Here we recount some of them and suggest how to remedy them.
-The method may cause the developed artifacts to overfit the user requirements in scope, which would hinder the reuse of the artifacts.
+The method may cause the developed artifacts outlined in @fig:process to overfit the user requirements in scope, which would hinder the reuse of the artifacts.
 This shortcoming can be remedied by including more CQs or focusing on reusability during refactoring.
 User requirements for the knowledge graph under construction can be more complex than what SPARQL can express.
 One way around it is formalizing the requirements in a more expressive programming language that extends SHACL, such as in @SHACLJS2017.
