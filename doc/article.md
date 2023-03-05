@@ -285,4 +285,8 @@ We share the experience of applying the method to build a knowledge graph about 
 The method aided in collaborative development of this knowledge graph, allowing its incremental refinement without regressions.
 Since constructing knowledge graphs from the same user requirements using multiple methods, while comparing their outcomes, is prohibitively expensive, we expect future improvements of the proposed method to come from its applications on knowledge graphs with different requirements.
 
+# Acknowledgements
+
+This research was supported by CHIST-ERA within the CIMPLE project (CHIST-ERA-19-XAI-003).
+
 # References
