@@ -274,6 +274,24 @@ Since the source data was collected manually, it was inconsistent and required f
 Some of these inconsistencies manifested as duplicates and were detected by our test suite.
 Future work on this knowledge graph can be aimed at automatic updates of the data and expanding its coverage beyond the Czech market for antigen covid tests.
 
+## Evaluation of the method's applicability
+The proposed method was used for building the knowledge graph about antigen tests for SARS-CoV-2 and their evaluations. 
+During the development, artefacts were produced such as competency questions, simple Ontology, SPARQL queries, XSL transformation, RDF data in Turtle serialization, and SHACL validation with proposed CQs. 
+The method helped to build an automated process of the data transformation and their validation with user requirements, which were expressed as competency questions.
+Thus, the knowledge graph includes all data that were required by users. 
+The main advantage of this method is that it offers steps regardless of particular technologies. 
+Instead of focusing on technologies, it provides a connection to objectives that a KG should be able to fulfil. 
+
+Once the whole process of transforming the data, including validation, was built, continuing with the development and improvement of the KG was fast and straightforward. 
+Given that we worked with the small data and the knowledge graph of around 10 thousand RDF triples, we could run all tests and validate the data as a whole. 
+At the end of the transformation and validation process (that were put together and run by one script), we got the data in RDF and the SHACL validation report. 
+Based on this report we were able to say whether the KG satisfied all users’ requirements. 
+Though, this validation needed to be extended with additional CQ, which identified that manufacturers of antigen SARS-CoV-2 tests were not merged. 
+This was discovered by additional analysis and not by automated tests. 
+It follows that we should not be presumed that our CQs always cover everything, sometimes it is needed to add another. 
+However, this is common practice during software development, where the method was inspired.
+
+
 # Conclusions
 
 The hereby proposed method guides through the open-ended process of knowledge graph construction.
