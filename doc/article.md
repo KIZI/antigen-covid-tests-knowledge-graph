@@ -190,7 +190,7 @@ Understanding the source data and its domain was a key prerequisite of our work.
 The XML data was originally structured for display on a web page so we needed to map its visual encoding into semantics.
 Already at this point, we discovered several challenges with designing the data model.
 For instance, the term *"evaluation"*  which have slightly different meanings, the question is, how to model them, whether to express them as one or more formal classes.
-This problem was described in [@Svatek2022].
+This problem was described in @Svatek2022.
 
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
