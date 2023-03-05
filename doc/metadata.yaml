@@ -3,13 +3,14 @@ title: Test-driven knowledge graph construction
 author:
 - name: Jindřich Mynarz
   email: mynarzjindrich@gmail.com
+  institute: Department of Information and Knowledge Engineering, University of Economics, Prague
 - name: Kateřina Haniková
   email: hank05@vse.cz
   institute: Department of Information and Knowledge Engineering, University of Economics, Prague
 - name: Vojtěch Svátek
   email: svatek@vse.cz
   institute: Department of Information and Knowledge Engineering, University of Economics, Prague
-date: 2022
+date: 2023
 abstract: |
   We propose how to construct knowledge graphs using a method based on user requirements formulated as competency questions.
   It suggests to formalize the competency questions as SPARQL queries wrapped as SHACL constraints allowing them to be used as automated tests.
