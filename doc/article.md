@@ -97,7 +97,7 @@ In case stricter guarantees are needed, the expected correct answers can be incl
 SHACL defines a target^[<https://www.w3.org/TR/shacl/#targets>] of each constraint.
 A target defines the scope of a CQ.
 Scope of the data graph validated by a given constraint may either encompass the entire knowledge graph or cover its subset.
-For instance, existentially quantified queries checking the complete data graph can target it by using `sh:targetNode [] .`.
+For instance, existentially quantified queries checking the complete data graph can target it by using `sh:targetNode []`.
 It is also possible to rewrite a part of a SPARQL query translating a CQ as target selection in SHACL.
 Alternatively, the prerequisite part of the query can be represented as a SPARQL-based target [@SHACLAF2017].
 An entity-centric partitioning can be implemented by defining a SPARQL-based target that covers a concise bounded description [@Stickler2005].
@@ -276,7 +276,7 @@ Future work on this knowledge graph can be aimed at automatic updates of the dat
 
 # Conclusions
 
-Hereby proposed method guides through the open-ended process of knowledge graph construction.
+The hereby proposed method guides through the open-ended process of knowledge graph construction.
 It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts that are produced or consumed in the process.
 The central contribution of the method is allowing to test if the produced knowledge graph satisfies the requirements for its construction.
 This is done via competency questions formulated as SPARQL queries embedded in SHACL shapes for test automation.
