@@ -241,14 +241,13 @@ After this step, we approached step number five and wrapped the SPARQL queries a
   ] .
 ```
 
-As the sixth step, we started with implementing a transformation of the source data into RDF.
-We transformed the input XML data to RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
-The resulting data was tested by the CQs in SHACL.
+As the sixth step, we started with implementing a transformation of the source data to RDF.
+We converted the input XML data into RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
+The resulting data was tested by the CQs implemented in SHACL.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
 Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
-So, in the end, we joined steps six and seven (transformation and validation) into one automated process.
 
-The final step of the proposed method, the eighth step, is about refactoring artefacts.
+The final step of the proposed method is about refactoring artefacts.
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
 When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artefacts we created.
 For example, we wanted to avoid blank nodes to make the process deterministic, so we improved the XSL transformation to generate IRIs instead.
@@ -270,15 +269,16 @@ The more specific assertions we make about our domain, the better we can detect 
 Yet when the domain changes or when our understanding of the domain is flawed, such assertions are more likely to become invalid.
 Consequently, there is a trade-off to be made between an assertion's specificity and its durability in face of change.
 
-Except for the previously mentioned challenges, there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
-Since the source data was collected manually, it was inconsistent and needed to be fixed, some of these errors occurred during the validation process, such as duplicates.
-Nevertheless, the future work could be aimed at an automatic update of the data and the related expansion of the knowledge graph, as this knowledge graph contains only the antigen covid-19 tests that are available in the Czech market.
+We encountered several other challenges during the development of the knowledge graph, such handling the structure of the source data originally designed only for a web presentation, or frequent changes in relevant legislation and evaluation studies.
+Since the source data was collected manually, it was inconsistent and required fixes.
+Some of these inconsistencies manifested as duplicates and were detected by our test suite.
+Future work on this knowledge graph can be aimed at automatic updates of the data and expanding its coverage beyond the Czech market for antigen covid tests.
 
 # Conclusions
 
 Hereby proposed method guides through the open-ended process of knowledge graph construction.
 It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts that are produced or consumed in the process.
-The central contribution of the method is allowing to test if and how well the produced knowledge graph satisfies the requirements for its construction.
+The central contribution of the method is allowing to test if the produced knowledge graph satisfies the requirements for its construction.
 This is done via competency questions formulated as SPARQL queries embedded in SHACL shapes for test automation.
 
 We share the experience of applying the method to build a knowledge graph about antigen covid tests.
