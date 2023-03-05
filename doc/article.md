@@ -67,7 +67,7 @@ The terms to extract from CQs are typically nouns or noun phrases that refer to 
 They can be considered lexical surface forms of these entities.
 The terms can be identified manually or aided by tools, such as part-of-speech tagging.
 The relations to extract might be represented by verbs connecting the terms co-occurring in a CQ.
-Less direct mappings between entities and surface forms are possible too. 
+Less direct mappings between entities and surface forms are possible too.
 
 3. Formalize the terms and relations in a minimum viable ontology using RDF Schema [@Brickley2014].
 While terms typically map to classes (i.e. instances of `rdfs:Class`), relations map either to properties (i.e. instances of `rdf:Property`) or n-ary relations represented by classes.
@@ -188,12 +188,13 @@ All artefacts we developed in this effort, such as CQs, are available as open so
 
 Understanding the source data and its domain was a key prerequisite of our work.
 The XML data was originally structured for display on a web page so we needed to map its visual encoding into semantics.
-Already at this point, we discovered several challenges with the data model.
-For instance, the term *"evaluation"* could lead to different individuals in the real world, which have slightly different meanings, the question is, how to model them, whether to express them as one or more formal classes. This problem was described in [@Svatek2022].
+Already at this point, we discovered several challenges with designing the data model.
+For instance, the term *"evaluation"*  which have slightly different meanings, the question is, how to model them, whether to express them as one or more formal classes.
+This problem was described in [@Svatek2022].
 
-The first step of the proposed method is gathering user requirements. 
+The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-The second step is to analyse the CQs to extract terms and relations. 
+The second step is to analyse the CQs to extract terms and relations.
 Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question.
 
 ```{#lst:example-onto caption="Example ontology terms"}
@@ -209,7 +210,7 @@ Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivi
 
 The third step was to create a minimum viable ontology from the extracted terms and relations, we did it mostly by reusing existing ontologies and using RDF Schema.
 For what we did not find suitable terms to reuse, we formalised terms in the simple Antigen Covid Test Ontology.
-This ontology aimed to allow the expression of the CQs in SPARQL. 
+This ontology aimed to allow the expression of the CQs in SPARQL.
 This could be an advantage of our proposed method, there is no need to create complex, complicated ontologies, just a few terms that cannot be reused from existing ontologies.
 
 Having the minimum viable ontology, we moved to step four: translating the CQs into SPARQL queries.
@@ -247,28 +248,25 @@ We automated the data processing and test execution by a script based on Jena co
 Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
 So, in the end, we joined steps six and seven (transformation and validation) into one automated process.
 
-The final step of the proposed method, the eighth step, is about refactoring artefacts. 
+The final step of the proposed method, the eighth step, is about refactoring artefacts.
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
 When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artefacts we created.
 For example, we wanted to avoid blank nodes to make the process deterministic, so we improved the XSL transformation to generate IRIs instead.
 We also abstracted a parent class for evaluations in the ontology and adjusted the SHACL shapes accordingly.
 
-One important thing needs to be emphasised.
-Some hidden errors were not discovered. 
-These errors were hidden by SPARQL ASK queries.
-As it was mentioned before ASK queries are expected to return the boolean `true` if there is any result for the queries.
-Though in a case of more complicated questions, in our case it was analytical questions, such validation was not enough.
-An essence of one of our questions was to group antigen tests by the same manufacturer.
-Running the SHACL validation with this question as a constraint in the form of `sh:ask` query did not detect any violation.
-But by directly querying the knowledge graph using SELECT query and with additional detailed analysis of the source data, we have discovered that even though we got some results from the knowledge graph, they were not as presumed.
-Specifically, up to this point each manufacturer produced only one test in our knowledge graph, although in the source data there were some manufacturers, which produced more than one.
-So, by doing this manual analysis we discovered a significant mistake that was not discovered simply using the `sh:ask` query.
-This mistake was caused during the XSL transformation where each test got its own unique manufacturer and there was no post-processing to merge the same manufacturers.
-Thus, we managed this "hidden" issue by post-processing the XSL transformation and got the expected results.
+Some errors were not detected by the tests based on CQs.
+For example, when querying the knowledge graph, we found that the data transformation to RDF mistakenly created IRIs of manufacturers based on their antigen covid test identifiers.
+Consequently, the resulting data related each manufacturer to one antigen covid test, so that it was not possible to group multiple tests by the same manufacturer.
+A common response to finding errors not covered by tests is improving tests coverage to enable detecting the errors found and thus avoid future regressions.
+We followed this practice and added a CQ comparing a given manufacturer's antigen covid tests.
+The CQ presupposed that there are manufacturers offering more than one test and would therefore fail in case of the above-described error.
+Apart from fixing the way we generated manufacturers' IRIs, we spent further effort on de-duplicating manufacturers via post-processing by SPARQL Update operations.
 
 It follows that using validation only with `sh:ask` queries is quite a black box, it can verify if there is an answer for a question, but we need to search more, if the result is what we have expected.
 Overall, using `sh:ask` queries for validation works well on simple questions, but in case of complicated questions we need to keep an eye for results in order to refactor the knowledge graph, so it can give proper results.
-The more specific assertions we make about our domain, the better we can detect invalid data describing it. Yet when the domain changes, such assertions are more likely to become invalid. Consequently, there is a trade-off to be made between the assertion's specificity and its durability in face of change.
+The more specific assertions we make about our domain, the better we can detect invalid data describing it.
+Yet when the domain changes, such assertions are more likely to become invalid.
+Consequently, there is a trade-off to be made between the assertion's specificity and its durability in face of change.
 
 Except for the previously mentioned challenges, there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
 Since the source data was collected manually, it was inconsistent and needed to be fixed, some of these errors occurred during the validation process, such as duplicates.
