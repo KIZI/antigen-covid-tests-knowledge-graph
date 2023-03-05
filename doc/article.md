@@ -262,11 +262,13 @@ We followed this practice and added a CQ comparing a given manufacturer's antige
 The CQ presupposed that there are manufacturers offering more than one test and would therefore fail in case of the above-described error.
 Apart from fixing the way we generated manufacturers' IRIs, we spent further effort on de-duplicating manufacturers via post-processing by SPARQL Update operations.
 
-It follows that using validation only with `sh:ask` queries is quite a black box, it can verify if there is an answer for a question, but we need to search more, if the result is what we have expected.
-Overall, using `sh:ask` queries for validation works well on simple questions, but in case of complicated questions we need to keep an eye for results in order to refactor the knowledge graph, so it can give proper results.
+While we had CQs about manufacturers' tests, the implementations of these CQs generally asked if manufacturers' tests matching certain criteria exist.
+Being encoded as SPARQL ASK queries, any non-empty query results satisfied these CQs.
+They did not detect when the results were not the expected ones, such as when not showing all manufacturer's tests in the example of duplicate manufacturers above.
+We addressed this limitation by asking a more specific CQ presupposing more specific assertions.
 The more specific assertions we make about our domain, the better we can detect invalid data describing it.
-Yet when the domain changes, such assertions are more likely to become invalid.
-Consequently, there is a trade-off to be made between the assertion's specificity and its durability in face of change.
+Yet when the domain changes or when our understanding of the domain is flawed, such assertions are more likely to become invalid.
+Consequently, there is a trade-off to be made between an assertion's specificity and its durability in face of change.
 
 Except for the previously mentioned challenges, there were others during the development of the knowledge graph, such as handling the structure of the source data, which was originally designed only for a web presentation, or frequent changes in legislation, and evaluation studies.
 Since the source data was collected manually, it was inconsistent and needed to be fixed, some of these errors occurred during the validation process, such as duplicates.
