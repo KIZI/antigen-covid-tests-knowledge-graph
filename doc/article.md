@@ -285,14 +285,7 @@ Thus, the knowledge graph includes all data that were required by users.
 The main advantage of this method is that it offers steps regardless of particular technologies. 
 Instead of focusing on technologies, it provides a connection to objectives that a KG should be able to fulfil. 
 
-Once the whole process of transforming the data, including validation, was built, continuing with the development and improvement of the KG was fast and straightforward. 
-Given that we worked with the small data and the knowledge graph of around 10 thousand RDF triples, we could run all tests and validate the data as a whole. 
-At the end of the transformation and validation process (that were put together and run by one script), we got the data in RDF and the SHACL validation report. 
-Based on this report we were able to say whether the KG satisfied all users’ requirements. 
-Though, this validation needed to be extended with additional CQ, which identified that manufacturers of antigen SARS-CoV-2 tests were not merged. 
-This was discovered by additional analysis and not by automated tests. 
-It follows that we should not be presumed that our CQs always cover everything, sometimes it is needed to add another. 
-However, this is common practice during software development, where the method was inspired.
+Since the data that we worked with was small, the final knowledge graph has around 10 thousand RDF triplets. With the proposed method it was easier to build this knowledge graph with respect to users’ requirements and it was clear what steps should follow. The whole process is iterative and is based on feedback from SHACL validation report. So, the better SHACL validation is, the better are results, and from that, we know exactly what is needed to be done. Our final script can process the source data (initial XML file) and provide results (RDF data and validation report) within seconds. Even if we tried to import some classes from another ontology to our ontology, or if we tried to merge our data with additional XML data. 
 
 # Conclusions
 
