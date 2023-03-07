@@ -197,7 +197,7 @@ Knowing the source data well, we could begin with the knowledge graph constructi
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
 The second step is to analyse the CQs to extract terms and relations.
-Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question.
+Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question. Extracted ontology terms can be seen in the [example @lst:example-onto].
 
 ```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
