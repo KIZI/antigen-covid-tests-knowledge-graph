@@ -185,13 +185,14 @@ Its source data was gathered to create an overview of different evaluations of s
 It was collected manually from several regulatory bodies, such as SÚKL^[<https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19>] and EU HSC^[<https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en>], and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
-All artefacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
+All artifacts we developed in this effort, such as CQs, are available as open source.^[<https://github.com/KIZI/antigen-covid-tests-knowledge-graph>]
 
 Understanding the source data and its domain was a key prerequisite of our work.
-The XML data was originally structured for display on a web page so we needed to map its visual encoding into semantics.
-The XML data contains information about 158 antigen SARS-CoV-2 tests and their evaluation. 
-Therefore, we needed to understand all resources from where the data were collected and how it was encoded in the XML data. 
-Knowing well the source data, we could begin with the knowledge graph construction.
+The data covers 158 antigen SARS-CoV-2 tests and their evaluations from several sources.
+Each source had its way of describing the domain, which we needed to comprehend first to represent the source's data well and make it commensurable.
+We also needed to become aware of the purpose for which the data was collected and how it was represented to serve this purpose.
+The data was originally structured in XML for display on a web page, so we needed to map its visual encoding into semantics.
+Knowing the source data well, we could begin with the knowledge graph construction.
 
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
@@ -248,9 +249,9 @@ The resulting data was tested by the CQs implemented in SHACL.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
 Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
 
-The final step of the proposed method is about refactoring artefacts.
+The final step of the proposed method is about refactoring artifacts.
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
-When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artefacts we created.
+When the knowledge graph satisfied the CQs, we continued with refactoring the semantic artifacts we created.
 For example, we wanted to avoid blank nodes to make the process deterministic, so we improved the XSL transformation to generate IRIs instead.
 We also abstracted a parent class for evaluations in the ontology and adjusted the SHACL shapes accordingly.
 
@@ -270,14 +271,15 @@ The more specific assertions we make about our domain, the better we can detect 
 Yet when the domain changes or when our understanding of the domain is flawed, such assertions are more likely to become invalid.
 Consequently, there is a trade-off to be made between an assertion's specificity and its durability in face of change.
 
-We encountered several other challenges during the development of the knowledge graph, such handling the structure of the source data originally designed only for a web presentation, or frequent changes in relevant legislation and evaluation studies.
+We encountered several other challenges during the development of the knowledge graph, such handling the structure of the source data originally designed for a web presentation or frequent changes in relevant legislation and evaluation studies.
 Since the source data was collected manually, it was inconsistent and required fixes.
 Some of these inconsistencies manifested as duplicates and were detected by our test suite.
 Future work on this knowledge graph can be aimed at automatic updates of the data and expanding its coverage beyond the Czech market for antigen covid tests.
 
 ## Evaluation of the method's applicability
+
 The proposed method was used for building the knowledge graph about antigen tests for SARS-CoV-2 and their evaluations. 
-During the development, artefacts were produced such as competency questions, simple Ontology, SPARQL queries, XSL transformation, RDF data in Turtle serialization, and SHACL validation with proposed CQs. 
+During the development, artifacts were produced such as competency questions, ontology, SPARQL queries, XSL transformation, data in RDF, and implementation of the proposed CQs in SHACL.
 The method helped to build an automated process of the data transformation and their validation with user requirements, which were expressed as competency questions.
 Thus, the knowledge graph includes all data that were required by users. 
 The main advantage of this method is that it offers steps regardless of particular technologies. 
@@ -291,7 +293,6 @@ Though, this validation needed to be extended with additional CQ, which identifi
 This was discovered by additional analysis and not by automated tests. 
 It follows that we should not be presumed that our CQs always cover everything, sometimes it is needed to add another. 
 However, this is common practice during software development, where the method was inspired.
-
 
 # Conclusions
 
