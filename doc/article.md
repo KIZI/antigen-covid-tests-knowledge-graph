@@ -247,7 +247,7 @@ As the sixth step, we started with implementing a transformation of the source d
 We converted the input XML data into RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
 The resulting data was tested by the CQs implemented in SHACL.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
-Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
+Given that this is a small knowledge graph of less than 10 thousand RDF triples, we validated it as a whole.
 
 The final step of the proposed method is about refactoring artifacts.
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
@@ -285,7 +285,7 @@ Thus, the knowledge graph includes all data that were required by users.
 The main advantage of this method is that it offers steps regardless of particular technologies. 
 Instead of focusing on technologies, it provides a connection to objectives that a KG should be able to fulfil. 
 
-Since the data that we worked with was small, the final knowledge graph has around 10 thousand RDF triplets. With the proposed method it was easier to build this knowledge graph with respect to users’ requirements and it was clear what steps should follow. The whole process is iterative and is based on feedback from SHACL validation report. So, the better SHACL validation is, the better are results, and from that, we know exactly what is needed to be done. Our final script can process the source data (initial XML file) and provide results (RDF data and validation report) within seconds. Even if we tried to import some classes from another ontology to our ontology, or if we tried to merge our data with additional XML data. 
+Since the data that we worked with was small, the final knowledge graph has 9893 RDF triples. With the proposed method it was easier to build this knowledge graph with respect to users’ requirements and it was clear what steps should follow. The whole process is iterative and is based on feedback from SHACL validation report. So, the better SHACL validation is, the better are results, and from that, we know exactly what is needed to be done. Our final script can process the source data (initial XML file) and provide results (RDF data and validation report) within seconds. Even if we tried to import some classes from another ontology to our ontology, or if we tried to merge our data with additional XML data. 
 
 # Conclusions
 
