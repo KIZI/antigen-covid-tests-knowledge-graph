@@ -66,7 +66,7 @@ CQs can be analyzed using the linguistic notion of presupposition, which can be 
 Viewed this way, CQs presuppose the terms with which they can be expressed.
 The terms to extract from CQs are typically nouns or noun phrases that refer to entities from the domain of the knowledge graph under construction.
 They can be considered lexical surface forms of these entities.
-The terms can be identified manually or aided by tools, such as part-of-speech tagging.
+The terms can be identified manually or with the help of tools, such as part-of-speech tagging.
 The relations to extract might be represented by verbs connecting the terms co-occurring in a CQ.
 Less direct mappings between entities and surface forms are possible too.
 
