@@ -1,6 +1,7 @@
 Knowledge graphs use graph-based data models to capture knowledge commonly combined from large and diverse data sources [@Hogan2021].
 Constructing knowledge graphs can be an intricate and open-ended task that is in many ways an art rather than a craft.^[The same argument was made about designing ontologies in @Soldatova2016.]
-There is a shortage of solid engineering practices guiding through this task.
+While there are resources covering how to build knowledge graphs, there is little about what to build: how to elicit, formulate, and validate requirements for a knowledge graph.
+Overall, there is a shortage of solid engineering practices guiding through this task.
 
 We propose how to construct knowledge graphs using a standards-based method founded upon user requirements formulated as competency questions (CQs).
 It suggests to formalize the CQs as SPARQL queries [@SPARQL2013] and wrap them as SHACL constraints [@SHACL2017] in order to allow them to be used as automated tests.
