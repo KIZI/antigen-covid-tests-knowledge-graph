@@ -283,7 +283,7 @@ Future work on this knowledge graph can be aimed at automatic updates of the dat
 
 Overall, the main advantage of this method is that it offers steps regardless of particular technologies. 
 Instead of focusing on technologies, it provides a connection to objectives that a knowledge graph should be able to fulfil. 
-During the antigen covid tests KG development, artifacts were produced such as competency questions, ontology, SPARQL queries, XSL transformation, data in RDF, and implementation of the proposed CQs in SHACL.
+During the antigen covid tests KG development artifacts were produced, such as competency questions, ontology, SPARQL queries, XSL transformation, data in RDF, and implementation of the proposed CQs in SHACL.
 The method helped to build an automated process of the data transformation and validation with user requirements, which were at the begining expressed as competency questions.
 Thus, the knowledge graph includes all data that were required by users.
 
