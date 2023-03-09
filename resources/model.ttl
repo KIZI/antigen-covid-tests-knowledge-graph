@@ -259,7 +259,8 @@
   :cq14 [] ;
   :cq16 [] ;
   :cq17 [] ;
-  :cq18 [] .
+  :cq18 [] ;
+  :cq19 [] .
 
 :PEIShape a sh:NodeShape ;
   rdfs:label "Competency questions about Paul-Ehrlich-Institut"@en ;
@@ -657,6 +658,37 @@
 
       [] reg:representationOf ?test ;
         reg:status status:not-approved .
+    }
+    """
+  ] .
+
+:CQ19 a sh:ConstraintComponent ;
+  rdfs:label "Manufacturers with greatest variability in tests' sensitivity"@en ;
+  sh:parameter [
+    sh:path :cq19
+  ] ;
+  sh:nodeValidator [
+    a sh:SPARQLAskValidator ;
+    sh:message "Which manufacturer's tests exhibit the largest range of clinical sensitivity for high viral load according to PEI?"@en ;
+    sh:prefixes :prefixes ;
+    sh:ask """
+    ASK {
+      {
+        SELECT ?manufacturer
+        WHERE {
+          ?test a act:AntigenCovidTest ;
+            schema:manufacturer ?manufacturer .
+
+          [] a ncit:C41394 ;
+            dcterms:subject ?test ;
+            dcterms:creator <https://www.pei.de> ;
+            act:peiSensitivityCategory/skos:altLabel "high viral load"@en ;
+            rdf:value ?sensitivity .
+        }
+        GROUP BY ?manufacturer
+        HAVING (COUNT(DISTINCT ?test) > 1)
+        ORDER BY DESC(MAX(?sensitivity) - MIN(?sensitivity))
+      }
     }
     """
   ] .
