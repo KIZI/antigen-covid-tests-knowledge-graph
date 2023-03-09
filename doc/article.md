@@ -196,11 +196,11 @@ Knowing the source data well, we could begin with the knowledge graph constructi
 
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-In the end, we had 18 CQs and we could divide them into two categories based on their objectives. 
-The first category of questions aimed to capture what information should be in the knowledge graph, and the second category was analytical questions, which should provide some basic analysis of the data. 
+In the end, we had 18 CQs and we could divide them into two categories based on their objectives.
+The first category of questions aimed to capture what information should be in the knowledge graph, and the second category was analytical questions, which should provide some basic analysis of the data.
 
 The second step of the method is to analyse the CQs to extract terms and relations.
-Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question. Extracted ontology terms can be seen in the [example @lst:example-onto]. Because we did not have too many CQs, we were capable of doing this extraction manually. 
+Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question. Extracted ontology terms can be seen in the [example @lst:example-onto]. Because we did not have too many CQs, we were capable of doing this extraction manually.
 
 ```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
@@ -281,16 +281,16 @@ Future work on this knowledge graph can be aimed at automatic updates of the dat
 
 ## Evaluation of the method's applicability
 
-Overall, the main advantage of this method is that it offers steps regardless of particular technologies. 
-Instead of focusing on technologies, it provides a connection to objectives that a knowledge graph should be able to fulfil. 
+Overall, the main advantage of this method is that it offers steps regardless of particular technologies.
+Instead of focusing on technologies, it provides a connection to objectives that a knowledge graph should be able to fulfil.
 During the antigen covid tests KG development artifacts were produced, such as competency questions, ontology, SPARQL queries, XSL transformation, data in RDF, and implementation of the proposed CQs in SHACL.
 The method helped to build an automated process of the data transformation and validation with user requirements, which were at the begining expressed as competency questions.
 Thus, the knowledge graph includes all data that were required by users.
 
-Since the data that we worked with was small, the final knowledge graph has 9893 RDF triples. 
-With the proposed method it was easier to build this knowledge graph because it was clear what artifacts should be developed and in what order. 
-The whole process is iterative and is based on feedback from a SHACL validation report. 
-So, the better SHACL validation is, the better are results. 
+Since the data that we worked with was small, the final knowledge graph has 9893 RDF triples.
+With the proposed method it was easier to build this knowledge graph because it was clear what artifacts should be developed and in what order.
+The whole process is iterative and is based on feedback from a SHACL validation report.
+So, the better SHACL validation is, the better are results.
 Our final script can process the source data (initial XML file) and provide results (RDF data and validation report) within seconds. Even if we tried to import some classes from another ontology to our ontology, or if we tried to merge our data with additional XML data.
 Given that we had only one case study and this particular study was a small dataset, we were not able to evaluate the method's applicability on a larger data.
 
