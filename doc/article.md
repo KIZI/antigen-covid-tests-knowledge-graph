@@ -280,21 +280,6 @@ Since the source data was collected manually, it was inconsistent and required f
 Some of these inconsistencies manifested as duplicates and were detected by our test suite.
 Future work on this knowledge graph can be aimed at automatic updates of the data and expanding its coverage beyond the Czech market for antigen covid tests.
 
-## Evaluation of the method's applicability
-
-Overall, the main advantage of this method is that it offers steps regardless of particular technologies.
-Instead of focusing on technologies, it provides a connection to objectives that a knowledge graph should be able to fulfil.
-During the antigen covid tests KG development artifacts were produced, such as competency questions, ontology, SPARQL queries, XSL transformation, data in RDF, and implementation of the proposed CQs in SHACL.
-The method helped to build an automated process of the data transformation and validation with user requirements, which were at the begining expressed as competency questions.
-Thus, the knowledge graph includes all data that were required by users.
-
-Since the data that we worked with was small, the final knowledge graph has 9893 RDF triples.
-With the proposed method it was easier to build this knowledge graph because it was clear what artifacts should be developed and in what order.
-The whole process is iterative and is based on feedback from a SHACL validation report.
-So, the better SHACL validation is, the better are results.
-Our final script can process the source data (initial XML file) and provide results (RDF data and validation report) within seconds. Even if we tried to import some classes from another ontology to our ontology, or if we tried to merge our data with additional XML data.
-Given that we had only one case study and this particular study was a small dataset, we were not able to evaluate the method's applicability on a larger data.
-
 # Conclusions
 
 The hereby proposed method guides through the open-ended process of knowledge graph construction.
