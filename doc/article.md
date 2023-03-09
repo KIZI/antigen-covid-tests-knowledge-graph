@@ -196,11 +196,12 @@ Knowing the source data well, we could begin with the knowledge graph constructi
 
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-In the end, we had 18 CQs and we could divide them into two categories based on their objectives.
-The first category of questions aimed to capture what information should be in the knowledge graph, and the second category was analytical questions, which should provide some basic analysis of the data.
+We came up with 18 CQs in total, divides into two categories based on their objective.
+The first category of questions captured what information should be present in the knowledge graph, the second category included analytical questions.
 
 The second step of the method is to analyse the CQs to extract terms and relations.
-Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question. Extracted ontology terms can be seen in the [example @lst:example-onto]. Because we did not have too many CQs, we were capable of doing this extraction manually.
+Thus, we analysed the CQs and extracted terms and relations, such as *"sensitivity"*, *"test"*, or *"has manufacturer"* from the given example question; see [example @lst:example-onto].
+Since we did not have many CQs, we extracted the terms and relations manually.
 
 ```{#lst:example-onto caption="Example ontology terms"}
 :DiagnosticSensitivity a rdfs:Class ;
@@ -250,7 +251,7 @@ As the sixth step, we started with implementing a transformation of the source d
 We converted the input XML data into RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing.
 The resulting data was tested by the CQs implemented in SHACL.
 We automated the data processing and test execution by a script based on Jena command-line tools.^[<https://jena.apache.org/documentation/tools>]
-Given that this is a small knowledge graph of less than 10 thousand RDF triples, we validated it as a whole.
+Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
 
 The final step of the proposed method is about refactoring artifacts.
 Our development work proceeded in several iterations guided by continuous feedback from the script for data transformation and validation.
@@ -300,6 +301,7 @@ The hereby proposed method guides through the open-ended process of knowledge gr
 It breaks the process down into a well-defined sequence of steps, feedback loops between them, and semantic artifacts that are produced or consumed in the process.
 The central contribution of the method is allowing to test if the produced knowledge graph satisfies the requirements for its construction.
 This is done via competency questions formulated as SPARQL queries embedded in SHACL shapes for test automation.
+As such, one of its key advantages is being based on established semantic web standards.
 
 We share the experience of applying the method to build a knowledge graph about antigen covid tests.
 The method aided in collaborative development of this knowledge graph, allowing its incremental refinement without regressions.
