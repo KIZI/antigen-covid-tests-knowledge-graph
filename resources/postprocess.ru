@@ -86,3 +86,77 @@ WHERE {
 }
 
 ;
+
+######################################
+# Merge manufacturers via schema:url #
+######################################
+
+DELETE {
+  ?inS ?inP ?manufacturer .
+  ?manufacturer ?outP ?outO .
+}
+INSERT {
+  ?inS ?inP ?chosen_manufacturer .
+  ?chosen_manufacturer ?outP ?outO .
+}
+WHERE {
+  {
+    SELECT ?url (SAMPLE(?manufacturer) AS ?chosen_manufacturer)
+    WHERE {
+      ?manufacturer schema:url ?url .
+    }
+    GROUP BY ?url
+    HAVING (COUNT(DISTINCT ?manufacturer) > 1)
+  }
+
+  ?manufacturer schema:url ?url .
+
+  FILTER (!sameTerm(?manufacturer, ?chosen_manufacturer))
+
+  {
+    ?inS ?inP ?manufacturer .
+  } UNION {
+    ?manufacturer ?outP ?outO .
+  }
+}
+
+;
+
+##########################
+# Merge postal addresses #
+##########################
+
+DELETE {
+  ?inS ?inP ?postal_address .
+  ?postal_address ?outP ?outO .
+}
+INSERT {
+  ?inS ?inP ?chosen_postal_address .
+  ?chosen_postal_address ?outP ?outO .
+}
+WHERE {
+  {
+    SELECT ?manufacturer ?country (SAMPLE(?postal_address) AS ?chosen_postal_address)
+    WHERE {
+      ?postal_address a schema:PostalAddress ;
+        schema:addressCountry ?country .
+
+      ?manufacturer schema:address ?postal_address .
+    }
+    GROUP BY ?manufacturer ?country
+    HAVING (COUNT(?postal_address) > 1)
+  }
+
+  ?manufacturer schema:address ?postal_address .
+  ?postal_address schema:addressCountry ?country .
+
+  FILTER (!sameTerm(?postal_address, ?chosen_postal_address))
+
+  {
+    ?inS ?inP ?postal_address .
+  } UNION {
+    ?postal_address ?outP ?outO .
+  }
+}
+
+;
