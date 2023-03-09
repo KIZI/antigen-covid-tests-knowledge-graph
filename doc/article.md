@@ -196,7 +196,7 @@ Knowing the source data well, we could begin with the knowledge graph constructi
 
 The first step of the proposed method is gathering user requirements.
 So, we started with capturing user requirements formulated as CQs, such as *"What is the sensitivity of given tests according to their manufacturers?"*
-We came up with 18 CQs in total, divides into two categories based on their objective.
+We came up with 19 CQs in total, divides into two categories based on their objective.
 The first category of questions captured what information should be present in the knowledge graph, the second category included analytical questions.
 
 The second step of the method is to analyse the CQs to extract terms and relations.
