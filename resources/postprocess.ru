@@ -174,7 +174,7 @@ INSERT {
 WHERE {
   ?s a schema:Organization .
   ?s schema:name ?oldName .
-  BIND(REPLACE(?oldName, "(Co\\.\\,\\sLtd\\.)|(CO\\.\\,\\sLTD\\.)|(CO\\.\\,\\sLTD)|(Co\\.\\,\\sLtd)|(Co\\.\\,Ltd)|(Co\\.\\,Ltd\\.)", "Co\\. Ltd\\.") AS ?newName)
+  BIND(REPLACE(?oldName, "(Co\\.\\,\\sLtd\\.)|(CO\\.\\,\\sLTD\\.)|(CO\\.\\,\\sLTD)|(CO\\.\\sLTD)|(Co\\.\\,\\sLTD)|(Co\\.\\,LTD)|(Co\\.\\,\\sLtd)|(Co\\.\\,Ltd)|(Co\\.\\,Ltd\\.)|(Co\\.\\,LTD\\.)", "Co\\. Ltd\\.") AS ?newName)
 }
 ;
 
