@@ -160,3 +160,20 @@ WHERE {
 }
 
 ;
+
+###############################
+# Normalize manufacturer's name
+###############################
+
+DELETE {
+  ?s schema:name ?oldName .
+}
+INSERT {
+  ?s schema:name ?newName .
+}
+WHERE {
+  ?s a schema:Organization .
+  ?s schema:name ?oldName .
+  BIND(REPLACE(?oldName, "(Co\\.\\,\\sLtd\\.)|(CO\\.\\,\\sLTD\\.)|(CO\\.\\,\\sLTD)|(Co\\.\\,\\sLtd)|(Co\\.\\,Ltd)|(Co\\.\\,Ltd\\.)", "Co\\. Ltd\\.") AS ?newName)
+}
+;
