@@ -177,3 +177,37 @@ WHERE {
   BIND(REPLACE(?oldName, "co\\.,?\\s*ltd\\.*$", "Co\\. Ltd\\.", "i") AS ?newName)
 }
 ;
+
+######################################
+# Merge manufacturers via schema:name #
+######################################
+
+DELETE {
+  ?inS ?inP ?manufacturer .
+  ?manufacturer ?outP ?outO .
+}
+INSERT {
+  ?inS ?inP ?chosen_manufacturer .
+  ?chosen_manufacturer ?outP ?outO .
+}
+WHERE {
+  {
+    SELECT ?name (SAMPLE(?manufacturer) AS ?chosen_manufacturer)
+    WHERE {
+      ?manufacturer schema:name ?name .
+    }
+    GROUP BY ?name
+    HAVING (COUNT(DISTINCT ?manufacturer) > 1)
+  }
+
+  ?manufacturer schema:name ?name .
+
+  FILTER (!sameTerm(?manufacturer, ?chosen_manufacturer))
+
+  {
+    ?inS ?inP ?manufacturer .
+  } UNION {
+    ?manufacturer ?outP ?outO .
+  }
+}
+;
