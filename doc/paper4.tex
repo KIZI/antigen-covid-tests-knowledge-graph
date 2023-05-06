@@ -133,7 +133,7 @@ Following a method for knowledge graph construction offers several benefits. In 
 
 The direction provided by a method anchored in user requirements can reduce the undirected upfront effort and help avoid over-engineering. For example, it discourages needless effort spent on achieving a lossless transformation to the target knowledge graph that preserves all source data even though it might not be needed. It can help avoid premature abstraction and premature optimization, such as for performance or readability. Thanks to the tests checking if the user requirements are satisfied, we get an early proof of value instead of speculating about it. Additionally, the explicit links between requirements and tests allow to assess the requirements traceability and coverage.
 
-\section{Related work}
+\section{Related Work}
 When outlining this method, we can learn from ontology engineering, as it has a head start of several decades on knowledge graphs. There is a long tradition of using competency questions as requirements for ontologies \cite{Gruninger1994}. Much of this experience can be reused, since ontologies serve as essential building blocks of knowledge graphs imbuing them with explicit semantics. Knowledge graphs in turn can be considered as ontologies populated with data. Creating tests for ontologies out of CQs is also nothing new \cite{Ren2014,Zemmouchi2013}. More recently, it was adopted for knowledge graphs too \cite{Pan2017}.
 
 Broader still, we can adopt the practices established in software engineering. The hereby presented method borrows from the test-driven development cycle \cite{Beck2003}, which is commonly characterized by the following steps:
@@ -164,7 +164,7 @@ We present a method for test-driven knowledge graph construction. The method pro
     \item Refactor the artifacts. The SHACL specification of the knowledge graph is a key artifact to refactor. It can serve as a formal specification of the anticipated use of the ontology. Moreover, SHACL can transcend a single ontology and specify how to combine terms reused from multiple ontologies. SHACL core constraints can be induced from SPARQL-based constraints to represent the frequently queried patterns in data. For instance, you can infer universally quantified axioms represented as SHACL constraints from a sample of existentially quantified axioms represented as SPARQL queries. In particular, SHACL can represent the expected relations in data. For example, more complex or distant relations might require the expressivity of SHACL to be represented, using property paths or SPARQL graph patterns. Even though SHACL does not support conditional constraints directly, they can be rewritten according to the inference rule of material implication ${P\to Q\Leftrightarrow \neg P\lor Q}$.
 \end{enumerate}
 
-\section{Non-functional requirements}
+\section{Non-functional Requirements}
 Note that the above-described method tests if a knowledge graph meets the given user requirements. It does not evaluate how well these requirements are satisfied. Absence of errors does not imply that the knowledge graph is sound. Therefore, the functional user requirements should be complemented by non-functional requirements describing the desired qualities of the solution. These requirements can be checked and refactored by using alternative sources of feedback, such as:
 
 \begin{description}
@@ -185,7 +185,7 @@ Using the above-mentioned feedback is a balancing act of multi-objective optimiz
 \section{Limitations}
 We are aware of several limitations of the proposed method. Here we recount some of them and suggest how to remedy them. The method may cause the developed artifacts outlined in the Figure \ref{fig:process} to overfit the user requirements in scope, which would hinder the reuse of the artifacts. This shortcoming can be remedied by including more CQs or focusing on reusability during refactoring. User requirements for the knowledge graph under construction can be more complex than what SPARQL can express. One way around it is formalizing the requirements in a more expressive programming language that extends SHACL, such as in \cite{SHACLJS2017}. Ultimately, in order to ameliorate the limitations of this method, it is best combined with other methods, such as those for ontology design (e.g., Kendall and McGuinness \cite{Kendall2019}).
 
-\section{Case study: Antigen covid tests knowledge graph}
+\section{Case Study: Antigen Covid Tests Knowledge Graph}
 
 We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2. 
 
