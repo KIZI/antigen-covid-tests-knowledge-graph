@@ -206,7 +206,9 @@ Understanding the source data and its domain was a key prerequisite of our work.
 
 \textbf{Step 1:} The first step of the proposed method is gathering user requirements. We started with capturing user requirements formulated as CQs, such as \textit{"What is the sensitivity of given tests according to their manufacturers?"} We came up with 19 CQs in total, covering basic information look-up and more complex analytical questions. The complete list of the CQs is available online.\footnote{\url{https://github.com/KIZI/antigen-covid-tests-knowledge-graph/wiki/Competency-questions}}
 
-\textbf{Step 2:} We continued with analysis of the CQs and extraction of terms and relations, such as \textit{"sensitivity"}, \textit{"test"}, or \textit{"has manufacturer"} from the given example question; see Listing \ref{lst:example-onto}. Since we did not have many CQs, we extracted the terms and relations manually.
+\textbf{Step 2:} We continued with analysis of the CQs and extraction of terms and relations, such as \textit{"sensitivity"}, \textit{"test"}, or \textit{"has manufacturer"} from the given example question. Since we did not have many CQs, we extracted the terms and relations manually.
+
+\textbf{Step 3:} The third step was to create a minimum viable ontology from the extracted terms and relations, which we did mostly by reusing existing ontology terms and using RDF Schema; see Listing \ref{lst:example-onto}. For what we did not find suitable terms to reuse, we formalised terms in the simple Antigen Covid Test Ontology. This ontology aimed to allow expressing the CQs in SPARQL.
 
 \begin{lstlisting}[language=turtle, caption=Example ontology terms, label={lst:example-onto}]
 :DiagnosticSensitivity a rdfs:Class ;
@@ -218,8 +220,6 @@ Understanding the source data and its domain was a key prerequisite of our work.
 :hasManufacturer a rdf:Property ;
   rdfs:label "Has manufacturer"@en .
 \end{lstlisting}
-
-\textbf{Step 3:} The third step was to create a minimum viable ontology from the extracted terms and relations, which we did mostly by reusing existing ontology terms and using RDF Schema. For what we did not find suitable terms to reuse, we formalised terms in the simple Antigen Covid Test Ontology. This ontology aimed to allow expressing the CQs in SPARQL.
 
 \textbf{Step 4:} Having a minimum viable ontology, we were able to translate the CQs into SPARQL queries. Each question was translated manually.
 
