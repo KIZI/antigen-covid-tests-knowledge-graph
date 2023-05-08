@@ -174,9 +174,9 @@ Note that the above-described method tests if a knowledge graph meets the given 
     Elicit expert insight from ontology and data engineers.
     \item[User feedback] \hfill \\
     The results produced by SPARQL queries formalizing the CQs can be judged to be incorrect by users. User feedback can identify wrong interpretation of CQs or false assumptions. It might prompt revisiting any of the previously described steps or lead to adding more CQs.
-    \item[Usability] \hfill \\
+    \item[Usability testing] \hfill \\
     Usability may manifest in developer experience of writing SPARQL queries on a knowledge graph. In particular, complexity and verbosity of SPARQL queries may be considered. In this way, usability of the queries indirectly reflects the usability of the ontology. For example, verbosity may be caused by duplicate data that can be abstracted to the ontology, while complexity can be reduced by introducing ontological shortcuts. Verbose SPARQL queries may also suggest a need for introducing abstraction or additional axioms into the ontology. In fact, some CQs can be answered directly using the knowledge formalized in the ontology, since SHACL expects the validated data graph\footnote{\urlschaclgraphdata} to include the ontologies it populates.
-    \item[Performance] \hfill \\
+    \item[Performance testing] \hfill \\
     Performance can be evaluated indirectly using the execution time of SHACL validation. This time is proportional to the execution times of the SPARQL queries the constraints include.
 \end{description}
 
