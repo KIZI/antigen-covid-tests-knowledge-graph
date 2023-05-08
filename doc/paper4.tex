@@ -274,7 +274,7 @@ ASK {
   ] .
 \end{lstlisting}
 
-\textbf{Step 6:} We started with implementing a transformation of the source data to RDF. We converted the input XML data into RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing. For example, we used post-processing for normalization of code-list values and manufacturers' names.
+\textbf{Step 6:} We started with implementing a transformation of the source data to RDF. We converted the input XML data into RDF/XML via an XSL transformation followed by SPARQL Update operations for post-processing. For example, we used post-processing for normalization of code-list values and manufacturers' names. We also implemented few traditional unit tests of XSL functions within the transformation.
 
 \textbf{Step 7:} The resulting data was tested by the CQs implemented in SHACL. We automated the data processing and test execution by a shell script based on Jena command-line tools.\footnote{\url{https://jena.apache.org/documentation/tools}} Given that this is a small knowledge graph of around 10 thousand RDF triples, we validated it as a whole.
 
