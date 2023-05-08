@@ -67,6 +67,7 @@
 \urldef\urlshacltargets\url{https://www.w3.org/TR/shacl/#targets}
 \urldef\urlshaclprebinding\url{https://www.w3.org/TR/shacl/#pre-binding}
 \urldef\urlschaclgraphdata\url{https://www.w3.org/TR/shacl/#data-graph}
+\urldef\urlshaclconstraintcomponent\url{https://www.w3.org/TR/shacl/#sparql-constraint-components}
 
 %%
 %% Rights management information.
@@ -241,7 +242,7 @@ ASK {
 }
 \end{lstlisting}
 
-\textbf{Step 5:} We wrapped the SPARQL queries as SHACL constraints, such as in the example Listing \ref{lst:example-cq} that defines a SPARQL-based constraint component\footnote{\url{https://www.w3.org/TR/shacl/#sparql-constraint-components}} applied to the entire data graph. The \texttt{sh:message} captures the CQ in natural language, which helps to identify which question failed to validate in the validation reports. The \texttt{sh:ask} contains the CQ translated to a SPARQL query prepared in the previous step.
+\textbf{Step 5:} We wrapped the SPARQL queries as SHACL constraints, such as in the example Listing \ref{lst:example-cq} that defines a SPARQL-based constraint component\footnote{\urlshaclconstraintcomponent} applied to the entire data graph. The \texttt{sh:message} captures the CQ in natural language, which helps to identify which question failed to validate in the validation reports. The \texttt{sh:ask} contains the CQ translated to a SPARQL query prepared in the previous step.
 
 \begin{lstlisting}[language=turtle, caption=Example competency question in SHACL,label={lst:example-cq}]
 :DatasetShape a sh:NodeShape ;
