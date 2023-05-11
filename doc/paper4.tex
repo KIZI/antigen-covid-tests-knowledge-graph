@@ -25,6 +25,9 @@
 \definecolor{iri}{RGB}{0,0,0}
 \definecolor{prefix}{RGB}{0,0,195} %dark blue
 \definecolor{afterPrefix}{RGB}{0,0,245}
+\definecolor{colorcomment}{RGB}{0, 153, 0}
+\definecolor{mahogany}{RGB}{153,0,0}
+\definecolor{darkblue}{RGB}{0,0,200}
 
 
 %%%Turtle
@@ -45,6 +48,27 @@
   classoffset=3,
   keywordstyle=\color{orange},
   morekeywords={@en}
+}
+
+%%% SPARQL
+\lstdefinelanguage{SPARQL}
+{
+  morecomment=[l][\color{gray}]{\#},       % comments
+  morecomment=[n][\color{black}]{<http}{>}, % uris
+  morestring=[b][\color{black}]{\"},  % strings
+  % -------------------------- variables
+  keywordsprefix=?,
+  classoffset=0,
+  keywordstyle=\color{darkblue},
+  morekeywords={},
+  % -------------------------- prefixes
+  classoffset=1,
+  keywordstyle=\color{orange},
+  morekeywords={act,dcterms,ncit,rdf,schema},
+  % -------------------------- keywords
+  classoffset=2,
+  keywordstyle=\color{purple},
+  morekeywords={ASK,a,PREFIX}
 }
 
 %%%Enironment for diagram
@@ -224,7 +248,7 @@ Understanding the source data and its domain was a key prerequisite of our work.
 
 \textbf{Step 4:} Having a minimum viable ontology, we were able to translate the CQs into SPARQL queries, such as in the example Listing \ref{lst:example-cq-sparql}. Each question was translated manually.
 
-\begin{lstlisting}[caption=Example competency question in SPARQL, label={lst:example-cq-sparql}]
+\begin{lstlisting}[language=SPARQL, caption=Example competency question in SPARQL, label={lst:example-cq-sparql}]
 PREFIX act:     <https://covidtesty.vse.cz/vocabulary#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX ncit:    <http://purl.obolibrary.org/obo/NCIT_>
