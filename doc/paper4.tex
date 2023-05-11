@@ -191,7 +191,7 @@ We are aware of several limitations of the proposed method. Here we recount some
 We used the described method to create a knowledge graph about antigen tests for SARS-CoV-2.
 
 Its source data was originally gathered to create an overview of different evaluations of selected rapid antigen tests available on the Czech market.
-Data analyses were carried out  \cite{Kliegr2022} in order to validate the assumption that the claims on test quality provided by the manufacturers differ significantly from what is verified by the laboratories of independent organizations.
+Data analyses were carried out \cite{Kliegr2022} in order to validate the assumption that the claims on test quality provided by the manufacturers differ significantly from what is verified by the laboratories of independent organizations.
 
 The data was collected manually from several regulatory bodies, such as SÚKL\footnote{\url{https://www.sukl.cz/prehled-testu-k-diagnostice-onemocneni-covid-19}} and EU HSC\footnote{\url{https://health.ec.europa.eu/health-security-and-infectious-diseases/crisis-management/covid-19-diagnostic-tests_en}}, and was combined with performance evaluations of the tests, such as their sensitivity and specificity, that came from independent studies from various countries.
 The data was collected into an XML file.
@@ -201,7 +201,7 @@ The other was a dashboard allowing to perform analyses online.
 While the XML data was already structured, it lacked any ontological grounding, and some of its features were tuned towards presentation aspects within the website.
 
 We set to create a knowledge graph out of it to open it to a wider reuse and allow performing retrospective analyses of this data.
-All artifacts we developed in this effort, such as CQs, are available as open source.\footnote{\url{https://github.com/KIZI/antigen-covid-tests-knowledge-graph}}
+All artifacts we developed in this effort, such as CQs, are available as open source\footnote{\url{https://github.com/KIZI/antigen-covid-tests-knowledge-graph}} and the knowledge graph is released.\footnote{\url{https://github.com/KIZI/antigen-covid-tests-knowledge-graph/releases/tag/v1.0.0}}
 
 Understanding the source data and its domain was a key prerequisite of our work. The data covers 158 antigen SARS-CoV-2 tests and their evaluations from several sources. Each source had its way of describing the domain, which we needed to comprehend first to represent the source's data faithfully and make it commensurable. We also needed to become aware of the purpose for which the data was collected and how it was represented to serve this purpose. The data was originally structured in XML for display on a web page, so we needed to map its document-oriented structure and visual encoding into semantics. Knowing the source data well, we could begin with the knowledge graph construction.
 
